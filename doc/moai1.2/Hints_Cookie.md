@@ -8,6 +8,7 @@
 * [Cookie cxyl]    (#ck_cxyl)
 * [Cookie namec]   (#ck_namec)
 * [Cookie pwdc]    (#ck_pwdc)
+* [Cookie verifyc] (#ck_verifyc)
 * [–¢’m(Unknown)‚ÌCookie•Ï”‚É‚Â‚¢‚Ä](#unknown_cookie_var)
 
 ## <a name="ck_posttime">Cookie posttime
