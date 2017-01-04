@@ -96,8 +96,9 @@
 
   この値は、Fingerprint値と呼ばれるものが格納される.
 
-  この変数には当初はFingerprintではなくFlashのReVision番号が格納されていたが、
-  その仕様を廃止し、替わりにFingerprint値を格納するようになった経緯がある.
+  当初はFingerprint値ではなくAdobe FlashのReVision番号が格納されていたのだが、
+  それだと値が被り過ぎるためかFlashに見切りをつけたためかは知らないがある時ふたばはその仕様を廃止した.
+  そしてこの変数名はそのままに替わりにFingerprint値を格納するようになった経緯がある.
   名前に含まれる謎の「l」の文字はその名残である.
 
   Fingerprint値はあなたのブラウザ環境やマシン環境の様々な情報をJavascriptにより取得し、
