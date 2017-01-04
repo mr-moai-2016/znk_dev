@@ -3,16 +3,18 @@
 
 ## <a name="index">目次
 -----------------------------------
-* [Fgp_userAgent](#Fgp_userAgent)
-* [Fgp_language] (#Fgp_language)
-* [Fgp_colorDepth] (#Fgp_colorDepth)
-* [Fgp_ScreenResolusion] (#Fgp_ScreenResolusion)
-* [Fgp_TimezoneOffset] (#Fgp_TimezoneOffset)
-* [Fgp_SessionStorage] (#Fgp_SessionStorage)
-* [Fgp_LocalStorage] (#Fgp_LocalStorage)
-* [Fgp_IndexedDB] (#Fgp_IndexedDB)
+* [Fgp_userAgent]       (#Fgp_userAgent)
+* [Fgp_language]        (#Fgp_language)
+* [Fgp_colorDepth]      (#Fgp_colorDepth)
+* [Fgp_ScreenResolusion](#Fgp_ScreenResolusion)
+* [Fgp_TimezoneOffset]  (#Fgp_TimezoneOffset)
+* [Fgp_SessionStorage]  (#Fgp_SessionStorage)
+* [Fgp_LocalStorage]    (#Fgp_LocalStorage)
+* [Fgp_IndexedDB]       (#Fgp_IndexedDB)
 * [Fgp_BodyAddBehavior] (#Fgp_BodyAddBehavior)
-* [Fgp_OpenDatabase] (#Fgp_OpenDatabase)
+* [Fgp_OpenDatabase]    (#Fgp_OpenDatabase)
+* [Fgp_CpuClass]        (#Fgp_CpuClass)
+* [Fgp_Platform]        (#Fgp_Platform)
 
 ## <a name="Fgp_userAgent">Fgp_userAgent
 -----------------------------------
@@ -148,7 +150,7 @@
 -----------------------------------
 
   typeof(window.openDatabase) というコードSnippetを実行した結果を示し、functionまたはobjectまたはundefinedという文字列となる.
-  そのブラウザにSQLによるデータ保存が実現されているか否かを示す.
+  そのブラウザにHTML5 WebSQL Databaseがサポートされているか否かを示す.
 
   <ul>
   <li>Chrome: 8以上か?</li>
@@ -160,3 +162,30 @@
   </ul>
 
   <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="Fgp_CpuClass">Fgp_CpuClass
+-----------------------------------
+
+  navigator.cpuClass より取得されるこのブラウザの動作しているマシンのCPU情報を示す文字列である.
+  x86、PPC などを返すと言われているが、実際のところほとんどのケースで空値となっている.
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="Fgp_Platform">Fgp_Platform
+-----------------------------------
+
+  navigator.platform より取得されるこのブラウザの動作しているOS環境を示す文字列である.
+  おおよそ以下が目安である.
+
+  <ul>
+  <li>Windows32/WOW : Win32</li>
+  <li>Windows64     : Win64</li>
+  <li>Linux32   : Linux i686</li>
+  <li>Linux64   : Linux x86_64</li>
+  <li>android   : Linux armv7l</li>
+  <li>iPhone    : iPhone</li>
+  <li>Mac       : MacIntel</li>
+  </ul>
+
+  <a href="#user-content-index">目次へ戻る</a>
+
