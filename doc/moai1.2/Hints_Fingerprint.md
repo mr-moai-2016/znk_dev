@@ -15,6 +15,9 @@
 * [Fgp_OpenDatabase]    (#Fgp_OpenDatabase)
 * [Fgp_CpuClass]        (#Fgp_CpuClass)
 * [Fgp_Platform]        (#Fgp_Platform)
+* [Fgp_doNotTrack]      (#Fgp_doNotTrack)
+* [Fgp_PluginsString]   (#Fgp_PluginsString)
+* [Fgp_Canvas]          (#Fgp_Canvas)
 
 ## <a name="Fgp_userAgent">Fgp_userAgent
 -----------------------------------
@@ -29,7 +32,7 @@
 
   navigator.languageより取得されるいわゆるブラウザの言語情報を示す文字列である.
   日本語環境のブラウザの場合、ja、ja-JP、ja-jp、ja-JP-macなどの値を取るが、
-  実際どのような値になるかはブラウザやその設定などによっても様々となる場合がある.
+  実際どのような値になるかはブラウザやその設定、システムのロケール設定などによっても様々となる場合がある.
 
   勿論例外もあるがおおよそ以下が目安である.
 
@@ -46,7 +49,7 @@
 ## <a name="Fgp_colorDepth">Fgp_colorDepth
 -----------------------------------
 
-  screen.colorDepthより取得されるモニタの色深度ビット数を示す文字列である.
+  screen.colorDepthより取得されるブラウザの色深度ビット数を示す文字列である.
   32、24、16などの値を取るが、実際どのような値になるかはブラウザやその設定などによっても様々となる場合がある.
 
   <a href="#user-content-index">目次へ戻る</a>
@@ -149,7 +152,7 @@
 ## <a name="Fgp_OpenDatabase">Fgp_OpenDatabase
 -----------------------------------
 
-  typeof(window.openDatabase) というコードSnippetを実行した結果を示し、functionまたはobjectまたはundefinedという文字列となる.
+  typeof(window.openDatabase) というコードSnippetを実行した結果を示し、functionまたはundefinedという文字列となる.
   そのブラウザにHTML5 WebSQL Databaseがサポートされているか否かを示す.
 
   <ul>
@@ -186,6 +189,43 @@
   <li>iPhone    : iPhone</li>
   <li>Mac       : MacIntel</li>
   </ul>
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+
+## <a name="Fgp_doNotTrack">Fgp_doNotTrack
+-----------------------------------
+
+  navigator.doNotTrack より取得されるこのブラウザがトラッキングを拒否しているか否か(DNT機能がOnか否か)を示す文字列である.
+  Firefox9以降より導入された.
+  Firefox9以降の場合、プライバシーの設定画面において「トラッキングの拒否をサイトに通知する」にチェックを入れるとこれが有効になり、この値は 1 となる.
+  チェックがOFFの場合 unspecified という値となる。 
+  それ以外の環境では空値を返すとみなしてよい.
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="Fgp_PluginsString">Fgp_PluginsString
+-----------------------------------
+
+  navigator.plugins の値を元に取得されるこのブラウザにインストールされているプラグイン群を示す文字列である.
+  環境によって様々なプラグインやそのバージョンがインストールされており、従ってほぼ自由文字列と考えてよく、
+  リアルに偽装したところでほぼ意味がない.
+  ただしIEの場合はこれは空値である.
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="Fgp_Canvas">Fgp_Canvas
+-----------------------------------
+
+  いわゆるCanvas Fingerprintと呼ばれる値である.
+  この値は /bin/fp.js における getCanvasFingerprint関数によって取得される文字列である.
+  getCanvasFingerprintでは HTML5のCanvas APIを使い図形や文字などを描き、次にその結果をPNG画像とし、
+  最後にそのPNG画像全体のファイルイメージをBASE64エンコーディングした結果がその値となる.
+
+  この画像の出力結果は使用するレンダリングエンジンやシステムにインストールされているグラフィックシステム、
+  グラフィクスカードなどのハードウェアにも依存することが考えられるため、
+  それを考慮すると全体としてそこそこ自由度の高い文字列とみなすこともできる.
+  これは多分に推測も入るし人によって解釈も分れるところであろう.
 
   <a href="#user-content-index">目次へ戻る</a>
 
