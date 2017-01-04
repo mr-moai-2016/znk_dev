@@ -64,7 +64,7 @@
 ## <a name="Fgp_SessionStorage">Fgp_SessionStorage
 -----------------------------------
 
-  return !!window.sessionStorage というSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
+  !!window.sessionStorage というコードSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
   そのブラウザにsessionStorage機構が存在するか否かを示す.
   ブラウザの対応状況は以下が目安である(MDNによる).
 
@@ -74,6 +74,9 @@
   <li>IE: 8以上</li>
   <li>Opera: 10.50以上</li>
   <li>Safari(Webkit): 4以上</li>
+  <li>Android: 2.1以上</li>
+  <li>Opera Mobile: 11以上</li>
+  <li>Safari Mobile: iOS 3.2以上</li>
   </ul>
 
   <a href="#user-content-index">目次へ戻る</a>
@@ -81,7 +84,7 @@
 ## <a name="Fgp_LocalStorage">Fgp_LocalStorage
 -----------------------------------
 
-  return !!window.localStorage というSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
+  !!window.localStorage というコードSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
   そのブラウザにlocalStorage機構が存在するか否かを示す.
   ブラウザの対応状況は以下が目安である(MDNによる).
 
@@ -91,6 +94,32 @@
   <li>IE: 8以上</li>
   <li>Opera: 10.50以上</li>
   <li>Safari(Webkit): 4以上</li>
+  <li>Android: 2.1以上</li>
+  <li>Opera Mobile: 11以上</li>
+  <li>Safari Mobile: iOS 3.2以上</li>
+  </ul>
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="Fgp_IndexedDB">Fgp_IndexedDB
+-----------------------------------
+
+  !!window.indexedDB というコードSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
+  そのブラウザにindexedDB機構が存在するか否かを示す.
+  ブラウザの対応状況は以下が目安である(MDNによる).
+
+  <ul>
+  <li>Chrome: 23以上</li>
+  <li>Firefox(Gecko): 10以上</li>
+  <li>IE: 10以上</li>
+  <li>Opera: 15以上</li>
+  <li>Safari(Webkit): 7.1以上</li>
+  <li>Edge: OK</li>
+  <li>Android: 4.4以上</li>
+  <li>Firefox Mobile: 22以上</li>
+  <li>Firefox OS: 1.0.1以上</li>
+  <li>Opera Mobile: 22以上</li>
+  <li>Safari Mobile: 8以上</li>
   </ul>
 
   <a href="#user-content-index">目次へ戻る</a>
