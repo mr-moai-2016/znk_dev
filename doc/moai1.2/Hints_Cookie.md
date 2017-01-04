@@ -7,6 +7,7 @@
 * [Cookie __cfduid](#ck___cfduid)
 * [Cookie cxyl]    (#ck_cxyl)
 * [Cookie namec]   (#ck_namec)
+* [Cookie pwdc]    (#ck_pwdc)
 
 ## <a name="ck_posttime">Cookie posttime
 -----------------------------------
@@ -54,6 +55,30 @@
   いずれにせよ空値以外の値を設定していても何一つ良いことはないので、基本的には消去しておくことが望ましい.
   futaba_send.myf の cookie_force において namec = [''] を指定しておくことをお勧めする
   (futaba_send.myfのデフォルトではそうなっている).
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="ck_pwdc">Cookie pwdc
+-----------------------------------
+
+  名前の由来は PassWorD Cookie と思われる.
+
+  この値は、レス投稿時のいわゆる「削除キー」に相当するものである.
+  ユーザが明示的に指定してもよいが、空にしておけば適当な削除キー値が自動的に割り当てられる.
+  このときCookieのpwdc変数にその値が格納され、レス投稿時においてはJavascriptを介してこの値がさらにPost変数pwdへセットされる.
+  通常は自動的に割り当てられた値をそのまま使えばよい.
+  ユーザ情報をリセットしたい場合は、Cookieのpwdc値を一旦空にしておくとよい.
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="unknown_cookie_var">未知のCookie変数について
+-----------------------------------
+
+  CustomCookieにおいて「Unknown」と表記されている変数は、CustomBoyが知らないあるいは把握していない変数である.
+  ふたばの仕様変更や、ある種の特別な規制にのみ発現するレアな変数などが存在する可能性があり、
+  そのようなCookie変数が検出された場合、この表示がされる場合がある.
+  CustomCookieに「Unknown」と表記された変数が登場した場合、CustomBoyの作者に報告してもらえれば幸いである.
+  その変数の仕様が確認できればこれに対応出来る可能性がある.
 
   <a href="#user-content-index">目次へ戻る</a>
 
