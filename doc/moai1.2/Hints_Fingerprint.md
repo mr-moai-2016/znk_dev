@@ -78,4 +78,21 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
+## <a name="Fgp_LocalStorage">Fgp_LocalStorage
+-----------------------------------
+
+  return !!window.localStorage というSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
+  そのブラウザにlocalStorage機構が存在するか否かを示す.
+  ブラウザの対応状況は以下が目安である(MDNによる).
+
+  <ul>
+  <li>Chrome: 4以上</li>
+  <li>Firefox(Gecko): 3.5以上</li>
+  <li>IE: 8以上</li>
+  <li>Opera: 10.50以上</li>
+  <li>Safari(Webkit): 4以上</li>
+  </ul>
+
+  <a href="#user-content-index">目次へ戻る</a>
+
 
