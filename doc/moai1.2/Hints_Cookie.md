@@ -1,4 +1,4 @@
-# Hints
+# Hints Cookie
 -----------------------------------
 
 ## <a name="index">目次
@@ -14,8 +14,7 @@
   カタログに初めてアクセスするか、または初めてレス投稿した際に設定されるようである.
   あるいは /bin/cachemt7.php にアクセスしたときにそれに類した値が生成される形となる.
   一旦設定されると、CookieおよびブラウザキャッシュおよびlocalStorage これら全てを
-  消去しない限り同じ値が残り続ける. この値はPOST変数 pthc (過去にはpthb や pthdに設定されていたこともあった)
-  とCookieのposttime値として送信される.  
+  消去しない限り同じ値が残り続ける. この値はPOST変数 pthb, pthc (pthd)とCookieのposttime値として送信される.  
 
   <a href="#user-content-index">目次へ戻る</a>
 
@@ -58,4 +57,4 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-[1]: https://github.com/mr-moai-2016/znk_dev/blob/master/src/moai/Hints.md
+[1]: https://github.com/mr-moai-2016/znk_dev/blob/master/src/moai/Hints_Cookie.md
