@@ -4,6 +4,7 @@
 ## <a name="index">–ÚŽŸ
 -----------------------------------
 * [Cookie posttime](#ck_posttime)
+* [Cookie posttime](#ck___cfduid)
 
 ## <a name="ck_posttime">Cookie posttime
 -----------------------------------
