@@ -5,6 +5,9 @@
 -----------------------------------
 * [Fgp_userAgent](#Fgp_userAgent)
 * [Fgp_language] (#Fgp_language)
+* [Fgp_colorDepth] (#Fgp_colorDepth)
+* [Fgp_ScreenResolusion] (#Fgp_ScreenResolusion)
+* [Fgp_TimezoneOffset] (#Fgp_TimezoneOffset)
 
 ## <a name="Fgp_userAgent">Fgp_userAgent
 -----------------------------------
