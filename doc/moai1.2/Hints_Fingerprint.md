@@ -8,6 +8,11 @@
 * [Fgp_colorDepth] (#Fgp_colorDepth)
 * [Fgp_ScreenResolusion] (#Fgp_ScreenResolusion)
 * [Fgp_TimezoneOffset] (#Fgp_TimezoneOffset)
+* [Fgp_SessionStorage] (#Fgp_SessionStorage)
+* [Fgp_LocalStorage] (#Fgp_LocalStorage)
+* [Fgp_IndexedDB] (#Fgp_IndexedDB)
+* [Fgp_BodyAddBehavior] (#Fgp_BodyAddBehavior)
+* [Fgp_OpenDatabase] (#Fgp_OpenDatabase)
 
 ## <a name="Fgp_userAgent">Fgp_userAgent
 -----------------------------------
@@ -124,4 +129,34 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
+## <a name="Fgp_BodyAddBehavior">Fgp_BodyAddBehavior
+-----------------------------------
 
+  typeof(document.body.addBehavior) というコードSnippetを実行した結果を示し、functionまたはobjectまたはundefinedという文字列となる.
+  そのブラウザにdocument.body.addBehaviorメソッドが存在するか否かを示す.
+  これはおそらくIE10以上にしか存在しない.
+
+  <ul>
+  <li>IE10以上: functionを返す.</li>
+  <li>IE9以下: objectを返す.</li>
+  <li>その他: undefinedを返す.</li>
+  </ul>
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="Fgp_OpenDatabase">Fgp_OpenDatabase
+-----------------------------------
+
+  typeof(window.openDatabase) というコードSnippetを実行した結果を示し、functionまたはobjectまたはundefinedという文字列となる.
+  そのブラウザにSQLによるデータ保存が実現されているか否かを示す.
+
+  <ul>
+  <li>Chrome: 8以上か?</li>
+  <li>Firefox(Gecko): 未サポート(undefinedを返す)</li>
+  <li>IE: 未サポート(undefinedを返す)</li>
+  <li>Opera: 10.6以上か?</li>
+  <li>Safari: 3.1以上</li>
+  <li>Android: 2.1以上</li>
+  </ul>
+
+  <a href="#user-content-index">目次へ戻る</a>
