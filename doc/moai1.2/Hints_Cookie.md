@@ -71,7 +71,7 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="unknown_cookie_var">未知のCookie変数について
+## <a name="unknown_cookie_var">未知(Unknown)のCookie変数について
 -----------------------------------
 
   CustomCookieにおいて「Unknown」と表記されている変数は、CustomBoyが知らないあるいは把握していない変数である.
