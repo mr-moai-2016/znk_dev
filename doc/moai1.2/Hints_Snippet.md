@@ -316,6 +316,7 @@ Chrome Ver14以上のみtrueである.
  もしかするとChromium系かつWebkitが使われているバージョンのみを検出する意図があったのかもしれない.
  確かに前半の **!!window.chrome** とは単に Chromium系であることを示し、Chromeの場合全バージョンでこれがtrueとなり、
  Operaの場合Ver14以上でこれがtrueとなる.
+
  しかしながら後半の **'WebkitAppearance' in document.documentElement.style** とはレンダリングエンジンとして Webkit が使われているか否かで
  良く登場するSnippetであるものの、これだけではChromeの場合全バージョンでこれがtrueとなり、Operaの場合Ver14以上でこれがtrueとなる.
  (ちなみにChromeのBlink対応はVer28以降、OperaのBlink対応はVer15以降である).
