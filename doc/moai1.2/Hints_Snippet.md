@@ -104,13 +104,27 @@ Firefoxにはこれが存在するためtrue.
 
 ## <a name="Snp_NavigatorOnline">   Snp_NavigatorOnline
 -----------------------------------
-(現在作成中…)
+  typeof window.navigator.onLine!=undefined の実行結果である.
 
   <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Snp_SessionStorage">    Snp_SessionStorage
 -----------------------------------
-(現在作成中…)
+
+  !!window.sessionStorage というコードSnippetを実行した結果を示し、
+  そのブラウザにsessionStorage機構が存在するか否かを示す.
+  ブラウザの対応状況は以下が目安である(MDNによる).
+
+  <ul>
+  <li>Chrome: 5以上</li>
+  <li>Firefox(Gecko): 2以上</li>
+  <li>IE: 8以上</li>
+  <li>Opera: 10.50以上</li>
+  <li>Safari(Webkit): 4以上</li>
+  <li>Android: 2.1以上</li>
+  <li>Opera Mobile: 11以上</li>
+  <li>Safari Mobile: iOS 3.2以上</li>
+  </ul>
 
   <a href="#user-content-index">目次へ戻る</a>
 
@@ -183,20 +197,30 @@ Firefox Ver3.xのみtrue.
 
 ## <a name="Snp_IndexedDB">         Snp_IndexedDB
 -----------------------------------
-以下の環境においてtrue.
+
+  !!window.indexedDB というコードSnippetを実行した結果を示し、
+  そのブラウザにindexedDB機構が存在するか否かを示す.
+  ブラウザの対応状況は以下が目安である(MDNによる).
+
   <ul>
   <li>Chrome: 23以上</li>
   <li>Firefox(Gecko): 10以上</li>
   <li>IE: 10以上</li>
   <li>Opera: 15以上</li>
-  <li>Safari: 7.1以上</li>
+  <li>Safari(Webkit): 7.1以上</li>
+  <li>Edge: OK</li>
+  <li>Android: 4.4以上</li>
+  <li>Firefox Mobile: 22以上</li>
+  <li>Firefox OS: 1.0.1以上</li>
+  <li>Opera Mobile: 22以上</li>
+  <li>Safari Mobile: 8以上</li>
   </ul>
 
   <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Snp_WindowStyles">      Snp_WindowStyles
 -----------------------------------
-(現在作成中…)
+  !!window.styles の実行結果である.
 
   <a href="#user-content-index">目次へ戻る</a>
 
@@ -328,13 +352,15 @@ Chrome Ver14以上のみtrueである.
 
 ## <a name="Snp_Touch">             Snp_Touch
 -----------------------------------
-(現在作成中…)
+  この環境のブラウザにおいてタッチパッドが有効か否かを示す.
 
   <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Snp_FacileMobile">      Snp_FacileMobile
 -----------------------------------
-(現在作成中…)
+  この環境のブラウザにおいてwindow.orientationが存在するか否かを示す.
+  window.orientationとは端末画面が縦長(portrait)と横長(landscape)のどちらであるかに関する情報である.
+  これはモバイル環境である否かの簡易判定に使うことができる.
 
   <a href="#user-content-index">目次へ戻る</a>
 
