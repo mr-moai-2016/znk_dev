@@ -3,10 +3,11 @@
 
 ## <a name="index">目次
 -----------------------------------
+* [CustomFinger]        (#CustomFinger)
 * [Fgp_userAgent]       (#Fgp_userAgent)
 * [Fgp_language]        (#Fgp_language)
 * [Fgp_colorDepth]      (#Fgp_colorDepth)
-* [Fgp_ScreenResolusion](#Fgp_ScreenResolusion)
+* [Fgp_ScreenResolution](#Fgp_ScreenResolution)
 * [Fgp_TimezoneOffset]  (#Fgp_TimezoneOffset)
 * [Fgp_SessionStorage]  (#Fgp_SessionStorage)
 * [Fgp_LocalStorage]    (#Fgp_LocalStorage)
@@ -18,6 +19,33 @@
 * [Fgp_doNotTrack]      (#Fgp_doNotTrack)
 * [Fgp_PluginsString]   (#Fgp_PluginsString)
 * [Fgp_Canvas]          (#Fgp_Canvas)
+
+## <a name="CustomFinger">CustomFinger
+-----------------------------------
+
+通常、CustomBoyの思考ルーチンは与えられた環境カテゴリを入力として
+それに矛盾しない範囲において最適なFigerprint値をランダムに自動的に構築します.
+さらにCustomFingerでは、その際に参照するマシン/ブラウザ固有の各要素値を明示的に上書き指定して
+生成されるFingerprint値の究極なるカスタマイズを行うができます.
+
+CustomFingerの基本的な使用方法として次のステップをご紹介します.
+
+<ol>
+<li>CustomMainの*Step1*ボタンにより仮想環境を構築します.
+このときCustomFingerにおいてもこの構築結果は反映されており、
+以下の一連の値はこの結果に矛盾しないよう自動的に文字列がセットされています.</li>
+
+<li>このままの状態でも全くかまいませんが、さらに下記の値に拘りのある方は
+これを微調整して修正した上で*値生成*ボタンを押します.
+これによりその調整が反映されたflrv,flvv値を下記「Fingerprint値の生成結果」に表示させることができます.</li>
+
+<li>*flrv,flvv欄へ値をコピー*ボタンを押します.
+これで生成結果をCustomMainのflrv,flvv欄にコピーできます.
+さらにCustomMainの*Step2*ボタンを押すことで最終状態を確定させましょう.
+これで完了です.</li>
+
+  <a href="#user-content-index">目次へ戻る</a>
+
 
 ## <a name="Fgp_userAgent">Fgp_userAgent
 -----------------------------------
@@ -54,7 +82,7 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="Fgp_ScreenResolusion">Fgp_ScreenResolusion
+## <a name="Fgp_ScreenResolution">Fgp_ScreenResolution
 -----------------------------------
 
   screen.width、screen.heightより取得されるモニタの解像度を示す二つの数字を文字xで連結した文字列である.
