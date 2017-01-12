@@ -43,6 +43,7 @@ CustomFingerの基本的な使用方法として次のステップをご紹介します.
 これで生成結果をCustomMainのflrv,flvv欄にコピーできます.
 さらにCustomMainの*Step2*ボタンを押すことで最終状態を確定させましょう.
 これで完了です.</li>
+</ol>
 
   <a href="#user-content-index">目次へ戻る</a>
 
