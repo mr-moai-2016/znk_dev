@@ -1,7 +1,7 @@
 # Hints Cookie
 -----------------------------------
 
-## <a name="index">目次
+## <a name="index"></a>目次
 -----------------------------------
 * [Cookie posttime](#ck_posttime)
 * [Cookie __cfduid](#ck___cfduid)
@@ -11,7 +11,7 @@
 * [Cookie verifyc] (#ck_verifyc)
 * [未知(Unknown)のCookie変数について](#unknown_cookie_var)
 
-## <a name="ck_posttime">Cookie posttime
+## <a name="ck_posttime"></a>Cookie posttime
 -----------------------------------
   この値はfutaba.phpに初アクセスした時間(およびそれに類した値)である. 現状では
   カタログに初めてアクセスするか、または初めてレス投稿した際に設定されるようである.
@@ -21,7 +21,7 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="ck___cfduid">Cookie __cfduid
+## <a name="ck___cfduid"></a>Cookie __cfduid
 -----------------------------------
 
   この値はfutaba.phpに初アクセスしたときに未設定である場合は新たに設定される.
@@ -32,7 +32,7 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="ck_cxyl">Cookie cxyl
+## <a name="ck_cxyl"></a>Cookie cxyl
 -----------------------------------
 
   この値はカタログのフォーマットを指定するために存在する.
@@ -48,7 +48,7 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="ck_namec">Cookie namec
+## <a name="ck_namec"></a>Cookie namec
 -----------------------------------
 
   この値は最後のレスにおいて使用した「お名前欄」の内容を示す.
@@ -60,7 +60,7 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="ck_pwdc">Cookie pwdc
+## <a name="ck_pwdc"></a>Cookie pwdc
 -----------------------------------
 
   名前の由来は PassWorD Cookie と思われる.
@@ -73,7 +73,7 @@
 
   <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="ck_verifyc">Cookie verifyc
+## <a name="ck_verifyc"></a>Cookie verifyc
 -----------------------------------
 
   このCookie変数は今となってはレア変数の一つであり、大半の方は表示されないであろう.
@@ -106,7 +106,7 @@
   <a href="#user-content-index">目次へ戻る</a>
 
 
-## <a name="unknown_cookie_var">未知(Unknown)のCookie変数について
+## <a name="unknown_cookie_var"></a>未知(Unknown)のCookie変数について
 -----------------------------------
 
   CustomCookieにおいて、一番右の本来「Hint」と表記されるべき位置に「Unknown」と表記されている変数が表示される場合がある.
