@@ -3,13 +3,13 @@
 
 ## <a name="index"></a>–ÚŸ
 -----------------------------------
-* [Cookie posttime](#ck_posttime)
-* [Cookie __cfduid](#ck___cfduid)
-* [Cookie cxyl    ](#ck_cxyl)
-* [Cookie namec   ](#ck_namec)
-* [Cookie pwdc    ](#ck_pwdc)
-* [Cookie verifyc ](#ck_verifyc)
-* [–¢’m(Unknown)‚ÌCookie•Ï”‚É‚Â‚¢‚Ä](#unknown_cookie_var)
+* [Cookie posttime](#user-content-ck_posttime)
+* [Cookie __cfduid](#user-content-ck___cfduid)
+* [Cookie cxyl    ](#user-content-ck_cxyl)
+* [Cookie namec   ](#user-content-ck_namec)
+* [Cookie pwdc    ](#user-content-ck_pwdc)
+* [Cookie verifyc ](#user-content-ck_verifyc)
+* [–¢’m(Unknown)‚ÌCookie•Ï”‚É‚Â‚¢‚Ä](#user-content-unknown_cookie_var)
 
 ## <a name="ck_posttime"></a>Cookie posttime
 -----------------------------------
