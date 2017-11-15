@@ -1,3 +1,129 @@
-<html><body>
-	This is docs/index.html.
-</body></html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<link href="/znk_dev/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<p><b><img src="/znk_dev/imgs/moai.png"> Welcome to Moai+Easter World Ver 2.0</b></p>
+
+<u><b>はじめに</b></u>
+<ul>
+	<font size=-1>Moaiはポータブルウェブサーバシステムです.<br>
+		<br>
+		最初にmoaiというプログラムを一つ起動します.<br>
+		次に http://127.0.0.1:8124 へアクセスしましょう！<br>
+		この間、あなたのマシンはローカルなプロキシサーバとウェブサーバとして同時に機能します(※1).<br>
+		これにより様々なWebアプリケーションをあなたのマシンだけで完結した形で、ブラウザ上にて利用できるようになります.<br>
+		<br>
+		以下でご紹介するツール群は、このWebアプリケーションの応用例です.<br>
+		それではさっそくMoai、そして今回のバージョンの目玉機能であるEasterの世界をご紹介しましょう！<br>
+		<br>
+		※1) デフォルトの設定では安全のため、あなたのマシン以外からのMoaiへの接続はすべて遮断されるようになっています.<br>
+	</font><br>
+</ul>
+
+<u><b>Webアプリケーション</b></u>
+<ul>
+	<li>
+	<a class=GeneralAppLink href="http://127.0.0.1:8124/easter">Easter</a>
+	<span class=GeneralAuthor> (Author: Zenkaku)</span>
+	</li>
+	<div class=GeneralComment>
+		Easterは仮想ブラウザ環境(以降、単に仮想環境と呼ぶ)を利用するツールです.<br>
+		<br>
+		Moai Ver1.1.x系まではこの仮想環境を利用するには、ブラウザにて「ローカルプロキシの設定」を行っておく必要がありました(※1).<br>
+		Ver2.0以降で導入されたEasterを使えば、この設定を行うことなく即座に仮想環境を利用することができます(※2).<br>
+		さっそく上のリンクよりEasterへ入り仮想環境を体験してみましょう…とその前に、下記のVirtualUSERSも一読しておきましょう！<br>
+		<br>
+		※1) もちろん現バージョンでも旧来通りMoaiをローカルプロキシとして使うこともできます.<br>
+		　　Easterの場合は使用可能なサイトが限られますが、一方でローカルプロキシの場合は基本的にどのようなサイトにでも使用可能です.<br>
+		※2) Moai Ver2.0で新たに導入されたXhrDMZシステムは、XMLHttpRequestによる攻撃を防御します.<br>
+		　　これによりEasterによるウェブ閲覧の安全性を高めています.<br>
+	</div><br>
+
+	<li>
+	<a class=GeneralAppLink href="http://127.0.0.1:8124/cgis/custom_boy/publicbox/virtual_users.html">VirtualUSERS</a>
+	<span class=GeneralAuthor> (Author: K.Yakisoba.H and Zenkaku)</span>
+	</li>
+	<div class=GeneralComment>
+		VirtualUSERSは、ランダムな仮想環境を自動的に構築するツールです.<br>
+		これはボタン一つ押すだけで簡単に行えます.<br>
+		<br>
+		このボタンは別にいつ押しても構わないのですが、もっとも適切なタイミングはルータリセットなどによりIPアドレスを変更した直後です.<br>
+		また、Moaiをダウンロード後に初めて起動したなら、Moaiが提供する仮想環境は初期設定値のものになっているはずですから、<br>
+		この場合もまずはこのボタンを一回押して仮想環境の値を変更しておきましょう！<br>
+	</div><br>
+
+	<li>
+	<a class=GeneralAppLink href="http://127.0.0.1:8124/cgis/custom_boy/publicbox/index.html">CustomBoy</a>
+	<span class=GeneralAuthor> (Author: K.Yakisoba.H and Zenkaku)</span>
+	</li>
+	<div class=GeneralComment>
+		CustomBoyとは、Moai/Easterの仮想環境を詳細にカスタマイズするエキスパートユーザ向けのツールです.<br>
+		(従って初心者の方がこのツールを使う必要はまずないと思われます)<br>
+		我々が提供する仮想化ツールの中でもこれは最強のカスタマイズ性を有するものです.<br>
+	</div><br>
+
+	<li>
+	<a class=GeneralAppLink href="http://127.0.0.1:8124/easter">ProxyFinder</a>
+	<span class=GeneralAuthor> (Author: Mr.Moai)</span>
+	</li>
+	<div class=GeneralComment>
+		ProxyFinderは定番のプロキシ情報提供サイトへ接続し、現在有効なプロキシサーバのリストを自動的に取得するツールです.<br>
+		また、Moaiが使用するProxyサーバをリストから選択して設定することができます.<br>
+	</div><br>
+
+	<li>
+	<a class=GeneralAppLink href="http://127.0.0.1:8124/cgis/cgi_samples/publicbox/index.html">Moai CGI Developers</a>
+	<span class=GeneralAuthor> (Author: Mr.Moai)</span>
+	</li>
+	<div class=GeneralComment>
+		Moai CGI は Moaiとは独立した単独のCGIスクリプトを実行します.<br>
+		従って、あなたがCGIスクリプトを独自に開発し、それをMoai CGI上で実行させることもできるのです！<br>
+
+		ここではこのようなWebアプリケーションを独自に作ってみたい野心溢れる方向けに、その開発方法を解説します.<br>
+	</div><br>
+</ul>
+
+<u><b>Moaiエンジン設定</b></u>
+<ul>
+	<li>
+	<a class=MoaiSysLink href="http://127.0.0.1:8124/config">Moai Basic Configuration</a>
+	<span class=GeneralAuthor> (Author: Mr.Moai)</span>
+	</li>
+	<div class=GeneralComment>
+		Moaiエンジンの設定のうち、基本的なものを取り扱います.<br>
+		具体的にはプロキシの指定、POST確認表示モードのOn/Off、ログに関する指定、フィルタディレクトリの指定などです.<br>
+	</div><br>
+
+	<li>
+	<a class=MoaiSysLink href="http://127.0.0.1:8124/sysconfig">Moai System Configuration</a>
+	<span class=GeneralAuthor> (Author: Mr.Moai)</span>
+	</li>
+	<div class=GeneralComment>
+		Moaiエンジンの設定のうち、高度なものを取り扱います.<br>
+		具体的にはネットワークの設定などです.<br>
+	</div><br>
+
+	<li>
+	<a class=MoaiSysLink href="http://127.0.0.1:8124/sysconfig">Moai CGI Configuration</a>
+	<span class=GeneralAuthor> (Author: Mr.Moai)</span>
+	</li>
+	<div class=GeneralComment>
+		Moaiエンジンの設定のうち、Moai CGIに関するものを取り扱います.<br>
+	</div><br>
+
+</ul>
+
+<u><b>リンク</b></u>
+<ul>
+	<li><a class=GeneralElemLink href="https://github.com/mr-moai-2016/znk_project">Moai 公式サイト(github)</a></li>
+	<li><a class=GeneralElemLink href="https://mr-moai-2016.github.io/znk_dev">Moai ドキュメント(github)</a></li>
+	<li><a class=GeneralElemLink href="https://127.0.0.1:8124/test.html">ウェブリンク集</a></li>
+</ul>
+
+</body>
+</html>
