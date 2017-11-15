@@ -1,7 +1,7 @@
 # Hints Fingerprint
 -----------------------------------
 
-## <a name="index">�ڎ�
+## <a name="index">目次
 -----------------------------------
 * [CustomFinger]        (#CustomFinger)
 * [Fgp_userAgent]       (#Fgp_userAgent)
@@ -23,191 +23,191 @@
 ## <a name="CustomFinger">CustomFinger
 -----------------------------------
 
-�ʏ�ACustomBoy�̎v�l���[�`���͗^����ꂽ���J�e�S������͂Ƃ���
-����ɖ������Ȃ��͈͂ɂ����čœK��Figerprint�l�������_���Ɏ����I�ɍ\�z���܂�.
-�����CustomFinger�ł́A���̍ۂɎQ�Ƃ���}�V��/�u���E�U�ŗL�̊e�v�f�l�𖾎��I�ɏ㏑���w�肵��
-���������Fingerprint�l�̋��ɂȂ�J�X�^�}�C�Y���s�����ł��܂�.
+通常、CustomBoyの思考ルーチンは与えられた環境カテゴリを入力として
+それに矛盾しない範囲において最適なFigerprint値をランダムに自動的に構築します.
+さらにCustomFingerでは、その際に参照するマシン/ブラウザ固有の各要素値を明示的に上書き指定して
+生成されるFingerprint値の究極なるカスタマイズを行うができます.
 
-CustomFinger�̊�{�I�Ȏg�p���@�Ƃ��Ď��̃X�e�b�v�����Љ�܂�.
+CustomFingerの基本的な使用方法として次のステップをご紹介します.
 
 <ol>
-<li>CustomMain��<b>Step1</b>�{�^���ɂ�艼�z�����\�z���܂�.
-���̂Ƃ�CustomFinger�ɂ����Ă����̍\�z���ʂ͔��f����Ă���A
-�ȉ��̈�A�̒l�͂��̌��ʂɖ������Ȃ��悤�����I�ɕ����񂪃Z�b�g����Ă��܂�.</li>
+<li>CustomMainの<b>Step1</b>ボタンにより仮想環境を構築します.
+このときCustomFingerにおいてもこの構築結果は反映されており、
+以下の一連の値はこの結果に矛盾しないよう自動的に文字列がセットされています.</li>
 
-<li>���̂܂܂̏�Ԃł��S�����܂��܂��񂪁A����ɉ��L�̒l�ɍS��̂������
-�������������ďC���������<b>�l����</b>�{�^���������܂�.
-����ɂ�肻�̒��������f���ꂽflrv,flvv�l�����L�uFingerprint�l�̐������ʁv�ɕ\�������邱�Ƃ��ł��܂�.</li>
+<li>このままの状態でも全くかまいませんが、さらに下記の値に拘りのある方は
+これを微調整して修正した上で<b>値生成</b>ボタンを押します.
+これによりその調整が反映されたflrv,flvv値を下記「Fingerprint値の生成結果」に表示させることができます.</li>
 
-<li><b>flrv,flvv���֒l���R�s�[</b>�{�^���������܂�.
-����Ő������ʂ�CustomMain��flrv,flvv���ɃR�s�[�ł��܂�.
-�����CustomMain��<b>Step2</b>�{�^�����������ƂōŏI��Ԃ��m�肳���܂��傤.
-����Ŋ����ł�.</li>
+<li><b>flrv,flvv欄へ値をコピー</b>ボタンを押します.
+これで生成結果をCustomMainのflrv,flvv欄にコピーできます.
+さらにCustomMainの<b>Step2</b>ボタンを押すことで最終状態を確定させましょう.
+これで完了です.</li>
 </ol>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 
 ## <a name="Fgp_userAgent">Fgp_userAgent
 -----------------------------------
 
-  navigator.userAgent���擾����邢����User-Agent������ł���.
-  ����̂ӂ��΂�Fingerprint�ɂ����Ă͂���͎Q�Ƃ���Ă��Ȃ�.
+  navigator.userAgentより取得されるいわゆるUser-Agent文字列である.
+  現状のふたばのFingerprintにおいてはこれは参照されていない.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_language">Fgp_language
 -----------------------------------
 
-  navigator.language���擾����邢����u���E�U�̌����������������ł���.
-  ���{����̃u���E�U�̏ꍇ�Aja�Aja-JP�Aja-jp�Aja-JP-mac�Ȃǂ̒l����邪�A
-  ���ۂǂ̂悤�Ȓl�ɂȂ邩�̓u���E�U�₻�̐ݒ�A�V�X�e���̃��P�[���ݒ�Ȃǂɂ���Ă��l�X�ƂȂ�ꍇ������.
+  navigator.languageより取得されるいわゆるブラウザの言語情報を示す文字列である.
+  日本語環境のブラウザの場合、ja、ja-JP、ja-jp、ja-JP-macなどの値を取るが、
+  実際どのような値になるかはブラウザやその設定、システムのロケール設定などによっても様々となる場合がある.
 
-  �ܘ_��O�����邪�����悻�ȉ����ڈ��ł���.
+  勿論例外もあるがおおよそ以下が目安である.
 
   <ul>
   <li>Android: ja-JP</li>
   <li>iPhone: ja-jp</li>
   <li>Mac Firefox: ja-JP-mac</li>
   <li>Mac safari: ja-jp</li>
-  <li>���̑�: ja</li>
+  <li>その他: ja</li>
   </ul>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_colorDepth">Fgp_colorDepth
 -----------------------------------
 
-  screen.colorDepth���擾�����u���E�U�̐F�[�x�r�b�g��������������ł���.
-  32�A24�A16�Ȃǂ̒l����邪�A���ۂǂ̂悤�Ȓl�ɂȂ邩�̓u���E�U�₻�̐ݒ�Ȃǂɂ���Ă��l�X�ƂȂ�ꍇ������.
+  screen.colorDepthより取得されるブラウザの色深度ビット数を示す文字列である.
+  32、24、16などの値を取るが、実際どのような値になるかはブラウザやその設定などによっても様々となる場合がある.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_ScreenResolution">Fgp_ScreenResolution
 -----------------------------------
 
-  screen.width�Ascreen.height���擾����郂�j�^�̉𑜓x��������̐����𕶎�x�ŘA������������ł���.
-  ���Ԃ͂���Ƃ͋t���ɂȂ邱�Ƃ�����.
-  ����̂ӂ��΂�Fingerprint�ɂ����Ă͂���͎Q�Ƃ���Ă��Ȃ�.
+  screen.width、screen.heightより取得されるモニタの解像度を示す二つの数字を文字xで連結した文字列である.
+  順番はこれとは逆順になることもある.
+  現状のふたばのFingerprintにおいてはこれは参照されていない.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_TimezoneOffset">Fgp_TimezoneOffset
 -----------------------------------
 
-  new Date().getTimezoneOffset() �ɂ��擾�����^�C���]�[�����Ӗ�����(���E�W���������)�I�t�Z�b�g�l������������ł���.
-  ���{�ł͂��̒l�͕K�� -540 �Œ�ƍl���Ă悢.
+  new Date().getTimezoneOffset() により取得されるタイムゾーンを意味する(世界標準時からの)オフセット値を示す文字列である.
+  日本ではこの値は必ず -540 固定と考えてよい.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_SessionStorage">Fgp_SessionStorage
 -----------------------------------
 
-  !!window.sessionStorage �Ƃ����R�[�hSnippet�����s�������ʂ������Atrue�܂���false�Ƃ���������ƂȂ�.
-  ���̃u���E�U��sessionStorage�@�\�����݂��邩�ۂ�������.
-  �u���E�U�̑Ή��󋵂͈ȉ����ڈ��ł���(MDN�ɂ��).
+  !!window.sessionStorage というコードSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
+  そのブラウザにsessionStorage機構が存在するか否かを示す.
+  ブラウザの対応状況は以下が目安である(MDNによる).
 
   <ul>
-  <li>Chrome: 5�ȏ�</li>
-  <li>Firefox(Gecko): 2�ȏ�</li>
-  <li>IE: 8�ȏ�</li>
-  <li>Opera: 10.50�ȏ�</li>
-  <li>Safari(Webkit): 4�ȏ�</li>
-  <li>Android: 2.1�ȏ�</li>
-  <li>Opera Mobile: 11�ȏ�</li>
-  <li>Safari Mobile: iOS 3.2�ȏ�</li>
+  <li>Chrome: 5以上</li>
+  <li>Firefox(Gecko): 2以上</li>
+  <li>IE: 8以上</li>
+  <li>Opera: 10.50以上</li>
+  <li>Safari(Webkit): 4以上</li>
+  <li>Android: 2.1以上</li>
+  <li>Opera Mobile: 11以上</li>
+  <li>Safari Mobile: iOS 3.2以上</li>
   </ul>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_LocalStorage">Fgp_LocalStorage
 -----------------------------------
 
-  !!window.localStorage �Ƃ����R�[�hSnippet�����s�������ʂ������Atrue�܂���false�Ƃ���������ƂȂ�.
-  ���̃u���E�U��localStorage�@�\�����݂��邩�ۂ�������.
-  �u���E�U�̑Ή��󋵂͈ȉ����ڈ��ł���(MDN�ɂ��).
+  !!window.localStorage というコードSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
+  そのブラウザにlocalStorage機構が存在するか否かを示す.
+  ブラウザの対応状況は以下が目安である(MDNによる).
 
   <ul>
-  <li>Chrome: 4�ȏ�</li>
-  <li>Firefox(Gecko): 3.5�ȏ�</li>
-  <li>IE: 8�ȏ�</li>
-  <li>Opera: 10.50�ȏ�</li>
-  <li>Safari(Webkit): 4�ȏ�</li>
-  <li>Android: 2.1�ȏ�</li>
-  <li>Opera Mobile: 11�ȏ�</li>
-  <li>Safari Mobile: iOS 3.2�ȏ�</li>
+  <li>Chrome: 4以上</li>
+  <li>Firefox(Gecko): 3.5以上</li>
+  <li>IE: 8以上</li>
+  <li>Opera: 10.50以上</li>
+  <li>Safari(Webkit): 4以上</li>
+  <li>Android: 2.1以上</li>
+  <li>Opera Mobile: 11以上</li>
+  <li>Safari Mobile: iOS 3.2以上</li>
   </ul>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_IndexedDB">Fgp_IndexedDB
 -----------------------------------
 
-  !!window.indexedDB �Ƃ����R�[�hSnippet�����s�������ʂ������Atrue�܂���false�Ƃ���������ƂȂ�.
-  ���̃u���E�U��indexedDB�@�\�����݂��邩�ۂ�������.
-  �u���E�U�̑Ή��󋵂͈ȉ����ڈ��ł���(MDN�ɂ��).
+  !!window.indexedDB というコードSnippetを実行した結果を示し、trueまたはfalseという文字列となる.
+  そのブラウザにindexedDB機構が存在するか否かを示す.
+  ブラウザの対応状況は以下が目安である(MDNによる).
 
   <ul>
-  <li>Chrome: 23�ȏ�</li>
-  <li>Firefox(Gecko): 10�ȏ�</li>
-  <li>IE: 10�ȏ�</li>
-  <li>Opera: 15�ȏ�</li>
-  <li>Safari(Webkit): 7.1�ȏ�</li>
+  <li>Chrome: 23以上</li>
+  <li>Firefox(Gecko): 10以上</li>
+  <li>IE: 10以上</li>
+  <li>Opera: 15以上</li>
+  <li>Safari(Webkit): 7.1以上</li>
   <li>Edge: OK</li>
-  <li>Android: 4.4�ȏ�</li>
-  <li>Firefox Mobile: 22�ȏ�</li>
-  <li>Firefox OS: 1.0.1�ȏ�</li>
-  <li>Opera Mobile: 22�ȏ�</li>
-  <li>Safari Mobile: 8�ȏ�</li>
+  <li>Android: 4.4以上</li>
+  <li>Firefox Mobile: 22以上</li>
+  <li>Firefox OS: 1.0.1以上</li>
+  <li>Opera Mobile: 22以上</li>
+  <li>Safari Mobile: 8以上</li>
   </ul>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_BodyAddBehavior">Fgp_BodyAddBehavior
 -----------------------------------
 
-  typeof(document.body.addBehavior) �Ƃ����R�[�hSnippet�����s�������ʂ������Afunction�܂���object�܂���undefined�Ƃ���������ƂȂ�.
-  ���̃u���E�U��document.body.addBehavior���\�b�h�����݂��邩�ۂ�������.
-  ����͂����炭IE10�ȏ�ɂ������݂��Ȃ�.
+  typeof(document.body.addBehavior) というコードSnippetを実行した結果を示し、functionまたはobjectまたはundefinedという文字列となる.
+  そのブラウザにdocument.body.addBehaviorメソッドが存在するか否かを示す.
+  これはおそらくIE10以上にしか存在しない.
 
   <ul>
-  <li>IE10�ȏ�: function��Ԃ�.</li>
-  <li>IE9�ȉ�: object��Ԃ�.</li>
-  <li>���̑�: undefined��Ԃ�.</li>
+  <li>IE10以上: functionを返す.</li>
+  <li>IE9以下: objectを返す.</li>
+  <li>その他: undefinedを返す.</li>
   </ul>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_OpenDatabase">Fgp_OpenDatabase
 -----------------------------------
 
-  typeof(window.openDatabase) �Ƃ����R�[�hSnippet�����s�������ʂ������Afunction�܂���undefined�Ƃ���������ƂȂ�.
-  ���̃u���E�U��HTML5 WebSQL Database���T�|�[�g����Ă��邩�ۂ�������.
+  typeof(window.openDatabase) というコードSnippetを実行した結果を示し、functionまたはundefinedという文字列となる.
+  そのブラウザにHTML5 WebSQL Databaseがサポートされているか否かを示す.
 
   <ul>
-  <li>Chrome: 8�ȏォ?</li>
-  <li>Firefox(Gecko): ���T�|�[�g(undefined��Ԃ�)</li>
-  <li>IE: ���T�|�[�g(undefined��Ԃ�)</li>
-  <li>Opera: 10.6�ȏォ?</li>
-  <li>Safari: 3.1�ȏ�</li>
-  <li>Android: 2.1�ȏ�</li>
+  <li>Chrome: 8以上か?</li>
+  <li>Firefox(Gecko): 未サポート(undefinedを返す)</li>
+  <li>IE: 未サポート(undefinedを返す)</li>
+  <li>Opera: 10.6以上か?</li>
+  <li>Safari: 3.1以上</li>
+  <li>Android: 2.1以上</li>
   </ul>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_CpuClass">Fgp_CpuClass
 -----------------------------------
 
-  navigator.cpuClass ���擾����邱�̃u���E�U�̓��삵�Ă���}�V����CPU��������������ł���.
-  x86�APPC �Ȃǂ�Ԃ��ƌ����Ă��邪�A���ۂ̂Ƃ���قƂ�ǂ̃P�[�X�ŋ�l�ƂȂ��Ă���.
+  navigator.cpuClass より取得されるこのブラウザの動作しているマシンのCPU情報を示す文字列である.
+  x86、PPC などを返すと言われているが、実際のところほとんどのケースで空値となっている.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_Platform">Fgp_Platform
 -----------------------------------
 
-  navigator.platform ���擾����邱�̃u���E�U�̓��삵�Ă���OS��������������ł���.
-  �����悻�ȉ����ڈ��ł���.
+  navigator.platform より取得されるこのブラウザの動作しているOS環境を示す文字列である.
+  おおよそ以下が目安である.
 
   <ul>
   <li>Windows32/WOW : Win32</li>
@@ -219,42 +219,42 @@ CustomFinger�̊�{�I�Ȏg�p���@�Ƃ��Ď��̃X�e�b�v�����Љ�܂�.
   <li>Mac       : MacIntel</li>
   </ul>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 
 ## <a name="Fgp_doNotTrack">Fgp_doNotTrack
 -----------------------------------
 
-  navigator.doNotTrack ���擾����邱�̃u���E�U���g���b�L���O�����ۂ��Ă��邩�ۂ�(DNT�@�\��On���ۂ�)������������ł���.
-  Firefox9�ȍ~��蓱�����ꂽ.
-  Firefox9�ȍ~�̏ꍇ�A�v���C�o�V�[�̐ݒ��ʂɂ����āu�g���b�L���O�̋��ۂ��T�C�g�ɒʒm����v�Ƀ`�F�b�N������Ƃ��ꂪ�L���ɂȂ�A���̒l�� 1 �ƂȂ�.
-  �`�F�b�N��OFF�̏ꍇ unspecified �Ƃ����l�ƂȂ�B 
-  ����ȊO�̊��ł͋�l��Ԃ��Ƃ݂Ȃ��Ă悢.
+  navigator.doNotTrack より取得されるこのブラウザがトラッキングを拒否しているか否か(DNT機能がOnか否か)を示す文字列である.
+  Firefox9以降より導入された.
+  Firefox9以降の場合、プライバシーの設定画面において「トラッキングの拒否をサイトに通知する」にチェックを入れるとこれが有効になり、この値は 1 となる.
+  チェックがOFFの場合 unspecified という値となる。 
+  それ以外の環境では空値を返すとみなしてよい.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_PluginsString">Fgp_PluginsString
 -----------------------------------
 
-  navigator.plugins �̒l�����Ɏ擾����邱�̃u���E�U�ɃC���X�g�[������Ă���v���O�C���Q������������ł���.
-  ���ɂ���ėl�X�ȃv���O�C���₻�̃o�[�W�������C���X�g�[������Ă���A�]���Ăقڎ��R������ƍl���Ă悭�A
-  ���A���ɋU�������Ƃ���łقڈӖ����Ȃ�.
-  ������IE�̏ꍇ�͂���͋�l�ł���.
+  navigator.plugins の値を元に取得されるこのブラウザにインストールされているプラグイン群を示す文字列である.
+  環境によって様々なプラグインやそのバージョンがインストールされており、従ってほぼ自由文字列と考えてよく、
+  リアルに偽装したところでほぼ意味がない.
+  ただしIEの場合はこれは空値である.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="Fgp_Canvas">Fgp_Canvas
 -----------------------------------
 
-  ������Canvas Fingerprint�ƌĂ΂��l�ł���.
-  ���̒l�� /bin/fp.js �ɂ����� getCanvasFingerprint�֐��ɂ���Ď擾����镶����ł���.
-  getCanvasFingerprint�ł� HTML5��Canvas API���g���}�`�╶���Ȃǂ�`���A���ɂ��̌��ʂ�PNG�摜�Ƃ��A
-  �Ō�ɂ���PNG�摜�S�̂̃t�@�C���C���[�W��BASE64�G���R�[�f�B���O�������ʂ����̒l�ƂȂ�.
+  いわゆるCanvas Fingerprintと呼ばれる値である.
+  この値は /bin/fp.js における getCanvasFingerprint関数によって取得される文字列である.
+  getCanvasFingerprintでは HTML5のCanvas APIを使い図形や文字などを描き、次にその結果をPNG画像とし、
+  最後にそのPNG画像全体のファイルイメージをBASE64エンコーディングした結果がその値となる.
 
-  ���̉摜�̏o�͌��ʂ͎g�p���郌���_�����O�G���W����V�X�e���ɃC���X�g�[������Ă���O���t�B�b�N�V�X�e���A
-  �O���t�B�N�X�J�[�h�Ȃǂ̃n�[�h�E�F�A�ɂ��ˑ����邱�Ƃ��l�����邽�߁A
-  ������l������ƑS�̂Ƃ��Ă����������R�x�̍���������Ƃ݂Ȃ����Ƃ��ł���.
-  ����͑����ɐ��������邵�l�ɂ���ĉ��߂������Ƃ���ł��낤.
+  この画像の出力結果は使用するレンダリングエンジンやシステムにインストールされているグラフィックシステム、
+  グラフィクスカードなどのハードウェアにも依存することが考えられるため、
+  それを考慮すると全体としてそこそこ自由度の高い文字列とみなすこともできる.
+  これは多分に推測も入るし人によって解釈も分れるところであろう.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 

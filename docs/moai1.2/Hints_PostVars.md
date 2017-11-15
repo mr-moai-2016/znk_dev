@@ -1,127 +1,127 @@
 # Hints PostVars
 -----------------------------------
 
-## <a name="index">�ڎ�
+## <a name="index">目次
 -----------------------------------
-* [Post�ϐ� js](#pv_js)
-* [Post�ϐ� pthb](#pv_pthb)
-* [Post�ϐ� pthc](#pv_pthc)
-* [Post�ϐ� pthd](#pv_pthd)
-* [Post�ϐ� ptua](#pv_ptua)
-* [Post�ϐ� scsz](#pv_scsz)
-* [Post�ϐ� pwd](#pv_pwd)
-* [Post�ϐ� flrv](#pv_flrv)
-* [Post�ϐ� flvv](#pv_flvv)
+* [Post変数 js](#pv_js)
+* [Post変数 pthb](#pv_pthb)
+* [Post変数 pthc](#pv_pthc)
+* [Post変数 pthd](#pv_pthd)
+* [Post変数 ptua](#pv_ptua)
+* [Post変数 scsz](#pv_scsz)
+* [Post変数 pwd](#pv_pwd)
+* [Post変数 flrv](#pv_flrv)
+* [Post変数 flvv](#pv_flvv)
 
-## <a name="pv_js">Post�ϐ� js
+## <a name="pv_js">Post変数 js
 -----------------------------------
-  ���̒l��**���q���ws�c**�ł͂Ȃ��AJavaScript�����s�������ǂ����𔻒f���邽�߂̂��̂ł���A
-  /bin/base4.js �����s����� on �ɐݒ肳���d�g�݂ƂȂ��Ă���.
-  ( ���_�AJavaScript��/bin/base4.js�����s�������Ƃ��A�ŏ����炱��Post�ϐ��� on �l��ݒ肵�Ă����Ηǂ�. )
-  ����� on �ɂ��Ă����Ȃ��Ɓu���ϐ�������܂���(JavaScript���I�t�H)�v�Ƃ����G���[���\������A���e�Ɏ��s����.
-  ����Ă��̒l�͕K�� on �ɂ��Ă����Ȃ���΂Ȃ�Ȃ�.
+  この値は**女子小学s…**ではなく、JavaScriptを実行したかどうかを判断するためのものであり、
+  /bin/base4.js を実行すると on に設定される仕組みとなっている.
+  ( 無論、JavaScriptの/bin/base4.jsを実行させずとも、最初からこのPost変数に on 値を設定しておけば良い. )
+  これを on にしておかないと「環境変数がありません(JavaScriptがオフ？)」というエラーが表示され、投稿に失敗する.
+  よってこの値は必ず on にしておかなければならない.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="pv_pthb"><a name="pv_pthc"><a name="pv_pthd">Post�ϐ� pthb, pthc, pthd
------------------------------------
-
-  pt��PosT �̈Ӗ��ł��낤. h �͕s���ł���. �Ȃ� a ����ł͂Ȃ� b ����n�܂�̂����s���ł���.
-
-  ���̒l��futaba.php�ɏ��A�N�Z�X��������(����т���ɗނ����l)�ł���. ����ł�
-  �J�^���O�ɏ��߂ăA�N�Z�X���邩�A�܂��͏��߂ă��X���e�����ۂɂ܂�pthc�ɐݒ肳���悤�ł���.
-  ���邢�� /bin/cachemt7.php �ɃA�N�Z�X�����Ƃ��ɂ���ɗނ����l�����������`�ƂȂ�.
-  **��x�ڂ̓��e**�ɂ����ẮAlocalStorage(futabapt)��pthc�̃R�s�[�l���ݒ肳���.
-  �܂�**��x�ڂ̓��e**�ɂ����āA����ɂ���localStorage(futabapt)�̃R�s�[�l��pthb�ւƐݒ肳���.
-  �����炭pthb�̒l�̑��݂ɂ����localStorage�Ɋm���ɒl���ݒ肳�ꂽ���Ƃ��m�F����Ӑ}������Ǝv����.
-  pthd�͌���ł͎g�p����Ă���C�z�͂Ȃ�.
-
-  ��U�ݒ肳���ƁACookie����уu���E�U�L���b�V�������localStorage �����S�Ă�
-  �������Ȃ����蓯���l���c�葱����.
-
-  <a href="#user-content-index">�ڎ��֖߂�</a>
-
-## <a name="pv_ptua">Post�ϐ� ptua
+## <a name="pv_pthb"><a name="pv_pthc"><a name="pv_pthd">Post変数 pthb, pthc, pthd
 -----------------------------------
 
-  ���̒l�͕p�ɂɂ��̈Ӗ����ύX�������j������.
-  �ŏ�����navigator.userAgent�̕�����l�����̂܂܊i�[���Ă������߁A���O�� ua �Ƃ����������܂܂�Ă���̂ł��낤.
+  ptはPosT の意味であろう. h は不明である. なぜ a からではなく b から始まるのかも不明である.
 
-  ����ł̈Ӗ��́A33�̂��̃u���E�U�Ƃ��̃o�[�W�����ŗL�̐^�U�l���Ƃ�Javascript�R�[�h��(Snippet�ƌĂ�)�̌��ʒl���A
-  33bit�̃t���O�l�Ƀp�b�N�������10�i���ϊ��������̂ł���.
-  ���̌v�Z�̓��X���e���ɖ��� /bin/base4.js �ɂ�����ptfk�֐����ōs���Ă���Asph�Ƃ������O�̔z��ϐ�����������ƊY���������s���Ă���s�������邱�Ƃ��ł���.
-  (���A�ő�l��32bit�񕉐�����Max�𒴂���\�������邽�߁A���������_�����x�[�X�Ƃ��čs���Ă���͗l).
+  この値はfutaba.phpに初アクセスした時間(およびそれに類した値)である. 現状では
+  カタログに初めてアクセスするか、または初めてレス投稿した際にまずpthcに設定されるようである.
+  あるいは /bin/cachemt7.php にアクセスしたときにそれに類した値が生成される形となる.
+  **一度目の投稿**においては、localStorage(futabapt)にpthcのコピー値も設定される.
+  また**二度目の投稿**において、さらにそのlocalStorage(futabapt)のコピー値がpthbへと設定される.
+  おそらくpthbの値の存在によってlocalStorageに確実に値が設定されたことを確認する意図があると思われる.
+  pthdは現状では使用されている気配はない.
 
-  �v�̓u���E�U�Ƃ��̃o�[�W�����ŗL�̒l�̊񂹏W�߂ł��邽�߁A�u���E�U���̂��̂��邢�͏ꍇ�ɂ���Ă͂��̃o�[�W�����݂̂ł��ǂ����A
-  ���̂����ꂩ��ύX���Ȃ������{�I�ɓ����l���Ƃ葱����.
+  一旦設定されると、CookieおよびブラウザキャッシュおよびlocalStorage これら全てを
+  消去しない限り同じ値が残り続ける.
 
-  ���A���̒l�𗐐�������Ȃǂŏo�͂���銮�S�ȃ����_���Ȑ����l�Ƃ��Ċ��蓖�ĂĂ��A���Ȃ��Ƃ��M�҂̊��ł͌�����Ȃ��悤�ł���.
-  �����A���̒l�͋t�ϊ����s���Ό��̃u���E�U����(������x�͈̔͂͂���Ƃ͌���)��ӂɓ��肷�邱�Ƃ��\�ł���.
-  �Ⴆ�Ή���8bit��IE(Edge)�Ɋւ�����̂ł��邽�߁AIE(Edge)�ȊO�̃u���E�U�Ƃ��ċU���������Ȃ�A���̐�����K��**256�̔{��**�ɂ���΁u**����炵��**�v�U���ł���.
-  ����ȊO�ɂ��eSnippet�̈Ӗ������ׂ��ɒ��ׂău���E�U�ƃo�[�W�������ɔ��f�����Ă����Βl�̐��x�͂�荂�܂�ł��낤.
-  ���͂Ńc�[���Ȃǂ�����Ă��̒l���U���������ŁA���̕ӂ�ɍS��̂�����͎Q�l�ɂ���Ă͂ǂ����낤���H
+  <a href="#user-content-index">目次へ戻る</a>
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
-
-## <a name="pv_scsz">Post�ϐ� scsz
+## <a name="pv_ptua">Post変数 ptua
 -----------------------------------
 
-  ���O�̗R���� SCreenSiZe �ł��낤. 
+  この値は頻繁にその意味が変更される歴史を持つ.
+  最初期はnavigator.userAgentの文字列値をそのまま格納していたため、名前に ua という文字が含まれているのであろう.
 
-  ���̒l�́A���Ȃ��̎g���Ă��郂�j�^�̉𑜓x�ƐF�[�x�̏�������.
-  (Javascript�ɂ�����擾����API������A���X���e(ptfk�֐�)���ɖ��� /bin/base4.js�ł�����擾���Ă���悤�ł���)
+  現状での意味は、33個のものブラウザとそのバージョン固有の真偽値をとるJavascriptコード片(Snippetと呼ぶ)の結果値を、
+  33bitのフラグ値にパックした上で10進数変換したものである.
+  この計算はレス投稿時に毎回 /bin/base4.js におけるptfk関数内で行われており、sphという名前の配列変数を検索すると該当処理を行っている行を見つけることができる.
+  (尚、最大値は32bit非負整数のMaxを超える可能性があるため、浮動小数点数をベースとして行われている模様).
+
+  要はブラウザとそのバージョン固有の値の寄せ集めであるため、ブラウザそのものあるいは場合によってはそのバージョンのみでも良いが、
+  そのいずれかを変更しない限り基本的に同じ値をとり続ける.
+
+  尚、この値を乱数生成器などで出力される完全なランダムな整数値として割り当てても、少なくとも筆者の環境では現状問題ないようである.
+  ただ、この値は逆変換を行えば元のブラウザ環境を(ある程度の範囲はあるとは言え)一意に特定することが可能である.
+  例えば下位8bitはIE(Edge)に関するものであるため、IE(Edge)以外のブラウザとして偽装したいなら、その数字を必ず**256の倍数**にすれば「**それらしく**」偽装できる.
+  それ以外にも各Snippetの意味を事細かに調べてブラウザとバージョン毎に反映させていけば値の精度はより高まるであろう.
+  自力でツールなどを作ってこの値を偽装される方で、この辺りに拘りのある方は参考にされてはどうだろうか？
+
+  <a href="#user-content-index">目次へ戻る</a>
+
+## <a name="pv_scsz">Post変数 scsz
+-----------------------------------
+
+  名前の由来は SCreenSiZe であろう. 
+
+  この値は、あなたの使っているモニタの解像度と色深度の情報を示す.
+  (Javascriptにこれを取得するAPIがあり、レス投稿(ptfk関数)時に毎回 /bin/base4.jsでこれを取得しているようである)
 
 ~~~
-    ���j�^�𑜓x�̕� x ���j�^�𑜓x�̍��� x ���j�^�̐F�[�x�r�b�g��
+    モニタ解像度の幅 x モニタ解像度の高さ x モニタの色深度ビット数
 ~~~
 
-  �Ƃ����t�H�[�}�b�g�����L�q�q�ƂȂ�.
-  �Ⴆ�΁A640x480x24�A1024x768x32�Ƃ������l���Ƃ�.
+  というフォーマットを持つ記述子となる.
+  例えば、640x480x24、1024x768x32といった値をとる.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 
-## <a name="pv_pwd">Post�ϐ� pwd
+## <a name="pv_pwd">Post変数 pwd
 -----------------------------------
 
-  ���O�̗R���� PassWorD �Ǝv����.
+  名前の由来は PassWorD と思われる.
 
-  ���̒l�́A���X���e���̂�����u�폜�L�[�v�ɑ���������̂ł���.
-  ���[�U�������I�Ɏw�肵�Ă��悢���A��ɂ��Ă����ΓK���ȍ폜�L�[�l�������I�Ɋ��蓖�Ă���.
-  ���̂Ƃ�Cookie��pwdc�ϐ��ɂ��̒l���i�[����A���X���e���ɂ����Ă�Javascript����Ă��̒l�������Post�ϐ�pwd�փZ�b�g�����.
-  �ʏ�͎����I�Ɋ��蓖�Ă�ꂽ�l�����̂܂܎g���΂悢.
-  ���[�U�������Z�b�g�������ꍇ�́ACookie��pwdc�l����U��ɂ��Ă����Ƃ悢.
+  この値は、レス投稿時のいわゆる「削除キー」に相当するものである.
+  ユーザが明示的に指定してもよいが、空にしておけば適当な削除キー値が自動的に割り当てられる.
+  このときCookieのpwdc変数にその値が格納され、レス投稿時においてはJavascriptを介してこの値がさらにPost変数pwdへセットされる.
+  通常は自動的に割り当てられた値をそのまま使えばよい.
+  ユーザ情報をリセットしたい場合は、Cookieのpwdc値を一旦空にしておくとよい.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
-## <a name="pv_flrv"><a name="pv_flvv">Post�ϐ� flrv flvv
+## <a name="pv_flrv"><a name="pv_flvv">Post変数 flrv flvv
 -----------------------------------
 
-  ���̒l�́AFingerprint�l�ƌĂ΂����̂��i�[�����.
+  この値は、Fingerprint値と呼ばれるものが格納される.
 
-  ������Fingerprint�l�ł͂Ȃ�Adobe Flash��ReVision�ԍ����i�[����Ă����̂����A
-  ���ꂾ�ƒl�����߂��邽�߂�Flash�Ɍ��؂���������߂��͒m��Ȃ������鎞�ӂ��΂͂��̎d�l��p�~����.
-  �����Ă��̕ϐ������������̂܂ܗ��p���āA�ւ��ɂ�����Fingerprint�l���i�[����悤�ɂȂ����o�܂�����.
-  ���O�Ɋ܂܂���́ul�v�̕����͂��̖��c�ł���.
+  当初はFingerprint値ではなくAdobe FlashのReVision番号が格納されていたのだが、
+  それだと値が被り過ぎるためかFlashに見切りをつけたためかは知らないがある時ふたばはその仕様を廃止した.
+  そしてこの変数名だけをそのまま流用して、替わりにここにFingerprint値を格納するようになった経緯がある.
+  名前に含まれる謎の「l」の文字はその名残である.
 
-  Fingerprint�l�͂��Ȃ��̃u���E�U����}�V�����̗l�X�ȏ���Javascript�ɂ��擾���A
-  �������W�߂ĘA��������̋��啶���������32bit�����̃n�b�V���l���v�Z�������̂ł���.
-  �u���E�U��}�V�����Ɉˑ��������ł��邽�߁A����炪�ς��΂���Fingerprint�l�͕ω�����.
-  flrv��flvv�̈Ⴂ�͂��̎擾������̎�ނ����ł���.
-  flrv���擾����S���ɉ����A�u���E�U�̃v���O�C����񕶎���܂ŉ����������̂�flvv�ł���.
+  Fingerprint値はあなたのブラウザ環境やマシン環境の様々な情報をJavascriptにより取得し、
+  それらを集めて連結した一つの巨大文字列を元に32bit整数のハッシュ値を計算したものである.
+  ブラウザやマシン環境に依存した情報であるため、これらが変わればこのFingerprint値は変化する.
+  flrvとflvvの違いはその取得する情報の種類だけである.
+  flrvが取得する全情報に加え、ブラウザのプラグイン情報文字列まで加味したものがflvvである.
 
-  �n�b�V���l�����̂��Ƃ��킩��Ȃ����́A���̂悤�ɍl����΂悢.
-  �Ⴆ�΂��Ȃ��̃}�V���̓�����������񂪂R�������Ƃ��Ă�������ꂼ�ꉼ��
-  ������ 2, 4, 7 �Ƃ���. �����𑫂��Z���č��v����� 2 + 4 + 7 = 13 �ƂȂ邪�A
-  ���� 13 ���n�b�V���l�ɑ����������ł͂��ꂪ���M�����. ���ɑ�G�c�����A
-  �Ƃ肠�������̂悤�ȃC���[�W�ŏ\���ł���.
+  ハッシュ値が何のことかわからない方は、次のように考えればよい.
+  例えばあなたのマシンの特徴を示す情報が３つあったとしてそれをそれぞれ仮に
+  数字の 2, 4, 7 とする. これらを足し算して合計すると 2 + 4 + 7 = 13 となるが、
+  この 13 がハッシュ値に相当しここではこれが送信される. 非常に大雑把だが、
+  とりあえずそのようなイメージで十分である.
 
-  �����ł̃|�C���g�� 13 ���猳�̒l 2, 4, 7 ����ӂɂ͕����ł��Ȃ��Ƃ������Ƃł���.
-  ( ���̓�����s�t�ƌ���. ���邢�͐��w�I�ɂ́u�P�˂ł͂Ȃ��v�ƌ���. )
-  ����Ă��̒l�͎��̂Ƃ���f�^�����ɐݒ肵�Ă���ʂɂ��̑Ó��������؂���p�͂Ȃ�.
-  ���̓_��ptua�Ƃ͑傫���قȂ�.
+  ここでのポイントは 13 から元の値 2, 4, 7 を一意には復元できないということである.
+  ( この特性を不可逆と言う. あるいは数学的には「単射ではない」と言う. )
+  よってこの値は実のところデタラメに設定しても一般にその妥当性を検証する術はない.
+  この点はptuaとは大きく異なる.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 
 [1]: https://github.com/mr-moai-2016/znk_dev/blob/master/src/moai/Hints_PostVars.md

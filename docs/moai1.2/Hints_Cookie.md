@@ -1,7 +1,7 @@
 # Hints Cookie
 -----------------------------------
 
-## <a name="index"></a>�ڎ�
+## <a name="index"></a>目次
 -----------------------------------
 * [Cookie posttime](#user-content-ck_posttime)
 * [Cookie __cfduid](#user-content-ck___cfduid)
@@ -9,124 +9,124 @@
 * [Cookie namec   ](#user-content-ck_namec)
 * [Cookie pwdc    ](#user-content-ck_pwdc)
 * [Cookie verifyc ](#user-content-ck_verifyc)
-* [���m(Unknown)��Cookie�ϐ��ɂ���](#user-content-unknown_cookie_var)
+* [未知(Unknown)のCookie変数について](#user-content-unknown_cookie_var)
 
 ## <a name="ck_posttime"></a>Cookie posttime
 -----------------------------------
-  ���̒l��futaba.php�ɏ��A�N�Z�X��������(����т���ɗނ����l)�ł���. ����ł�
-  �J�^���O�ɏ��߂ăA�N�Z�X���邩�A�܂��͏��߂ă��X���e�����ۂɐݒ肳���悤�ł���.
-  ���邢�� /bin/cachemt7.php �ɃA�N�Z�X�����Ƃ��ɂ���ɗނ����l�����������`�ƂȂ�.
-  ��U�ݒ肳���ƁACookie����уu���E�U�L���b�V�������localStorage �����S�Ă�
-  �������Ȃ����蓯���l���c�葱����. ���̒l��POST�ϐ� pthb, pthc (pthd)��Cookie��posttime�l�Ƃ��đ��M�����.  
+  この値はfutaba.phpに初アクセスした時間(およびそれに類した値)である. 現状では
+  カタログに初めてアクセスするか、または初めてレス投稿した際に設定されるようである.
+  あるいは /bin/cachemt7.php にアクセスしたときにそれに類した値が生成される形となる.
+  一旦設定されると、CookieおよびブラウザキャッシュおよびlocalStorage これら全てを
+  消去しない限り同じ値が残り続ける. この値はPOST変数 pthb, pthc (pthd)とCookieのposttime値として送信される.  
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="ck___cfduid"></a>Cookie __cfduid
 -----------------------------------
 
-  ���̒l��futaba.php�ɏ��A�N�Z�X�����Ƃ��ɖ��ݒ�ł���ꍇ�͐V���ɐݒ肳���.
-  ���݂ӂ��΂��������Ă���N���E�h�t���A�����s������̂ł���Ǝv����.
-  ��U�ݒ肳���ƁACookie���������Ȃ����蓯���l���c�葱����.
-  �܂��u���E�U���̊���ς��Ȃ�����A���l�̒l���Ĕ��s�����\��������.
-  ���̒l��Cookie��__cfduid�l�Ƃ��Ăӂ��΂ւƑ��M�����.  
+  この値はfutaba.phpに初アクセスしたときに未設定である場合は新たに設定される.
+  現在ふたばが導入しているクラウドフレアが発行するものであると思われる.
+  一旦設定されると、Cookieを消去しない限り同じ値が残り続ける.
+  またブラウザ等の環境を変えない限り、同様の値が再発行される可能性もある.
+  この値はCookieの__cfduid値としてふたばへと送信される.  
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="ck_cxyl"></a>Cookie cxyl
 -----------------------------------
 
-  ���̒l�̓J�^���O�̃t�H�[�}�b�g���w�肷�邽�߂ɑ��݂���.
-  ���ꂪ�������e�̈Ӗ��̓J�^���O�́u�ݒ�v��ʂ���s����w�肻�̂��̂ł���.
+  この値はカタログのフォーマットを指定するために存在する.
+  これが示す内容の意味はカタログの「設定」画面から行える指定そのものである.
 
 ~~~
-    ���̃X���� x �c�̃X���� x �e�X���ł̕����� x �����ʒu(0:��,1:�E) x �摜�T�C�Y(0����6�܂ł�0���ŏ��ŋ����̕\��)
+    横のスレ個数 x 縦のスレ個数 x 各スレでの文字数 x 文字位置(0:下,1:右) x 画像サイズ(0から6までで0が最小で旧来の表示)
 ~~~
-  �Ƃ����t�H�[�}�b�g�����L�q�q�ƂȂ�.
+  というフォーマットを持つ記述子となる.
 
-  �f�t�H���g�ł͂��̒l�͎w�肳��Ă��炸�A���̏ꍇfutaba.php�� ['14x6x4x0x0'] �Ƃ����l���w�肳�ꂽ���̂Ƃ݂Ȃ��悤�ł���.
-  ��{�I�ɂ̓��[�U�����R�ɐݒ肷����̂ł��邩�烆�[�U���ʂƂ͊֌W���Ȃ��Ǝv����.
+  デフォルトではこの値は指定されておらず、その場合futaba.phpは ['14x6x4x0x0'] という値が指定されたものとみなすようである.
+  基本的にはユーザが自由に設定するものであるからユーザ識別とは関係がないと思われる.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="ck_namec"></a>Cookie namec
 -----------------------------------
 
-  ���̒l�͍Ō�̃��X�ɂ����Ďg�p�����u�����O���v�̓��e������.
-  �l�͑S�p�����Ȃǂ��܂މ\��������AURL�G���R�[�f�B���O�����.
-  ���̂��߂Ɏg������̂��͕s���ł��邪�A�R�e�΍�œ����������̂ł���\��������.
-  ������ɂ����l�ȊO�̒l��ݒ肵�Ă��Ă�����ǂ����Ƃ͂Ȃ��̂ŁA��{�I�ɂ͏������Ă������Ƃ��]�܂���.
-  futaba_send.myf �� cookie_force �ɂ����� namec = [''] ���w�肵�Ă������Ƃ������߂���
-  (futaba_send.myf�̃f�t�H���g�ł͂����Ȃ��Ă���).
+  この値は最後のレスにおいて使用した「お名前欄」の内容を示す.
+  値は全角文字などを含む可能性があり、URLエンコーディングされる.
+  何のために使われるものかは不明であるが、コテ対策で導入したものである可能性もある.
+  いずれにせよ空値以外の値を設定していても何一つ良いことはないので、基本的には消去しておくことが望ましい.
+  futaba_send.myf の cookie_force において namec = [''] を指定しておくことをお勧めする
+  (futaba_send.myfのデフォルトではそうなっている).
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="ck_pwdc"></a>Cookie pwdc
 -----------------------------------
 
-  ���O�̗R���� PassWorD Cookie �Ǝv����.
+  名前の由来は PassWorD Cookie と思われる.
 
-  ���̒l�́A���X���e���̂�����u�폜�L�[�v�ɑ���������̂ł���.
-  ���[�U�������I�Ɏw�肵�Ă��悢���A��ɂ��Ă����ΓK���ȍ폜�L�[�l�������I�Ɋ��蓖�Ă���.
-  ���̂Ƃ�Cookie��pwdc�ϐ��ɂ��̒l���i�[����A���X���e���ɂ����Ă�Javascript����Ă��̒l�������Post�ϐ�pwd�փZ�b�g�����.
-  �ʏ�͎����I�Ɋ��蓖�Ă�ꂽ�l�����̂܂܎g���΂悢.
-  ���[�U�������Z�b�g�������ꍇ�́ACookie��pwdc�l����U��ɂ��Ă����Ƃ悢.
+  この値は、レス投稿時のいわゆる「削除キー」に相当するものである.
+  ユーザが明示的に指定してもよいが、空にしておけば適当な削除キー値が自動的に割り当てられる.
+  このときCookieのpwdc変数にその値が格納され、レス投稿時においてはJavascriptを介してこの値がさらにPost変数pwdへセットされる.
+  通常は自動的に割り当てられた値をそのまま使えばよい.
+  ユーザ情報をリセットしたい場合は、Cookieのpwdc値を一旦空にしておくとよい.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 ## <a name="ck_verifyc"></a>Cookie verifyc
 -----------------------------------
 
-  ����Cookie�ϐ��͍��ƂȂ��Ă̓��A�ϐ��̈�ł���A�唼�̕��͕\������Ȃ��ł��낤.
+  このCookie変数は今となってはレア変数の一つであり、大半の方は表示されないであろう.
 
-  ���̒l�͕M�҂̒m�����A���݂ł́u�������̋K���v�ɂ����Ďg���Ă���悤�ł���.
-  (���Ă͕ʂ̗p�r�Ŏg�p����Ă������Ƃ��������ƋL�����Ă���).
-  �������̋K���Ƃ́A�u�����̉����������b��背�X���o����悤�ɂȂ�܂��v�Ƃ������|�̃��b�Z�[�W���\�������K���ł���A
-  ��{�I�ɂ̓v���o�C�_��IP�x�[�X�ōs����L��K���̈��̂悤�ł���.
+  この値は筆者の知る限り、現在では「時限式の規制」において使われているようである.
+  (かつては別の用途で使用されていたこともあったと記憶している).
+  時限式の規制とは、「何日の何時何分何秒よりレスが出来るようになります」といった旨のメッセージが表示される規制であり、
+  基本的にはプロバイダやIPベースで行われる広域規制の一種のようである.
 
-  ����verifyc�́A���[�U������IP�ɂ����ď��߂ă��X����ۂɔ��s����A�����炭���̒l�̓��e�́A
-  ���̂Ƃ��̎�����IP�A�h���X�̏�񂪈Í�������Ċi�[���ꂽ���̂ł���.
-  �����Ă��̕\���̒ʂ�A���̎�������v���X�����Ԃ��o�߂�����Ƀ��X���\�ɂȂ�Ƃ��������̂ł���.
+  このverifycは、ユーザがそのIPにおいて初めてレスする際に発行され、おそらくその値の内容は、
+  そのときの時刻とIPアドレスの情報が暗号化されて格納されたものである.
+  そしてその表示の通り、その時刻からプラス何時間か経過した後にレスが可能になるといったものである.
 
-  �܂��A���̒l�����[�U���s�p�ӂɉ��ς����肻������verifyc���̂���������ƁAfutaba.php�͂��̂悤�ȉ��ς����o���郋�[���������Ă���A
-  ���ς��ꂽ�l�͔j������A�Ăт���IP�ɂ�����u���߂Ẵ��X�v�Ƃ݂Ȃ���Ď����̏������Z�b�g�����.
+  また、この値をユーザが不用意に改変したりそもそもverifyc自体を消去すると、futaba.phpはそのような改変を検出するルールを持っており、
+  改変された値は破棄され、再びそのIPにおける「初めてのレス」とみなされて時刻の情報もリセットされる.
 
-  �Ⴆ�΁A�u�R���Ԍ�Ƀ��X���\�ɂȂ�v�Ƃ������\��������ĂQ���Ԃ��o�߂����ꍇ���l���悤.
-  ���̎��_�Ŏc��P���Ԃł���A�P���Ԍo�ߌ�Ƀ��X���\�ł���n�Y�ł���.
-  ������������verifyc��s�p�ӂɉ��H������폜�����肵�čĂу��X���e�����݂�ƁA�V����verifyc�����s����u�R���Ԍ�Ƀ��X���\�ɂȂ�v��ԂɃ��Z�b�g�����Ƃ������Ƃł���.
+  例えば、「３時間後にレスが可能になる」といった表示がされて２時間が経過した場合を考えよう.
+  この時点で残り１時間であり、１時間経過後にレスが可能であるハズである.
+  しかしそこでverifycを不用意に加工したり削除したりして再びレス投稿を試みると、新しいverifycが発行され「３時間後にレスが可能になる」状態にリセットされるということである.
 
-  �]���āA���[�J�`���ň�UIP�A�h���X��ς�����Ƃ肠�����Â�verifyc�͏������A���ɂ���IP�ł́u���߂Ẵ��X�v�ŐV����verifyc�𔭍s������.
-  ���̌�͂���Ȃ鎟��IP�ύX�܂ł͂������肻��verifyc�������Ȃ��悤�ɔz������K�v������Ƃ������ƂɂȂ낤.
+  従って、ルーカチ等で一旦IPアドレスを変えたらとりあえず古いverifycは消去し、次にそのIPでの「初めてのレス」で新しいverifycを発行させる.
+  その後はさらなる次のIP変更まではうっかりそのverifycを消さないように配慮する必要があるということになろう.
 
-  ����͒��X�ɋÂ����K���ł���A�K���R���N�^�[���}�j�A�̕M�҂Ƃ��Ă�**���Ȃ�ʔ������ނ̎d�g��**���Ǝv���̂����������ł��낤���H 
-  �i���H�ʔ������P�ˁ[����I���Ă��j
+  これは中々に凝った規制であり、規制コレクター＆マニアの筆者としては**かなり面白い部類の仕組み**かと思うのだがいかがであろうか？ 
+  （え？面白いワケねーだろ！ってｗ）
 
-  ���Ȃ݂ɂ��̎����ɂ����Č���verifyc���o�b�N�A�b�v���Ă����A��U���Z�b�g���ꂽ��ɍĂь��̒l�𕜌�����ƁA
-  �c��P���Ԍ�Ƀ��X���\�ɂȂ��Ԃɕ����ł���P�[�X������悤�ł���.
+  ちなみにこの実験において元のverifycをバックアップしておき、一旦リセットされた後に再び元の値を復元すると、
+  残り１時間後にレスが可能になる状態に復元できるケースもあるようである.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 
-## <a name="unknown_cookie_var"></a>���m(Unknown)��Cookie�ϐ��ɂ���
+## <a name="unknown_cookie_var"></a>未知(Unknown)のCookie変数について
 -----------------------------------
 
-  CustomCookie�ɂ����āA��ԉE�̖{���uHint�v�ƕ\�L�����ׂ��ʒu�ɁuUnknown�v�ƕ\�L����Ă���ϐ����\�������ꍇ������.
-  �����CustomBoy���m��Ȃ��A���邢�͔c�����Ă��Ȃ��ϐ��ł��邱�Ƃ��Ӗ�����.
-  �f���̎d�l�ύX�ɂ��V�K�ϐ��̓����A���邢�͂����̓��ʂȋK���ɂ̂ݔ������郌�A�ȕϐ��Ȃǂ����݂���\��������A
-  ���̂悤��Cookie�ϐ������o���ꂽ�ꍇ�A���̕\�����Ȃ����.
+  CustomCookieにおいて、一番右の本来「Hint」と表記されるべき位置に「Unknown」と表記されている変数が表示される場合がある.
+  これはCustomBoyが知らない、あるいは把握していない変数であることを意味する.
+  掲示板の仕様変更による新規変数の導入、あるいはある種の特別な規制にのみ発現するレアな変数などが存在する可能性があり、
+  そのようなCookie変数が検出された場合、この表示がなされる.
 
-  ���́uUnknown�v�\�������ꂽ�ꍇ�A**2ch�̖^�X��**�Ȃǂł��̎|����҂ɕ񍐂��Ă��炦��΍K���ł���( **�唭���ł���!** ).
-  **�����������͊F�ŋ��L���邱�Ƃ��ƂĂ��厖�ł��� �i�L���ցE`�j**. 
-  ���̕ϐ����o������ڂ������J�j�Y���Ǝd�l�̏ڍׂ��m�F�ł���� CustomBoy������ɑΉ������A�h�L�������g���z�����邱�Ƃ��ł���.
+  この「Unknown」表示がされた場合、**2chの某スレ**などでその旨を作者に報告してもらえれば幸いである( **大発見である!** ).
+  **こういう情報は皆で共有することがとても大事である （´＞ω・`）**. 
+  その変数が出現する詳しいメカニズムと仕様の詳細が確認できれば CustomBoyをこれに対応させ、ドキュメントも配備することができる.
 
-  ���[�U�������Z�b�g�������ꍇ�́A���̎��Cookie�ϐ��̒l���ǂ������ׂ��ł��낤���H
-  ���̏ꍇ�A�Ƃ肠������U��ɂ��Ă����ƊԈႢ�͂Ȃ��낤. 
-  �Ȃ��Ȃ�N�ł���ԏ��߂͉����Ȃ���ԂȂ̂����A�����łȂ��Ƃ������ł��Z�L�����e�B�[�Ɉӎ������郆�[�U�Ȃ�A�u**�u���E�U�����ۂɑS�N�b�L�[���폜����**�v�ݒ�ɂ��Ă����Ȃǂ́A�ɂ߂Ď��R�őÓ��Ȃ��Ƃł��낤.
+  ユーザ情報をリセットしたい場合は、この種のCookie変数の値をどう扱うべきであろうか？
+  大抵の場合、とりあえず一旦空にしておくと間違いはなかろう. 
+  なぜなら誰でも一番初めは何もない状態なのだし、そうでなくとも少しでもセキュリティーに意識があるユーザなら、「**ブラウザを閉じる際に全クッキーを削除する**」設定にしておくなどは、極めて自然で妥当なことであろう.
 
-  �������Ȃ���ACustomBoy��VirtualUSERS Initiate�{�^���ł͐F�X�ᖡ���d�˂����ʁACookie�ϐ��S�̖̂������ȏ����͊����čs��Ȃ��悤�ɂ��Ă���.
-  �܂肱�ꂪ�����I�ɍ폜����Cookie�ϐ��͂����Ȃ�ꍇ�ł����̔��������Ȃ����Ƃ��킩���Ă���ϐ��Q�ɂƂ肠�����͌��肵�Ă���.
-  �Ⴆ�Ώ�L�ŏq�ׂ�verifyc�͌��󎩓��I�ɂ͍폜����Ȃ��悤�ɂ��Ă���. 
-  ���̏ꍇ�A����ŉ�����Ȃ��Ǝv�����A�K�v�Ȃ�CustomCookie����蓮�ł�����������Ă�����������.
+  しかしながら、CustomBoyのVirtualUSERS Initiateボタンでは色々吟味を重ねた結果、Cookie変数全体の無条件な消去は敢えて行わないようにしてある.
+  つまりこれが自動的に削除するCookie変数はいかなる場合でも問題の発生し得ないことがわかっている変数群にとりあえずは限定してある.
+  例えば上記で述べたverifycは現状自動的には削除されないようにしてある. 
+  大抵の場合、これで何ら問題ないと思うが、必要ならCustomCookieから手動でこれを消去していただきたい.
 
-  <a href="#user-content-index">�ڎ��֖߂�</a>
+  <a href="#user-content-index">目次へ戻る</a>
 
 [1]: https://github.com/mr-moai-2016/znk_dev/blob/master/src/moai/Hints_Cookie.md

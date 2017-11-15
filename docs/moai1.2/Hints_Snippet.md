@@ -1,7 +1,7 @@
 # Hints Snippet
 -----------------------------------
 
-## <a name="index">–ÚŸ
+## <a name="index">ç›®æ¬¡
 -----------------------------------
 * [Snp_LtIE6]             (#Snp_LtIE6)
 * [Snp_LtIE7]             (#Snp_LtIE7)
@@ -41,341 +41,341 @@
 
 ## <a name="Snp_LtIE6">             Snp_LtIE6
 -----------------------------------
-IE6ˆÈ‘O‚Ì‚İtrue
+IE6ä»¥å‰ã®ã¿true
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_LtIE7">             Snp_LtIE7
 -----------------------------------
-IE7ˆÈ‘O‚Ì‚İtrue
+IE7ä»¥å‰ã®ã¿true
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_LtIE8">             Snp_LtIE8
 -----------------------------------
-IE8ˆÈ‘O‚Ì‚İtrue
+IE8ä»¥å‰ã®ã¿true
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_IE9">               Snp_IE9
 -----------------------------------
-IE9‚Ì‚İtrue
+IE9ã®ã¿true
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_IE10">              Snp_IE10
 -----------------------------------
-IE10‚Ì‚İtrue
+IE10ã®ã¿true
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_IE11">              Snp_IE11
 -----------------------------------
-IE11‚Ì‚İtrue
+IE11ã®ã¿true
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Trident">           Snp_Trident
 -----------------------------------
-TridentƒŒƒ“ƒ_ƒŠƒ“ƒOƒGƒ“ƒWƒ“‚ğg‚Á‚Ä‚¢‚éê‡‚Ítrue
-IE‚Í‚±‚ê‚ğg‚Á‚Ä‚¢‚é‚½‚ßtrue.
+Tridentãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¨ãƒ³ã‚¸ãƒ³ã‚’ä½¿ã£ã¦ã„ã‚‹å ´åˆã¯true
+IEã¯ã“ã‚Œã‚’ä½¿ã£ã¦ã„ã‚‹ãŸã‚true.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Edge">              Snp_Edge
 -----------------------------------
-Edge‚Ìê‡‚Ítrue
+Edgeã®å ´åˆã¯true
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Gecko">             Snp_Gecko
 -----------------------------------
-GeckoƒŒƒ“ƒ_ƒŠƒ“ƒOƒGƒ“ƒWƒ“‚ğg‚Á‚Ä‚¢‚éê‡‚Ítrue
-Firefox‚Í‚±‚ê‚ğg‚Á‚Ä‚¢‚é‚½‚ßtrue.
+Geckoãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¨ãƒ³ã‚¸ãƒ³ã‚’ä½¿ã£ã¦ã„ã‚‹å ´åˆã¯true
+Firefoxã¯ã“ã‚Œã‚’ä½¿ã£ã¦ã„ã‚‹ãŸã‚true.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_MozillaSidebar">    Snp_MozillaSidebar
 -----------------------------------
-Mozilla Sidebar‚ª‘¶İ‚·‚éê‡‚Ítrue
-Firefox‚É‚Í‚±‚ê‚ª‘¶İ‚·‚é‚½‚ßtrue.
+Mozilla SidebarãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯true
+Firefoxã«ã¯ã“ã‚ŒãŒå­˜åœ¨ã™ã‚‹ãŸã‚true.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_NavigatorOnline">   Snp_NavigatorOnline
 -----------------------------------
-  typeof window.navigator.onLine!=undefined ‚ÌÀsŒ‹‰Ê‚Å‚ ‚é.
+  typeof window.navigator.onLine!=undefined ã®å®Ÿè¡Œçµæœã§ã‚ã‚‹.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_SessionStorage">    Snp_SessionStorage
 -----------------------------------
 
-  !!window.sessionStorage ‚Æ‚¢‚¤ƒR[ƒhSnippet‚ğÀs‚µ‚½Œ‹‰Ê‚ğ¦‚µA
-  ‚»‚Ìƒuƒ‰ƒEƒU‚ÉsessionStorage‹@\‚ª‘¶İ‚·‚é‚©”Û‚©‚ğ¦‚·.
-  ƒuƒ‰ƒEƒU‚Ì‘Î‰ó‹µ‚ÍˆÈ‰º‚ª–ÚˆÀ‚Å‚ ‚é(MDN‚É‚æ‚é).
+  !!window.sessionStorage ã¨ã„ã†ã‚³ãƒ¼ãƒ‰Snippetã‚’å®Ÿè¡Œã—ãŸçµæœã‚’ç¤ºã—ã€
+  ãã®ãƒ–ãƒ©ã‚¦ã‚¶ã«sessionStorageæ©Ÿæ§‹ãŒå­˜åœ¨ã™ã‚‹ã‹å¦ã‹ã‚’ç¤ºã™.
+  ãƒ–ãƒ©ã‚¦ã‚¶ã®å¯¾å¿œçŠ¶æ³ã¯ä»¥ä¸‹ãŒç›®å®‰ã§ã‚ã‚‹(MDNã«ã‚ˆã‚‹).
 
   <ul>
-  <li>Chrome: 5ˆÈã</li>
-  <li>Firefox(Gecko): 2ˆÈã</li>
-  <li>IE: 8ˆÈã</li>
-  <li>Opera: 10.50ˆÈã</li>
-  <li>Safari(Webkit): 4ˆÈã</li>
-  <li>Android: 2.1ˆÈã</li>
-  <li>Opera Mobile: 11ˆÈã</li>
-  <li>Safari Mobile: iOS 3.2ˆÈã</li>
+  <li>Chrome: 5ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 2ä»¥ä¸Š</li>
+  <li>IE: 8ä»¥ä¸Š</li>
+  <li>Opera: 10.50ä»¥ä¸Š</li>
+  <li>Safari(Webkit): 4ä»¥ä¸Š</li>
+  <li>Android: 2.1ä»¥ä¸Š</li>
+  <li>Opera Mobile: 11ä»¥ä¸Š</li>
+  <li>Safari Mobile: iOS 3.2ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_FunctionX5">        Snp_FunctionX5
 -----------------------------------
-‚±‚ÌFunctionX5ƒeƒXƒg‚Æ‚ÍAFirefox Ver3.x‚É‚Ì‚İ‘¶İ‚·‚éƒR[ƒh“Á«‚ğŒŸ¸‚·‚é‚Æ‚¢‚¤‚à‚Ì.
-Firefox Ver3.x‚Ì‚İtrue.
+ã“ã®FunctionX5ãƒ†ã‚¹ãƒˆã¨ã¯ã€Firefox Ver3.xã«ã®ã¿å­˜åœ¨ã™ã‚‹ã‚³ãƒ¼ãƒ‰ç‰¹æ€§ã‚’æ¤œæŸ»ã™ã‚‹ã¨ã„ã†ã‚‚ã®.
+Firefox Ver3.xã®ã¿true.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_DocCurrentScript">  Snp_DocCurrentScript
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 29ˆÈã</li>
-  <li>Firefox(Gecko): 4ˆÈã</li>
-  <li>Opera: 16ˆÈã</li>
+  <li>Chrome: 29ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 4ä»¥ä¸Š</li>
+  <li>Opera: 16ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_EventSource">       Snp_EventSource
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 9ˆÈã</li>
-  <li>Firefox(Gecko): 6ˆÈã</li>
-  <li>Opera: 11ˆÈã</li>
+  <li>Chrome: 9ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 6ä»¥ä¸Š</li>
+  <li>Opera: 11ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Crypto">            Snp_Crypto
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 11ˆÈã</li>
-  <li>Firefox(Gecko): 21ˆÈã</li>
-  <li>IE: 11ˆÈã</li>
-  <li>Opera: 15ˆÈã</li>
-  <li>Safari: 3.1ˆÈã</li>
+  <li>Chrome: 11ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 21ä»¥ä¸Š</li>
+  <li>IE: 11ä»¥ä¸Š</li>
+  <li>Opera: 15ä»¥ä¸Š</li>
+  <li>Safari: 3.1ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_PerformanceNow">    Snp_PerformanceNow
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 20ˆÈã</li>
-  <li>Firefox(Gecko): 15ˆÈã</li>
-  <li>IE: 10ˆÈã</li>
-  <li>Opera: 15ˆÈã</li>
-  <li>Safari: 8ˆÈã</li>
+  <li>Chrome: 20ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 15ä»¥ä¸Š</li>
+  <li>IE: 10ä»¥ä¸Š</li>
+  <li>Opera: 15ä»¥ä¸Š</li>
+  <li>Safari: 8ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_AudioContext">      Snp_AudioContext
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 10ˆÈã</li>
-  <li>Firefox(Gecko): 25ˆÈã</li>
-  <li>Opera: 15ˆÈã</li>
-  <li>Safari: 6ˆÈã</li>
+  <li>Chrome: 10ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 25ä»¥ä¸Š</li>
+  <li>Opera: 15ä»¥ä¸Š</li>
+  <li>Safari: 6ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_IndexedDB">         Snp_IndexedDB
 -----------------------------------
 
-  !!window.indexedDB ‚Æ‚¢‚¤ƒR[ƒhSnippet‚ğÀs‚µ‚½Œ‹‰Ê‚ğ¦‚µA
-  ‚»‚Ìƒuƒ‰ƒEƒU‚ÉindexedDB‹@\‚ª‘¶İ‚·‚é‚©”Û‚©‚ğ¦‚·.
-  ƒuƒ‰ƒEƒU‚Ì‘Î‰ó‹µ‚ÍˆÈ‰º‚ª–ÚˆÀ‚Å‚ ‚é(MDN‚É‚æ‚é).
+  !!window.indexedDB ã¨ã„ã†ã‚³ãƒ¼ãƒ‰Snippetã‚’å®Ÿè¡Œã—ãŸçµæœã‚’ç¤ºã—ã€
+  ãã®ãƒ–ãƒ©ã‚¦ã‚¶ã«indexedDBæ©Ÿæ§‹ãŒå­˜åœ¨ã™ã‚‹ã‹å¦ã‹ã‚’ç¤ºã™.
+  ãƒ–ãƒ©ã‚¦ã‚¶ã®å¯¾å¿œçŠ¶æ³ã¯ä»¥ä¸‹ãŒç›®å®‰ã§ã‚ã‚‹(MDNã«ã‚ˆã‚‹).
 
   <ul>
-  <li>Chrome: 23ˆÈã</li>
-  <li>Firefox(Gecko): 10ˆÈã</li>
-  <li>IE: 10ˆÈã</li>
-  <li>Opera: 15ˆÈã</li>
-  <li>Safari(Webkit): 7.1ˆÈã</li>
+  <li>Chrome: 23ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 10ä»¥ä¸Š</li>
+  <li>IE: 10ä»¥ä¸Š</li>
+  <li>Opera: 15ä»¥ä¸Š</li>
+  <li>Safari(Webkit): 7.1ä»¥ä¸Š</li>
   <li>Edge: OK</li>
-  <li>Android: 4.4ˆÈã</li>
-  <li>Firefox Mobile: 22ˆÈã</li>
-  <li>Firefox OS: 1.0.1ˆÈã</li>
-  <li>Opera Mobile: 22ˆÈã</li>
-  <li>Safari Mobile: 8ˆÈã</li>
+  <li>Android: 4.4ä»¥ä¸Š</li>
+  <li>Firefox Mobile: 22ä»¥ä¸Š</li>
+  <li>Firefox OS: 1.0.1ä»¥ä¸Š</li>
+  <li>Opera Mobile: 22ä»¥ä¸Š</li>
+  <li>Safari Mobile: 8ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_WindowStyles">      Snp_WindowStyles
 -----------------------------------
-  !!window.styles ‚ÌÀsŒ‹‰Ê‚Å‚ ‚é.
+  !!window.styles ã®å®Ÿè¡Œçµæœã§ã‚ã‚‹.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_SendBeacon">        Snp_SendBeacon
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 39ˆÈã</li>
-  <li>Firefox(Gecko): 31ˆÈã</li>
-  <li>Opera: 26ˆÈã</li>
+  <li>Chrome: 39ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 31ä»¥ä¸Š</li>
+  <li>Opera: 26ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_GetGamepads">       Snp_GetGamepads
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 21ˆÈã</li>
-  <li>Firefox(Gecko): 29ˆÈã</li>
-  <li>Opera: 15ˆÈã</li>
+  <li>Chrome: 21ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 29ä»¥ä¸Š</li>
+  <li>Opera: 15ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_NavLanguages">      Snp_NavLanguages
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 32ˆÈã</li>
-  <li>Firefox(Gecko): 32ˆÈã</li>
+  <li>Chrome: 32ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 32ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_NavMediaDevices">   Snp_NavMediaDevices
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 51ˆÈã</li>
-  <li>Firefox(Gecko): 36ˆÈã</li>
+  <li>Chrome: 51ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 36ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_WinCaches">         Snp_WinCaches
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 43ˆÈã</li>
-  <li>Firefox(Gecko): 39ˆÈã</li>
+  <li>Chrome: 43ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 39ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_CreateImageBitmap"> Snp_CreateImageBitmap
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 50ˆÈã</li>
-  <li>Firefox(Gecko): 42ˆÈã</li>
+  <li>Chrome: 50ä»¥ä¸Š</li>
+  <li>Firefox(Gecko): 42ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Onstorage">         Snp_Onstorage
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Firefox(Gecko): 45ˆÈã</li>
+  <li>Firefox(Gecko): 45ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_NavGetBattery">     Snp_NavGetBattery
 -----------------------------------
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
   <ul>
-  <li>Chrome: 39ˆÈã</li>
+  <li>Chrome: 39ä»¥ä¸Š</li>
   <li>Firefox(Gecko): ?</li>
-  <li>Opera: 25ˆÈã</li>
+  <li>Opera: 25ä»¥ä¸Š</li>
   </ul>
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Presto">            Snp_Presto
 -----------------------------------
-Opera‚ÌŒÃ‚¢ƒo[ƒWƒ‡ƒ“‚Å‚Í‚»‚ÌƒŒƒ“ƒ_ƒŠƒ“ƒOƒGƒ“ƒWƒ“‚ÍPresto‚ÆŒÄ‚Î‚ê‚Ä‚¢‚½.
-Opera12.16ˆÈ‘O‚Å‚Í‚±‚ê‚ªtrue‚Æ‚È‚é.
+Operaã®å¤ã„ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã¯ãã®ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¨ãƒ³ã‚¸ãƒ³ã¯Prestoã¨å‘¼ã°ã‚Œã¦ã„ãŸ.
+Opera12.16ä»¥å‰ã§ã¯ã“ã‚ŒãŒtrueã¨ãªã‚‹.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_ChromeBlink">       Snp_ChromeBlink
 -----------------------------------
-Chrome‚©‚ÂƒŒƒ“ƒ_ƒŠƒ“ƒOƒGƒ“ƒWƒ“‚ªBlink‚Å‚ ‚é‚©”Û‚©‚ğ¦‚·.
-Chrome Ver14ˆÈã‚Ì‚İtrue‚Å‚ ‚é.
+Chromeã‹ã¤ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¨ãƒ³ã‚¸ãƒ³ãŒBlinkã§ã‚ã‚‹ã‹å¦ã‹ã‚’ç¤ºã™.
+Chrome Ver14ä»¥ä¸Šã®ã¿trueã§ã‚ã‚‹.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_ChromiumInFact">       Snp_ChromiumInFact
 -----------------------------------
-À¿ ChromiumŒn‚Å‚ ‚é‚©”Û‚©‚ğ¦‚µ‚Ä‚¢‚é.
-ˆÈ‰º‚ÌŠÂ‹«‚É‚¨‚¢‚Ätrue.
+å®Ÿè³ª Chromiumç³»ã§ã‚ã‚‹ã‹å¦ã‹ã‚’ç¤ºã—ã¦ã„ã‚‹.
+ä»¥ä¸‹ã®ç’°å¢ƒã«ãŠã„ã¦true.
 
   <ul>
-  <li>Chrome: ‘Sƒo[ƒWƒ‡ƒ“</li>
-  <li>Opera: 14ˆÈã</li>
+  <li>Chrome: å…¨ãƒãƒ¼ã‚¸ãƒ§ãƒ³</li>
+  <li>Opera: 14ä»¥ä¸Š</li>
   </ul>
 
- ‚±‚ÌƒeƒXƒg‚É‚¨‚¢‚ÄÀÛ‚ÌƒR[ƒhƒXƒjƒyƒbƒg‚ÍŒ»İˆÈ‰º‚Ì‚æ‚¤‚É‚È‚Á‚Ä‚¢‚é.
+ ã“ã®ãƒ†ã‚¹ãƒˆã«ãŠã„ã¦å®Ÿéš›ã®ã‚³ãƒ¼ãƒ‰ã‚¹ãƒ‹ãƒšãƒƒãƒˆã¯ç¾åœ¨ä»¥ä¸‹ã®ã‚ˆã†ã«ãªã£ã¦ã„ã‚‹.
 
 ~~~js
  !!window.chrome&&'WebkitAppearance' in document.documentElement.style 
 ~~~
 
- ‚±‚ÌƒeƒXƒg‚ÌˆÓ}‚Í‚æ‚­‚í‚©‚ç‚È‚¢.
- ‚à‚µ‚©‚·‚é‚ÆChromiumŒn‚©‚ÂWebkit‚ªg‚í‚ê‚Ä‚¢‚éƒo[ƒWƒ‡ƒ“‚Ì‚İ‚ğŒŸo‚·‚éˆÓ}‚ª‚ ‚Á‚½‚Ì‚©‚à‚µ‚ê‚È‚¢.
- Šm‚©‚É‘O”¼‚Ì **!!window.chrome** ‚Æ‚Í’P‚É ChromiumŒn‚Å‚ ‚é‚±‚Æ‚ğ¦‚µAChrome‚Ìê‡‘Sƒo[ƒWƒ‡ƒ“‚Å‚±‚ê‚ªtrue‚Æ‚È‚èA
- Opera‚Ìê‡Ver14ˆÈã‚Å‚±‚ê‚ªtrue‚Æ‚È‚é.
+ ã“ã®ãƒ†ã‚¹ãƒˆã®æ„å›³ã¯ã‚ˆãã‚ã‹ã‚‰ãªã„.
+ ã‚‚ã—ã‹ã™ã‚‹ã¨Chromiumç³»ã‹ã¤WebkitãŒä½¿ã‚ã‚Œã¦ã„ã‚‹ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®ã¿ã‚’æ¤œå‡ºã™ã‚‹æ„å›³ãŒã‚ã£ãŸã®ã‹ã‚‚ã—ã‚Œãªã„.
+ ç¢ºã‹ã«å‰åŠã® **!!window.chrome** ã¨ã¯å˜ã« Chromiumç³»ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã—ã€Chromeã®å ´åˆå…¨ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã“ã‚ŒãŒtrueã¨ãªã‚Šã€
+ Operaã®å ´åˆVer14ä»¥ä¸Šã§ã“ã‚ŒãŒtrueã¨ãªã‚‹.
 
- ‚µ‚©‚µ‚È‚ª‚çŒã”¼‚Ì **'WebkitAppearance' in document.documentElement.style** ‚Æ‚ÍƒŒƒ“ƒ_ƒŠƒ“ƒOƒGƒ“ƒWƒ“‚Æ‚µ‚Ä Webkit ‚ªg‚í‚ê‚Ä‚¢‚é‚©”Û‚©‚Å
- —Ç‚­“oê‚·‚éSnippet‚Å‚ ‚é‚à‚Ì‚ÌA‚±‚ê‚¾‚¯‚Å‚ÍChrome‚Ìê‡‘Sƒo[ƒWƒ‡ƒ“‚Å‚±‚ê‚ªtrue‚Æ‚È‚èAOpera‚Ìê‡Ver14ˆÈã‚Å‚±‚ê‚ªtrue‚Æ‚È‚é.
- (‚¿‚È‚İ‚ÉChrome‚ÌBlink‘Î‰‚ÍVer28ˆÈ~AOpera‚ÌBlink‘Î‰‚ÍVer15ˆÈ~‚Å‚ ‚é).
+ ã—ã‹ã—ãªãŒã‚‰å¾ŒåŠã® **'WebkitAppearance' in document.documentElement.style** ã¨ã¯ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ã‚¨ãƒ³ã‚¸ãƒ³ã¨ã—ã¦ Webkit ãŒä½¿ã‚ã‚Œã¦ã„ã‚‹ã‹å¦ã‹ã§
+ è‰¯ãç™»å ´ã™ã‚‹Snippetã§ã‚ã‚‹ã‚‚ã®ã®ã€ã“ã‚Œã ã‘ã§ã¯Chromeã®å ´åˆå…¨ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã“ã‚ŒãŒtrueã¨ãªã‚Šã€Operaã®å ´åˆVer14ä»¥ä¸Šã§ã“ã‚ŒãŒtrueã¨ãªã‚‹.
+ (ã¡ãªã¿ã«Chromeã®Blinkå¯¾å¿œã¯Ver28ä»¥é™ã€Operaã®Blinkå¯¾å¿œã¯Ver15ä»¥é™ã§ã‚ã‚‹).
 
- ‚Â‚Ü‚è‚±‚ê‚Å‚ÍÀ¿“I‚É**Blink‚Å‚ ‚éê‡**‚àtrue‚Æ‚È‚Á‚Ä‚µ‚Ü‚¤.
- Œ‹‰ÊAChrome‚Ì‘Sƒo[ƒWƒ‡ƒ“‚Ü‚½‚ÍOpera14ˆÈã‚ğŒŸo‚Æ‚¢‚¤’P‚ÉChromiumŒn‚©”Û‚©‚ğŒŸo‚·‚é‚¾‚¯‚ÌˆÓ}‚Ì—Ç‚­‚í‚©‚ç‚È‚¢ƒeƒXƒg‚Æ‚È‚Á‚Ä‚¢‚é.
+ ã¤ã¾ã‚Šã“ã‚Œã§ã¯å®Ÿè³ªçš„ã«**Blinkã§ã‚ã‚‹å ´åˆ**ã‚‚trueã¨ãªã£ã¦ã—ã¾ã†.
+ çµæœã€Chromeã®å…¨ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¾ãŸã¯Opera14ä»¥ä¸Šã‚’æ¤œå‡ºã¨ã„ã†å˜ã«Chromiumç³»ã‹å¦ã‹ã‚’æ¤œå‡ºã™ã‚‹ã ã‘ã®æ„å›³ã®è‰¯ãã‚ã‹ã‚‰ãªã„ãƒ†ã‚¹ãƒˆã¨ãªã£ã¦ã„ã‚‹.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Touch">             Snp_Touch
 -----------------------------------
-  ‚±‚ÌŠÂ‹«‚Ìƒuƒ‰ƒEƒU‚É‚¨‚¢‚Äƒ^ƒbƒ`ƒpƒbƒh‚ª—LŒø‚©”Û‚©‚ğ¦‚·.
+  ã“ã®ç’°å¢ƒã®ãƒ–ãƒ©ã‚¦ã‚¶ã«ãŠã„ã¦ã‚¿ãƒƒãƒãƒ‘ãƒƒãƒ‰ãŒæœ‰åŠ¹ã‹å¦ã‹ã‚’ç¤ºã™.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_FacileMobile">      Snp_FacileMobile
 -----------------------------------
-  ‚±‚ÌŠÂ‹«‚Ìƒuƒ‰ƒEƒU‚É‚¨‚¢‚Äwindow.orientation‚ª‘¶İ‚·‚é‚©”Û‚©‚ğ¦‚·.
-  window.orientation‚Æ‚Í’[––‰æ–Ê‚ªc’·(portrait)‚Æ‰¡’·(landscape)‚Ì‚Ç‚¿‚ç‚Å‚ ‚é‚©‚ÉŠÖ‚·‚éî•ñ‚Å‚ ‚é.
-  ‚±‚ê‚Íƒ‚ƒoƒCƒ‹ŠÂ‹«‚Å‚ ‚é”Û‚©‚ÌŠÈˆÕ”»’è‚Ég‚¤‚±‚Æ‚ª‚Å‚«‚é.
+  ã“ã®ç’°å¢ƒã®ãƒ–ãƒ©ã‚¦ã‚¶ã«ãŠã„ã¦window.orientationãŒå­˜åœ¨ã™ã‚‹ã‹å¦ã‹ã‚’ç¤ºã™.
+  window.orientationã¨ã¯ç«¯æœ«ç”»é¢ãŒç¸¦é•·(portrait)ã¨æ¨ªé•·(landscape)ã®ã©ã¡ã‚‰ã§ã‚ã‚‹ã‹ã«é–¢ã™ã‚‹æƒ…å ±ã§ã‚ã‚‹.
+  ã“ã‚Œã¯ãƒ¢ãƒã‚¤ãƒ«ç’°å¢ƒã§ã‚ã‚‹å¦ã‹ã®ç°¡æ˜“åˆ¤å®šã«ä½¿ã†ã“ã¨ãŒã§ãã‚‹.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 ## <a name="Snp_Webkit">            Snp_Webkit
 -----------------------------------
- Ql:Webkit”»’è.
- ‚±‚ÌƒeƒXƒg‚Í‚Ó‚½‚Î‚Ì/bin/base4.js“à‚É‚Í‘¶İ‚µ‚È‚¢‚ªAQl‚Ì‚½‚ßˆê‰‚±‚±‚É‹LÚ‚µ‚Ä‚¨‚­.
- ‚±‚ÌƒeƒXƒg‚É‚¨‚¢‚ÄÀÛ‚ÌƒR[ƒhƒXƒjƒyƒbƒg‚ÍŒ»İˆÈ‰º‚Ì‚æ‚¤‚É‚È‚Á‚Ä‚¢‚é.
+ å‚è€ƒ:Webkitåˆ¤å®š.
+ ã“ã®ãƒ†ã‚¹ãƒˆã¯ãµãŸã°ã®/bin/base4.jså†…ã«ã¯å­˜åœ¨ã—ãªã„ãŒã€å‚è€ƒã®ãŸã‚ä¸€å¿œã“ã“ã«è¨˜è¼‰ã—ã¦ãŠã.
+ ã“ã®ãƒ†ã‚¹ãƒˆã«ãŠã„ã¦å®Ÿéš›ã®ã‚³ãƒ¼ãƒ‰ã‚¹ãƒ‹ãƒšãƒƒãƒˆã¯ç¾åœ¨ä»¥ä¸‹ã®ã‚ˆã†ã«ãªã£ã¦ã„ã‚‹.
 
 ~~~js
  !window.chrome&&'WebkitAppearance' in document.documentElement.style 
 ~~~
- ‚±‚ê‚ÍChromiumŒnˆÈŠO‚ÌWebkit‚ªg‚í‚ê‚Ä‚¢‚éƒuƒ‰ƒEƒUA—á‚¦‚ÎSafari‚È‚Ç‚ğŒŸo‚·‚é–Ú“I‚Åg—p‚·‚é‚±‚Æ‚ª‚Å‚«‚é.
+ ã“ã‚Œã¯Chromiumç³»ä»¥å¤–ã®WebkitãŒä½¿ã‚ã‚Œã¦ã„ã‚‹ãƒ–ãƒ©ã‚¦ã‚¶ã€ä¾‹ãˆã°Safariãªã©ã‚’æ¤œå‡ºã™ã‚‹ç›®çš„ã§ä½¿ç”¨ã™ã‚‹ã“ã¨ãŒã§ãã‚‹.
 
-  <a href="#user-content-index">–ÚŸ‚Ö–ß‚é</a>
+  <a href="#user-content-index">ç›®æ¬¡ã¸æˆ»ã‚‹</a>
 
 
 
