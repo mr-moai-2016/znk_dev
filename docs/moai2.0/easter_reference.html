@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<link href="/znk_dev/msty.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<a name=TopBar></a>
+<p><b><img src="/znk_dev/imgs/moai.png"> Moai2.0ドキュメント</b></p>
+
+<a class=MstyElemLink href="/">トップページ</a> &nbsp;
+<a class=MstyElemLink href="/znk_dev/index.html">Moaiイントロダクション</a> &nbsp;
+<a class=MstyNowSelectedLink href="/znk_dev/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<br> <br>
+<a class=MstyElemLink href="/znk_dev/moai2.0/install.html">インストールガイド</a> &nbsp;
+<a class=MstyElemLink href="/znk_dev/moai2.0/moai_reference.html">Moaiリファレンス</a> &nbsp;
+<a class=MstyNowSelectedLink href="/znk_dev/moai2.0/easter_reference.html">Easterリファレンス</a> &nbsp;
+<a class=MstyElemLink href="/znk_dev/moai2.0/customboy_reference.html">CustomBoyリファレンス</a> &nbsp;
+<br> <br>
+
+<div class=MstyComment>
+<u><b>記事担当者</b></u> : 全角<br> 
+<br>
+<u><b>最終更新日</b></u> : 2018/03/25<br>
+<br>
+</div>
+<br>
+
+<u><b>はじめに</b></u>
+<ul>
+	<font >
+		Easterは仮想ブラウザ環境(以降、単に仮想環境と呼ぶ)を利用するツールです.<br>
+		これはMoai CGI上でWebアプリケーションとして動作します.<br>
+		ここではEasterに関する全機能を詳細に解説します.<br>
+		<br>
+		<div class=MstyComment>
+			<u><b>Note</b></u><br>
+			<br>
+			Moai Ver1.1.x系まではこの仮想環境を利用するには、ブラウザにて「ローカルプロキシの設定」を行っておく必要がありました.<br>
+			Ver2.0以降で導入されたEasterを使えば、この設定を行うことなく即座に仮想環境を利用することができます.<br>
+		</div>
+	</font><br>
+</ul><br>
+
+
+<a name=Index></a>
+<u><b>目次</b></u>
+<ul>
+	<li><b><a class=MstyElemLink href=#FirstEaster>初めてのEaster</a></b></li>
+	<li><b><a class=MstyElemLink href=#EasterLinkManager>Easter リンクマネージャー</a></b></li>
+	<li><b><a class=MstyElemLink href=#EasterURL>Easter URL</a></b></li>
+	<li><b><a class=MstyElemLink href=#EasterURL_Mechanism>仮想環境が継続的に維持される仕組み</a></b></li>
+	<li><b><a class=MstyElemLink href=#EasterCollection>Easter コレクション</a></b></li>
+	<li><b><a class=MstyElemLink href=#EasterTagManager>Easter タグマネージャー</a></b></li>
+	<li><b><a class=MstyElemLink href=#EasterTopics>Easter トピックス</a></b></li>
+	<li><b><a class=MstyElemLink href=#EasterConfig>Easter 設定</a></b></li>
+</ul><br>
+
+
+<a name=FirstEaster></a>
+<u><b>初めてのEaster</b></u>
+<ul>
+	<font >
+		Easterを使うために必要なことは、以下の二つだけです.<br>
+		(既にMoaiを起動できる状態であることを前提とします.)<br>
+		<br>
+		<li>1. moai(Windowsならmoai.exe)を起動する.<br>
+		</li>
+		<br>
+		<li>2. ブラウザから http://localhost:8124 を開く.
+		</li>
+		<div class=MstyComment>
+		これでうまくいかない場合は http://127.0.0.1:8124 で試してみましょう.
+		</div>
+		<br>
+		お使いのブラウザに「Welcome to Moai+Easter World」のページが表示されたでしょうか？<br>
+		表示されたなら、そこから<a class=MstyAppLink href="/easter" target=_blank>Easter</a>をクリックすれば<br>
+		Easterによる仮想環境がスタートします.<br>
+		<br>
+		しかしその前に！<br>
+		新しくMoaiをダウンロードした直後、初めてのMoai起動時なら、<br>
+		まず<a class=MstyAppLink href="/cgis/custom_boy/common.cgi?cb_target=futaba&cb_type=automatic" target=_blank>VirtualUSERS</a>の画面より、仮想ブラウザ環境をあなた用に変更/構築しておきましょう.<br>
+		<br>
+		<div class=MstyComment>
+			<u><b>Note</b></u><br>
+			<br>
+			この構築は別に何回行っても構いません.<br>
+			あなたが納得するブラウザ環境となるまで繰り返し構築し直すこともできます.<br>
+		</div>
+		<br>
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+
+<a name=EasterLinkManager></a>
+<u><b>Easter リンクマネージャー</b></u>
+<ul>
+	<font >
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+<a name=EasterURL></a>
+<u><b>Easter URL</b></u>
+<ul>
+	<font >
+		以下の例でEaster URLの構造を簡単に説明しましょう.<br>
+		<br>
+		http://192.168.0.1:8125/easter?est_view=may.2chan.net/b/futaba.php?mode=cat&amp;sort=1<br>
+		<br>
+		<li>「192.168.0.1:8125」</li>
+		<div class=MstyComment>
+		あなたのマシンで今起動しているMoaiへの接続を意味します.<br>
+		ここでのIPとポート番号はMoaiがセキュリティーの観点から厳格に規定したものが使われます.<br>
+		(これをMoai XhrDMZと呼びます. XhrDMZでは通常、IPはLAN上でのものが採用されます.<br>
+		またポート番号はこの場合に限り8124ではなく8125になります.)<br>
+		</div><br>
+		<li>「easter」</li>
+		<div class=MstyComment>
+		EasterをMoai CGIとして起動することをMoaiエンジンに指示します.
+		</div><br>
+		<li>「est_view=」</li>
+		<div class=MstyComment>
+		これに続けて目的のサイトのURLを与えます.<br>
+		Easterが現在サポートしているサイトのURLならば、基本的にはどのページのものでも構いません.<br>
+		(現在サポートされているサイトは５ちゃんねるとふたばちゃんねるのみです)<br>
+		</div><br>
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+
+<a name=EasterURL_Mechanism></a>
+<u><b>仮想環境が継続的に維持される仕組み</b></u>
+<ul>
+	<font >
+		EasterはデフォルトでいくつかのサイトへのEaster URLが登録されていますが、<br>
+		ここに登録するリンクはサイトのトップ等にある<b>目次に相当するページ</b>だけで十分です.<br>
+		(これらは掲示板などでは「板一覧メニュー」や「カタログ」と呼ばれることもあります)<br>
+		<br>
+		しかし目次に相当するページはスレッド本体や書き込みをする画面とは違います.<br>
+		後者の画面においては仮想環境が機能しないのでは？と思われる方もおられるかもしれません.<br>
+		<br>
+		大丈夫です. <br>
+		目次からさらに先のリンクへと移動した場合でもEaster URLがうまく継続するようになっています.<br>
+		Easter URLさえ維持されていれば仮想状態もまた維持するのです.<br>
+		<br>
+		何が起きているのか詳しく説明しましょう.<br>
+		通常、Easterで閲覧したページ内に子となるページへのリンクが含まれていた場合、<br>
+		そのリンク先もEasterを介する閲覧となるようにEaster URLへの変換が自動的に行われます.<br> 
+		さらにその子を閲覧したタイミングで、同様の変換がその孫へのリンクに対しても行われ、<br>
+		この連鎖によりEasterによる仮想状態を子孫へ継続させる仕組みとなっています.<br>
+		<br>
+		一方、Easterが認識できないサイトへのリンク(喩えるなら家族や親戚以外へのリンク)が含まれていた場合、<br>
+		このリンクに対してはEaster URLへ変換は行われず、従ってその先はEasterを介さず直接閲覧する形になります.
+		</div><br>
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+
+<a name=EasterCollection></a>
+<u><b>Easter コレクション</b></u>
+<ul>
+	<font >
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+
+<a name=EasterTagManager></a>
+<u><b>Easter タグマネージャー</b></u>
+<ul>
+	<font >
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+
+<a name=EasterTopics></a>
+<u><b>Easter トピックス</b></u>
+<ul>
+	<font >
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+
+<a name=EasterConfig></a>
+<u><b>Easter 設定</b></u>
+<ul>
+	<font >
+	</font><br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b>
+</ul><br>
+
+
+<u><b>リンク</b></u>
+<ul>
+	<li><a class=MstyElemLink href="#TopBar">一番上へ</a></li>
+	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">Moai公式サイト(github)</a></li>
+	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io/znk_dev">Moaiドキュメント(github)</a></li>
+</ul><br>
+
+</body>
+</html>
