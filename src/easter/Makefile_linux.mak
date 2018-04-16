@@ -130,43 +130,6 @@ OBJS1=\
 	$O/Est_unid.o \
 	$O/cache_task.o \
 
-BASENAME2=import_favorite
-EXE_FILE2=$O/import_favorite.cgi
-OBJS2=\
-	$O/Est_assort.o \
-	$O/Est_assort_list.o \
-	$O/Est_assort_ui.o \
-	$O/Est_base.o \
-	$O/Est_bat_operator.o \
-	$O/Est_box.o \
-	$O/Est_boxmap_viewer.o \
-	$O/Est_box_base.o \
-	$O/Est_box_ui.o \
-	$O/Est_cinf_ui.o \
-	$O/Est_config.o \
-	$O/Est_dir_util.o \
-	$O/Est_filter.o \
-	$O/Est_finf.o \
-	$O/Est_get.o \
-	$O/Est_hint_manager.o \
-	$O/Est_img_viewer.o \
-	$O/Est_linf_list.o \
-	$O/Est_link.o \
-	$O/Est_link_manager.o \
-	$O/Est_parser.o \
-	$O/Est_post.o \
-	$O/Est_recentory.o \
-	$O/Est_record.o \
-	$O/Est_search_manager.o \
-	$O/Est_sqi.o \
-	$O/Est_tag.o \
-	$O/Est_tag_manager.o \
-	$O/Est_topic.o \
-	$O/Est_ui.o \
-	$O/Est_ui_base.o \
-	$O/Est_unid.o \
-	$O/import_favorite.o \
-
 SUB_LIBS=\
 
 PRODUCT_EXECS= \
@@ -175,9 +138,6 @@ PRODUCT_EXECS= \
 PRODUCT_EXECS= \
 	__mkg_sentinel_target__ \
 	$(EXE_FILE1) \
-PRODUCT_EXECS= \
-	__mkg_sentinel_target__ \
-	$(EXE_FILE2) \
 
 RUNTIME_FILES= \
 	__mkg_sentinel_target__ \
@@ -187,7 +147,7 @@ RUNTIME_FILES= \
 
 
 # Entry rule.
-all: $O $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) 
+all: $O $(EXE_FILE0) $(EXE_FILE1) 
 
 # Mkdir rule.
 $O:
@@ -200,9 +160,6 @@ $(EXE_FILE0): $(OBJS0)
 
 $(EXE_FILE1): $(OBJS1)
 	$(LINKER) -o $(EXE_FILE1) $(OBJS1) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.so $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano.so -lpthread -ldl -lstdc++ 
-
-$(EXE_FILE2): $(OBJS2)
-	$(LINKER) -o $(EXE_FILE2) $(OBJS2) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.so $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano.so -lpthread -ldl -lstdc++ 
 
 
 ##
@@ -248,11 +205,10 @@ install_data:
 	for tgt in publicbox/alternative/5ch/agree.5ch.net/js/*.js ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/easter/publicbox/alternative/5ch/agree.5ch.net/js/ ; fi ; done
 
 # Install exec rule.
-install_exec: $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2)
+install_exec: $(EXE_FILE0) $(EXE_FILE1)
 	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/easter 
 	for tgt in $(EXE_FILE0) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/easter/ ; fi ; done
 	for tgt in $(EXE_FILE1) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/easter/ ; fi ; done
-	for tgt in $(EXE_FILE2) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/easter/ ; fi ; done
 
 # Install dlib rule.
 install_dlib:
@@ -302,5 +258,4 @@ Est_topic.o: Est_topic.h Est_config.h Est_ui.h Est_ui_base.h Est_box.h Est_box_u
 Est_ui.o: Est_ui.h Est_ui_base.h Est_config.h Est_assort.h Est_base.h Est_box_ui.h
 Est_ui_base.o: Est_ui_base.h Est_box_base.h
 Est_unid.o:
-import_favorite.o: Est_config.h Est_base.h Est_assort.h
 main.o: Est_config.h Est_get.h Est_post.h Est_filter.h Est_link_manager.h Est_boxmap_viewer.h Est_search_manager.h Est_img_viewer.h Est_topic.h Est_tag_manager.h
