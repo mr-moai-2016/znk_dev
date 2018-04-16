@@ -1,18 +1,14 @@
-# CustomBoy Engine (introduced by Ver2.0 2017.3)
+# Easter : client-viewer system (introduced by Ver2.0)
 -----------------------------------
 
 ## brief
 -----------------------------------
-  CustomBoy is the next-generation of USERS(User-Agent Screen-size and Everything Randomizer System)
-  based on Moai Ver2.0 and build up your virtual browser information instantly.
-  You can also create a custom detailed information about each element of browser,
-  such as Fingerprint and result values of Javascipt snippet code on Moai CGI user-interface.
+  Easter is a client-viewer system on your virtual browser environment of Moai Ver2.0 filters.
+  You can also manage your image collections gotten from Image BBS,
 
 ## auther
 -----------------------------------
- *  Main Programmer : K.Yakisoba.H
- *  Library Support : Zenkaku
- *  Supervisor      : Mr.Moai
+ * Zenkaku
 
 ## licence
 -----------------------------------
