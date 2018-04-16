@@ -11,9 +11,7 @@ typedef enum {
 	,MoaiPluginState_e_Updated    = 1
 }MoaiPluginState;
 
-#if 0
 /**
- * 廃止.
  * @brief
  *  target固有のsendフィルタの初期化処理を行う.
  *  Web Configurationの「Virtual USERS Initiation」ボタンを押すとこの関数が呼び出される.
@@ -35,7 +33,6 @@ typedef enum {
  */
 MoaiPluginState
 initiate( ZnkMyf ftr_send, const char* parent_proxy, ZnkStr result_msg );
-#endif
 
 /**
  * @brief
