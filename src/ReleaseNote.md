@@ -29,7 +29,7 @@ Release Note
 	  この機能を後継したMoai CGIアプリケーション.
 	* user_agent.txt および screen_size.txtを廃止.
 	  ユーザはもはやこれらに候補を記述しておく必要はなく、User-Agent、Screen-Size、そしてすべて(Everything)の情報は
-	  CustomBoy-Engineにより自動的に生成される.
+	  CustomBoy-Engineにより無の状態から自動的に構築される.
 
     Easter(MoaiCGIアプリケーション)
 
@@ -41,7 +41,7 @@ Release Note
 
 	* 新規導入. 
 	* 仮想ブラウザ環境を構築するコアエンジン.
-	* 我々が現在提供できる最強のカスタマイズ性を備える.
+	* 我々が提供する仮想化ツールの中でもこれは最強のカスタマイズ性を有する.
 
     ProxyFinder(MoaiCGIアプリケーション)
 
