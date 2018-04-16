@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<link href="/msty.css" rel="stylesheet" type="text/css">
+	<title>Moai2.0ドキュメント</title>
+</head>
+<body>
+<a name=TopBar></a>
+<p><b><img src="/imgs/here_landmark.png"> Moai2.0ドキュメント</b></p>
+
+<a class=MstyElemLink href="/">トップページ</a> &nbsp;
+<a class=MstyNowSelectedLink href="/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<br> <br>
+<a class=MstyElemLink        href="/moai2.0/install.html">インストールガイド</a> &nbsp;
+<a class=MstyElemLink        href="/moai2.0/moai_reference.html">Moai本体</a> &nbsp;
+<a class=MstyElemLink        href="/moai2.0/easter_reference.html">Easter</a> &nbsp;
+<a class=MstyElemLink        href="/moai2.0/virtual_users.html">VirtualUSERS</a> &nbsp;
+<a class=MstyElemLink        href="/moai2.0/customboy_reference.html">CustomBoy</a> &nbsp;
+<a class=MstyElemLink        href="/moai2.0/how_to_compile.html">HowToコンパイル</a> &nbsp;
+<a class=MstyNowSelectedLink href="/moai2.0/moai_cgi_developers.html">Moai CGI Developers</a> &nbsp;
+<br> <br>
+<a class=MstyElemLink        href="/moai2.0/moai_cgi_developers.html">Moai CGI 入門編</a> &nbsp;
+<a class=MstyNowSelectedLink href="/moai2.0/moai_cgi_developers_pragmatic.html">Moai CGI 実践編</a> &nbsp;
+<a class=MstyElemLink        href="/moai2.0/mkfgen.html">mkfgenリファレンス</a> &nbsp;
+<br> <br>
+
+
+<div class=MstyComment>
+<u><b>記事担当者</b></u> : Mr.Moai<br> 
+<br>
+<u><b>最終更新日</b></u> : 2018/03/31<br>
+<br>
+</div>
+<br>
+
+
+<a name=AtFirst></a>
+<u><b>
+はじめに
+</b></u><br>
+<br>
+<div class=MstyIndent>
+	この記事ではMoai CGI上で動くWebアプリケーションの実践的な開発方法について述べます.<br>
+	<br>
+	尚、これは Moai CGI 入門編の続きです.<br>
+	C言語によるCGI開発についてご存知ない方はまずは入門編を先にお読みになった方がよいでしょう.<br>
+	<br>
+	ここではライブラリを使ったMoai CGIを開発する方法について述べます.<br>
+	そして最終課題としてproxy_finderに該当するツールを作成してみます.<br>
+	難易度はやや高めです.<br>
+	<br>
+</div><br>
+<br>
+
+
+<a name=Index></a>
+<u><b>目次</b></u>
+<ul>
+	<li><b><a class=MstyElemLink href=#MoaiCGI_pragmatic_introduction>準備</a></b></li>
+	<li><b><a class=MstyElemLink href=#MoaiCGI_pragmatic_library>ライブラリを使った高度なMoai CGIの例</a></b></li>
+</ul><br>
+
+
+<a name=MoaiCGI_pragmatic_introduction></a>
+<u><b>
+準備
+</b></u><br>
+<br>
+<div class=MstyIndent>
+	ライブラリを指定するには、mkfgen.myfにその記述を追加する必要があります.<br>
+	mkfgenについては<a href="/moai2.0/mkfgen.html" target=_blank>こちら</a>に作者によるリファレンスがありますが、<br>
+	この内容は大変難しいため、ムリに読む必要はないでしょう.<br>
+	<br>
+	この記事では、znk_project 内にあるlibZnkとlibRanoという二つのライブラリを使いたいと思います.<br>
+	とりあえず深く考えず次の手順で指定をしましょう.<br>
+	<ol>
+		<li>srcディレクトリ配下にあるcgi_simpleディレクトリを雛形として使います.<br>
+		これを同じくsrcディレクトリ内にコピーして、あなたの好きな名前に変えましょう(ただし使う文字は半角英数字にしておきましょう).<br>
+		ここでは仮に my_cgi という名前にしたとします.<br>
+		これをあなたが開発するMoai CGI用ディレクトリとします.<br>
+		</li>
+		<br>
+		<li>my_cgiディレクトリ内にあるmkfgen.myfをテキストエディタで開きます.<br>
+		</li>
+		<br>
+		<li>include_paths_commonセクションに以下の二行を記述します.<br>
+		<br>
+		<div class=MstyComment>
+			@{libZnk}<br>
+			@{libRano}<br>
+		</div>
+		</li>
+		<br>
+		<li>dependency_libs_commonセクションに以下の二行を記述します.<br>
+		<br>
+		<div class=MstyComment>
+			rlib: @{libZnk}  Znk  $(DL_VER)<br>
+			rlib: @{libRano} Rano $(DL_VER)<br>
+		</div>
+		</li>
+		<br>
+		<li>Windowsの場合、my_cgiディレクトリ内にあるauto_trigger.batを実行し、以下を選択します.<br>
+		<br>
+		<div class=MstyComment>
+			6. mkfgen_update<br>
+		</div>
+		<br>
+		Linuxの場合はsrc/my_cgiディレクトリをカレントディレクトリにしておいてmkfgenを直接実行します.<br>
+		mkfsysはsrcディレクトリの一つ上の階層にありますから、つまり以下のように実行します.<br>
+		<br>
+		<div class=MstyComment>
+			$ ../../mkfsys/mkfgen<br>
+		</div>
+		<br>
+		これでmkfgen.myfの内容を元にmkfgenツールが実行され、あなたのMakefileが自動生成(既に存在する場合は更新)されます.
+		</li>
+		<br>
+		<li>この状態で試しに実際にコンパイルしてみましょう.<br>
+		Windowsの場合、my_cgiディレクトリ内にあるauto_trigger.batを実行し、以下を選択します.<br>
+		<br>
+		<div class=MstyComment>
+			0. make<br>
+		</div>
+		<br>
+		Linuxの場合はMakefile_linux.mak を指定してmakeします.<br>
+		つまり以下のように実行します.<br>
+		<br>
+		<div class=MstyComment>
+			$ make -f Makefile_linux.mak<br>
+		</div>
+		<br>
+		</li>
+	</ol>
+	<br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
+</div><br>
+
+
+<a name=MoaiCGI_pragmatic_library></a>
+<u><b>
+ライブラリを使った高度なMoai CGIの例
+</b></u><br>
+<br>
+<div class=MstyIndent>
+	ここではlibZnkとlibRanoライブラリを使ったMoai CGIの例をみてみましょう.<br>
+	Moai CGI で処理の途中経過を表示するサンプルです.<br>
+	<br>
+	<b><u>CGIへのリンクとソースコード</u></b><br>
+	<br>
+	<div class=MstyIndent>
+		<a class=MstyAppLink href="http://localhost:8124/cgis/cgi_developers/progress.cgi">http://localhost:8124/cgis/cgi_developers/progress.cgi</a>
+		<a class=MstyElemLink href="/cgis/cgi_developers/publicbox/progress.c">ソースコード</a> 
+		<span class=MstyAuthor> (Author: Mr.Moai)</span><br>
+		<div class=MstyComment>
+			CGIのリンクについてはmoaiを起動しておく必要があります.<br>
+		</div>
+	</div>
+	<br>
+	<b><u>説明</u></b><br>
+	<br>
+	<div class=MstyIndent>
+		準備中.<br>
+		<br>
+		<div class=MstyComment>
+			<div class=MstyCode>
+				ZnkVarpAry post_vars = ZnkVarpAry_create( true );<br>
+				...<br>
+				<span class=MstyCodeSynComment>/* CGIにおけるフォームの投稿データをpost_varsへと取得します. */<br>
+				/* またこの関数においては第1引数evarの指定も必要となります. */</span><br>
+				RanoCGIUtil_getPostedFormData( evar, post_vars, NULL, NULL, NULL, NULL, true );<br>
+			</div>
+		</div>
+		<br>
+		post_varsに取得結果を格納する点はQuery Stringの時とよく似ています.<br>
+		これはフォームの投稿データもQuery Stringと同様、基本的には変数の配列であるためです.<br>
+		以下のようにすれば、Query Stringをpost_varsに取得後、フォームの投稿データを追加的にpost_varsへと取得します.<br>
+		つまりこれらを統合して取得することが出来るのです.<br>
+		<div class=MstyComment>
+			<div class=MstyCode>
+				<ul class=MstyCode>
+				<br>
+				...<br>
+				<span class=MstyCodeSynComment>/* CGIにおけるQuery Stringとフォームの投稿データの両方をまとめてpost_varsへと取得します. */</span><br>
+				const char* query_string = evar-&gt;query_string_ ? evar-&gt;query_string_ : "";<br>
+				RanoCGIUtil_splitQueryString( post_vars, query_string, Znk_NPOS, false );<br>
+				RanoCGIUtil_getPostedFormData( evar, post_vars, NULL, NULL, NULL, NULL, true );<br>
+				...<br>
+			</div>
+		</div>
+		<br>
+		以降、Query Stringとフォームの投稿データをまとめたこの post_vars を<b>POST変数</b>と呼ぶことにします.<br>
+	</div>
+	<br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
+</div><br>
+
+
+<u><b>リンク</b></u>
+<ul>
+	<li><a class=MstyElemLink href="#TopBar">一番上へ</a></li>
+	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">Moai公式サイト(github)</a></li>
+	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(github)</a></li>
+</ul><br>
+
+</body>
+</html>
