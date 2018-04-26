@@ -263,7 +263,7 @@ isOldFile( const char* file_path, size_t days_ago, size_t sec_ago )
 	
 		if( ZnkDate_compareDay( &date, &threshold ) >= 0 ){
 			diff_sec = ZnkDate_diffSecond( &current, &date, 1 );
-			if( diff_sec >= sec_ago ){
+			if( diff_sec >= (long)sec_ago ){
 				is_old = true;
 			}
 		} else {

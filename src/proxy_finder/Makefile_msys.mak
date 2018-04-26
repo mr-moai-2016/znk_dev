@@ -55,6 +55,8 @@ PRODUCT_EXECS= \
 
 RUNTIME_FILES= \
 	__mkg_sentinel_target__ \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/Znk-$(DL_VER).dll \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/Rano-$(DL_VER).dll \
 
 
 
@@ -68,7 +70,7 @@ $O:
 
 # Product files rule.
 $(EXE_FILE0): $(OBJS0)
-	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano.a $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.a $(MY_LIBS_ROOT)/libZnk/zlib/out_dir/$(ABINAME)/libzlib.a -lws2_32 
+	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk-$(DL_VER).dll.a $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano-$(DL_VER).dll.a
 
 
 ##

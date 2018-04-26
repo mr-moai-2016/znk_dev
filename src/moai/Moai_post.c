@@ -111,12 +111,25 @@ MoaiPost_parsePostAndCookieVars( ZnkSocket sock, MoaiFdSet mfds,
 	}
 	ZnkHtpHdrs_scanContentType( htp_hdrs->vars_, dst_boundary );
 
-	if( ZnkS_isBegin_literal( content_type, "multipart/form-data" ) ){
+	/***
+	 * Note. body部について.
+	 *
+	 * 1. GETの場合
+	 *   body部は存在しない.
+	 *
+	 * 2. POST(multipart/form-data)の場合
+	 *   存在する.
+	 *   boundary文字列で分割される形式である.
+	 *
+	 * 3. POST(application/x-www-form-urlencoded)の場合
+	 *   存在する.
+	 *   この場合、URLで ? に続く部分がある場合は、環境変数 QUERY_STRING として取得できるが、
+	 *   これはbody部とはならない.
+	 *   一方、formタグ内で指定したinputやtextareaデータなどはbody部となっている.
+	 *   この場合のbody部は、QUERY_STRINGと同じ形式で&で連結された形となっている.
+	 */
+	{
 		size_t remain_size = 0;
-		/***
-		 * この場合、bodyの取得も試みる.
-		 */
-
 		if( ZnkBfr_size( stream ) < hdr_size + content_length ){
 			remain_size = hdr_size + content_length - ZnkBfr_size( stream );
 		} else {

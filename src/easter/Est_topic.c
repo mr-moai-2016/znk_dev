@@ -11,6 +11,7 @@
 #include <Est_recentory.h>
 #include <Est_finf.h>
 #include <Est_assort_list.h>
+#include <Est_hint_manager.h>
 
 #include <Znk_htp_util.h>
 #include <Znk_str_ex.h>
@@ -407,12 +408,14 @@ viewTopic( ZnkBird bird, ZnkVarpAry post_vars, ZnkStr backto, ZnkStr msg, const 
 			ZnkStr_addf( EstTP_view, "searched_key=[%s] does not exist.", ZnkVar_cstr(searched_key) );
 		}
 		{
-			ZnkStr  arg = ZnkStr_newf( searched_key ? "searched_key=%s#TagsView" : "searched_key=0#TagsView", ZnkVar_cstr(searched_key) );
+			ZnkStr  arg = searched_key ?
+				ZnkStr_newf( "searched_key=%s", ZnkVar_cstr(searched_key) ) :
+				ZnkStr_new( "searched_key=0" );
 			if( current_category ){
 				current_category_id = ZnkVar_cstr( current_category );
 			}
 			EstAssortUI_makeCategorySelectBar( category_select_bar, current_category_id, current_category_name,
-					"topic", "view", ZnkStr_cstr(arg) );
+					"topic", "view", ZnkStr_cstr(arg), "#TagsView" );
 			ZnkStr_delete( arg );
 		}
 
@@ -431,7 +434,7 @@ viewTopic( ZnkBird bird, ZnkVarpAry post_vars, ZnkStr backto, ZnkStr msg, const 
 	ZnkBird_regist( bird, "current_category_name", ZnkStr_cstr(current_category_name) );
 	ZnkBird_regist( bird, "tags_view",     ZnkStr_cstr(tags_view) );
 	ZnkBird_regist( bird, "tag_editor_ui", ZnkStr_cstr(tag_editor_ui) );
-	ZnkBird_regist( bird, "hint_table", "" );
+	//ZnkBird_regist( bird, "hint_table", "" );
 	ZnkStr_delete( query_string_base );
 	ZnkStr_delete( EstCM_img_url_list );
 	EstRecentory_destroy( recent );
@@ -518,6 +521,7 @@ EstTopicManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const
 	}
 	ZnkStr_addf( msg, "is_authenticated=[%d]\n", is_authenticated );
 
+	ZnkBird_regist( bird, "EstCM_img_url_list", "" );
 	if( IS_OK( cmd = ZnkVarpAry_find_byName_literal( post_vars, "command", false ) )){
 		ZnkStr assort_msg = ZnkStr_new( "" );
 		ZnkStr  backto = ZnkStr_new( "" );
@@ -574,6 +578,14 @@ EstTopicManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const
 		ZnkStr_delete( EstTP_view );
 	}
 
+	{
+		ZnkStr hint_table = EstHint_getHintTable( "topic" );
+		if( hint_table ){
+			ZnkBird_regist( bird, "hint_table", ZnkStr_cstr(hint_table) );
+		} else {
+			ZnkBird_regist( bird, "hint_table", "" );
+		}
+	}
 	ZnkHtpURL_negateHtmlTagEffection( msg ); /* for XSS */
 	{
 		ZnkSRef old_ptn = { 0 };

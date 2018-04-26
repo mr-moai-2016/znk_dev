@@ -65,6 +65,7 @@ hosts.myf
 config_cgi.myf
 target.myf
 moai_without_proxy.bat
+moai_without_console.bat
 default/filters/*.myf
 doc_root/*.html
 doc_root/*.css
@@ -78,6 +79,7 @@ doc_root/moai2.0/*.html
 doc_root/imgs/*.png
 doc_root/imgs/*.jpg
 doc_root/imgs/*.gif
+doc_root/public/moai.png
 moai_for_android.sh
 @@.
 

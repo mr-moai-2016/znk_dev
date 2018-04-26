@@ -12,6 +12,7 @@
 
 <a class=MstyElemLink href="/">トップページ</a> &nbsp;
 <a class=MstyNowSelectedLink href="/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<a class=MstyElemLink        href="/moai1.1/index.html">Moai1.1ドキュメント</a> &nbsp;
 <br> <br>
 <a class=MstyElemLink        href="/moai2.0/install.html">インストールガイド</a> &nbsp;
 <a class=MstyNowSelectedLink href="/moai2.0/moai_reference.html">Moai本体</a> &nbsp;
@@ -70,6 +71,7 @@
 	<li><b><a class=MstyElemLink href=#filter_send>送信フィルタについて</a></b></li>
 	<li><b><a class=MstyElemLink href=#MoaiAuthentication>Moai認証</a></b></li>
 	<li><b><a class=MstyElemLink href=#XhrDMZ>Moaiの新防御システムXhrDMZについて</a></b></li>
+	<li><b><a class=MstyElemLink href=#config_cgi_myf>config_cgi.myfについて</a></b></li>
 	<li><b><a class=MstyElemLink href=#ignore_hosts>無用なホストへの接続をブロックする(ignore_hosts機能)</a></b></li>
 	<li><b><a class=MstyElemLink href=#post_confirm>POST時の確認メッセージ表示(post_confirm機能)</a></b></li>
 	<li><b><a class=MstyElemLink href=#acceptable_host>他のマシンからの接続を許可/制限する</a></b></li>
@@ -425,10 +427,30 @@ Moai認証
 	まず正規のUIにのみMoai_AuthenticKeyの値を埋め込みます.<br>
 	そのUIのHTMLの中身は、例えば以下のようにして form から post した際に<br>
 	このMoai_AuthenticKeyがPOST変数に含まれるようにしておきます.<br>
+	( 以下で #[Moai_AuthenticKey]# の部分は実際には16桁の16進数記号列になります.<br>
+	この値は Moaiを起動するたびにランダムに変わります. )<br>
 	<br>
 	<div class=MstyComment>
 		&lt;input type=hidden name=Moai_AuthenticKey value="#[Moai_AuthenticKey]#"&gt;
-	</div><br>
+	</div>
+	<br>
+	あるいはURLにQueryStringの形で指定する方法もあります.<br>
+	例えば command がsaveの場合はMoai_AuthenticKeyを正しく設定する必要があり、<br>
+	それ以外の command ではMoai_AuthenticKeyは別に必要ないといった柔軟性のある指定ができます.<br>
+	<br>
+	<div class=MstyComment>
+		http://127.0.0.1:8124/cgis/my_tool/my_cgi.cgi?command=save&amp;Moai_AuthenticKey=#[Moai_AuthenticKey]#
+	</div>
+	<br>
+	あるいはURLに次の形で指定する方法もあります.<br>
+	(これをMoaiでは<b>prefixing Moai_AuthenticKey</b>と呼んでいます)<br>
+	外サイトから拾ってきたCGIスクリプト等をMoai_AuthenticKey下で安全に実行させるのに便利です.<br>
+	CGIスクリプトの実体は Moaiディレクトリ直下の cgis/protected ディレクトリ配下に置きます.<br>
+	<br>
+	<div class=MstyComment>
+		http://127.0.0.1:8124/authentic/#[Moai_AuthenticKey]#/cgis/protected/my_tool/my_cgi.cgi
+	</div>
+	<br>
 	後述するXhrDMZ側でブラウザにて実行されるJavascriptは、このUIのHTMLに対してXHtmlRequestを発行することができず、<br>
 	従ってMoai_AuthenticKeyの値をユーザ以外が自動的には読むことができないという仕組みになっています.<br>
 	<br>
@@ -443,11 +465,11 @@ Moaiの新防御システムXhrDMZについて
 <br>
 <div class=MstyIndent>
 	例えばユーザにとって秘匿性の高いファイルにアクセスするなど重要なCGIを実行する場合、<br>
-	確かに正規のUIからの要求であることを保証するために、正規のUI内にMoai AuthenticKeyを埋め込み、<br>
-	その値で認証を行うべきです(これをMoai認証と呼ぶ).<br>
+	確かに正規のUIからの要求であることを保証するために、正規のUI内にMoai_AuthenticKeyを埋め込み、<br>
+	その値で認証を行うべきです(これをMoai認証と呼ぶことは前述しました).<br>
 	<br>
 	しかし仮に他のサイトにこの正規のUIのHTML本文全体を取得するようなJavascriptコードが埋め込まれていたとしたら、<br>
-	Moai AuthenticKeyの内容を奪取される恐れがあります.<br>
+	Moai_AuthenticKeyの内容を奪取される恐れがあります.<br>
 	そしてXMLHttpRequestを使えばそれをJavascript上で実現できてしまいます.<br>
 	<br>
 	このようにXMLHttpRequestは強力な機能ですが、仮にこの機能に全く歯止めを設けなかった場合、<br>
@@ -465,30 +487,30 @@ Moaiの新防御システムXhrDMZについて
 	しかしオリジンはあまりわかりやすい表現ではないので、ここではある程度正確さは犠牲にして、<br>
 	わかりやすくURLという表現として説明しましょう.<br>
 	<br>
-	MoaiはこのSame-Origin Policyに基づき、XMLHttpRequestが適用できる範囲を隔離するために、<br>
-	Moai本体(Moai CGI実行)用のホストとポート番号の組み合わせとは別に、<br>
-	新しいホストとポートを分離したURL領域を導入しました.<br>
-	これを我々はXhrDMZと呼んでいます.<br>
+	MoaiはこのSame-Origin Policyに基づき、XMLHttpRequestが適用できる範囲を分離するために、<br>
+	Moai本体(Moai CGI実行)用のポート番号とは別に、異なるポート番号を持ったURL領域を導入しました.<br>
+	この隔離領域を我々は<b>XhrDMZ</b>と呼んでいます.<br>
 	<br>
 	例えばMoai本体が http://127.0.0.1:8124 内で動作していたとします.<br>
 	Moai CGIもこのURL内で動作します.<br>
 	一方、XhrDMZはこのURLとは異なるものがMoai内のアルゴリズムによって自動的に決定されます.<br>
 	<br>
-	例えばこの場合、XhrDMZとして http://192.168.1.50:8125 というURLになります.<br>
-	ここで 192.168.1.50 というのはLAN上からみたあなたのマシンのIP(Private IP)としましょう.<br>
-	つまり実質的には 127.0.0.1 と同じマシンを示すことになりますが、その表現のみ異なっているということです.<br>
+	例えばこの場合、XhrDMZとして http://127.0.0.1:8125 というURLになります.<br>
+	設定によっては 127.0.0.1 の部分は 192.168.1.50 といったLAN上からみたあなたのマシンのIP(Private IP)になる場合もあります.<br>
+	いずれによ実質的には 127.0.0.1 と同じマシンを示すことになりますが、その表現のみ異なっているということです.<br>
 	Same-Origin Policyにおいては、この表現が異なれば別のURL(オリジン)とみなされます.<br>
-	またポート番号についても、8124ではなく8125となり、Moai本体のURLとは確実に異なるものとして生成されます.<br>
+	またポート番号については 8124ではなく8125となり、Moai本体のURLとは確実に異なるものとして生成されます.<br>
 	<br>
-	これにより、XhrDMZ内のURLでブラウザ上に表示されたJavascript(XMLHttpRequest)は、<br>
+	これにより、XhrDMZ内の隔離されたURLでブラウザ上に表示されたJavascript(XMLHttpRequest)は、<br>
 	Moai本体のURL内で表示されたHTML本文の内容を取得できなくなり、<br>
-	従ってそこに埋め込まれた Moai AuthenticKeyなどの認証に関する値が奪取される可能性を排除できます.<br>
+	従ってそこに埋め込まれた Moai_AuthenticKeyなどの認証に関する値が奪取される可能性を排除できます.<br>
 	<br>
 	どのようなXMLHttpRequest(JavascriptからHTTPを発行する機能)が含まれているか<br>
-	一般に予測不能な危険性のあるファイルをブラウザで表示する際は、XhrDMZから行うようにするのが安全です.<br>
-	それをMoai本体用のURL下で不用意に表示させるべきではありません.<br>
+	一般に予測不能な危険性のあるファイルをブラウザで表示する際は、まずそれをXhrDMZに置いてから表示するのが安全です.<br>
+	( Moai本体用のURL下では不用意に表示させるべきではありません ).<br>
 	例えば、あなたがWebクライアントとしての能力を持つCGIを開発したとします.<br>
 	このようなやや特殊な用途ではこのような状況が発生し得るため、XhrDMZがその効力を発揮することでしょう.<br>
+	( Easterはこの種のタイプのツールの一例となっています ).<br>
 	<br>
 	<div class=MstyComment>
 		<u><b>XhrDMZ導入の背景</b></u><br>
@@ -510,6 +532,273 @@ Moaiの新防御システムXhrDMZについて
 		<br>
 		今回のMoai Ver2.0のエンジン開発で、私がXhrDMZを導入した背景もこのような要請からのものです.<br>
 		<br>
+	</div>
+	<br>
+	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
+</div><br>
+<br>
+
+
+<a name=config_cgi_myf></a>
+<u><b>
+config_cgi.myfについて
+</b></u><br>
+<br>
+<div class=MstyIndent>
+	<b>interpreter_{platform}セクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		Moaiはこのセクションで宣言された拡張子を持つファイルのみCGIスクリプトとみなします.<br>
+		それ以外のファイルはCGIスクリプトとはみなされません.<br>
+		左辺値が拡張子の文字列そのものとなっています.<br>
+		右辺値が空でない場合、その値はそのCGIスクリプトを実行するためのインタープリタのパスとみなされます.<br>
+		右辺値が空である場合、その拡張子のCGIスクリプトはインタープリタなしで自立して実行可能であることを示します.<br>
+		<br>
+		{platform}の部分には windows, linux, android, cygwin の４つの識別子が付加され、<br>
+		それぞれのプラットフォーム毎にパスを指定します.<br>
+		例えばお使いのMoaiがWindows版であれば、interpreter_windowsにパスを指定してください.<br>
+		<br>
+		例. Windowsの場合<br>
+		<div class=MstyComment>
+			@@V interpreter_windows<br>
+			php = ['C:\my_interpreters\php\php-4.4.6-Win32\php.exe']<br>
+			rb  = ['C:\my_interpreters\ruby-1.8.4\bin\ruby.exe']<br>
+			cgi = ['']<br>
+			@@.<br>
+		</div>
+		<br>
+		例. Linuxの場合<br>
+		<div class=MstyComment>
+			@@V interpreter_linux<br>
+			php = ['/usr/bin/php-cgi -q']<br>
+			rb  = ['']<br>
+			cgi = ['']<br>
+			@@.<br>
+		</div>
+		<br>
+		例. Androidの場合<br>
+		<div class=MstyComment>
+			@@V interpreter_android<br>
+			php = ['/usr/bin/php-cgi -q']<br>
+			rb  = ['']<br>
+			cgi = ['']<br>
+			@@.<br>
+		</div>
+		<br>
+		例. Cygwinの場合<br>
+		<div class=MstyComment>
+			@@V interpreter_cygwin<br>
+			php = ['/cygdrive/c/my_interpreters/php/php-4.4.6-Win32/php.exe']<br>
+			rb  = ['']<br>
+			cgi = ['']<br>
+			@@.<br>
+		</div>
+		<br>
+		しかしLinuxなど、シェル上でテキストなスクリプトファイルが起動可能な環境では<br>
+		最初の行に #! 指定(これをshebangと呼ぶ)が使えるので、そのようにした上で右の値は空値にして自立実行させることも勿論可能です.<br>
+		<br>
+	</div>
+	<br>
+	<b>urp_alias_listセクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		MoaiはURLの第1番目の / から第2番目の / までに続く部分の文字列を別の文字列へ置換することができます.<br>
+		(複数指定可能)<br>
+		<br>
+		これをMoaiではURPAliasと呼びます.<br>
+		これは長いURPを単に簡略化するだけのために導入された機能です.<br>
+		<br>
+		easterのCGIスクリプト本体の本来の位置は /cgis/easter/easter.cgi です.<br>
+		それにも関わらず /easter とだけURP指定してもこれが実行されます.<br>
+		そのからくりはMoaiの提供するこのURPAlias機能を利用しているからです.<br>
+		<br>
+		例. easterのalias<br> 
+		<div class=MstyComment>
+			<br>
+			<div class=MstyComment>
+				@@V urp_alias_list<br>
+				easter = ['cgis/easter/easter.cgi']<br>
+				@@.<br>
+			</div>
+			<br>
+			/easter  だけの場合は /cgis/easter/easter.cgi<br>
+			/easter/... と続く場合は /cgis/easter/easter.cgi/...<br>
+			/easter?... と続く場合は /cgis/easter/easter.cgi?...<br>
+			/easter#... と続く場合は /cgis/easter/easter.cgi#...<br>
+			と展開されます.<br>
+			<br>
+			/easter  の後ろに上記以外の文字が続く場合は何も展開されずそのままとなります.<br>
+		</div>
+		<br>
+	</div>
+	<br>
+	<b>cgi_exec_deny_urpセクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		MoaiはCGIへのパスとして cgis/<一つ以上のディレクトリ>/CGIスクリプト というパターンが与えられた場合のみ<br>
+		その実行が許可されます.<br>
+		(その他のパターンでは(aliasを除いては)実行は一切許可されません)
+		<br>
+		しかし上記を満たすディレクトリ配下であっても、一部のパターンで例外的にCGIスクリプトの実行を許可しないようにしたいことがあります.<br>
+		このセクションではそのようなディレクトリのパターンを指定できます.<br>
+		(複数指定可能)<br>
+		<br>
+		例. 以下のパターンでは例外的にCGIの実行を不可とします.<br>
+		<div class=MstyComment>
+			/cgis/easter/cachebox/*<br>
+			/cgis/custom_boy/cachebox/*<br>
+			/cgis/easter/tmp/*<br>
+			/cgis/custom_boy/tmp/*<br>
+		</div>
+		<br>
+		例えば、あなたがWebクライアントとしての能力を持つCGIを開発したとします.<br>
+		またそれがWebにアクセスした際のキャッシュファイルなどを保存しておくためのディレクトリをcgis配下に用意するものとします.<br>
+		(easterはまさにこの例の一つです)<br>
+		このようなやや特殊な状況で、この指定が必要になります.<br>
+		キャッシュファイルの中にcgiスクリプトが含まれている可能性もあり、それがどんな内容であるかは一般的には予測不能です.<br>
+		従ってそれをローカルで不用意に実行させるのを認めるべきではありません.<br>
+	</div>
+	<br>
+	<b>xhrdmz_only_urpセクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		Moaiは このセクションで指定されたパターンについてはXhrDMZからのアクセスに限りファイル取得を認めるものとします.<br>
+		(複数指定可能)<br>
+		<br>
+		ここで指定したフォルダ内には、ネット上から取得したファイルのキャッシュなどを格納しておくとよいです.<br>
+		このようなファイルは隔離された仮想ホストであるXhrDMZから表示させる方が安全であるためです.<br>
+		また逆に(XhrDMZではない)通常のMoai WebServerを介しては、これらを参照することは不可能であるものとします.<br>
+		<br>
+		<div class=MstyComment>
+			<b><u>Note.</u></b><br>
+			<br>
+			これはつまり、通常のMoai WebServerではそのようなファイルを不用意に表示すべきでないことを意味します.<br>
+			そのようなファイルには未知のXMLHttpRequest(JavascriptからHTTPを発行する機能)が含まれている可能性があるためです.<br>
+			これを不用意に正規のMoai WebServerの方で表示させては、(Moai WebServer上の)他のCGI群への危険因子となる恐れがあります.<br>
+		</div><br>
+		<div class=MstyComment>
+			<b><u>Note.</u></b><br>
+			<br>
+			XhrDMZからファイル取得できるのは、このxhrdmz_only_urpセクションで指定されたものと<br>
+			public_urp セクションで指定されたものの二つに限ります.<br>
+			それ以外はファイル取得要求は拒否されます.<br>
+		</div><br>
+		<div class=MstyComment>
+			<b><u>Note.</u></b><br>
+			<br>
+			このセクションで指定されたパターンについては、CGIの実行は認められません.<br>
+			(指定されたURPの拡張子がCGIスクリプトのものであってもファイル取得要求とみなされます).<br>
+		</div><br>
+		例. easter用の設定.<br>
+		<div class=MstyComment>
+			@@L xhrdmz_only_urp<br>
+			/cgis/easter/cachebox/*<br>
+			/cgis/easter/dustbox/*<br>
+			/cgis/easter/favorite/*<br>
+			/cgis/easter/stockbox/*<br>
+			/cgis/easter/userbox/*<br>
+			@@.<br>
+		</div>
+		<br>
+	</div>
+	<br>
+	<b>xhrdmz_cgi_urpセクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		Moaiは このセクションで指定されたパターンについてはXhrDMZからのCGI実行<b>も</b>許可します.<br>
+		(複数指定可能)<br>
+		<br>
+		このセクションは非常に特殊なもので、安全上差障りのない用途に限りますが、XhrDMZ内からある種の特別なCGI処理を実行させたいことがあります.<br>
+		このセクションで指定するCGIスクリプトは、それがXhrDMZからの実行要求であることを内部で正しく認識する機構を備えていなければなりません.<br>
+		また、XhrDMZからの要求に対して越権的な処理が行使されることのないよう適切な防御機構を備えておく必要があります.<br>
+		(例えばeasterの場合、それ自体がそのような防御機構を備えています)<br>
+		<br>
+		XhrDMZからのCGI実行は、ここで指定されたパターン以外では一切許可されません.<br>
+		<br>
+		例. easter用の設定.<br>
+		<div class=MstyComment>
+			@@L xhrdmz_cgi_urp<br>
+			/cgis/easter/easter.cgi<br>
+			@@.<br>
+		</div><br>
+		<div class=MstyComment>
+			<b><u>Note.</u></b><br>
+			<br>
+			この指定は、xhrdmz_only_urp セクションの指定より優先されます.<br>
+			即ち、このセクションで指定したCGIスクリプトが、xhrdmz_only_urp セクションで指定されていたパターンにマッチした場合は、<br>
+			このCGIスクリプトの実行に限り許可するものとします.<br>
+		</div><br>
+	</div>
+	<br>
+	<b>public_urpセクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		Moaiはこのセクションで指定されたURPのパターンにマッチした場合、いかなる場合もそのURPの中身のファイル取得を認めます.<br>
+		(すなわち Moai WebServerやXhrDMZからのファイル取得アクセスも可能であり、そのときMoai_AuthenticKeyも必要としません).<br>
+		<br>
+		ここで指定したフォルダ内にはネットワーク上の他マシンに公開しても全く問題ないようなファイルのみを格納すべきです.<br>
+		<br>
+		例. <br>
+		<div class=MstyComment>
+			@@L public_urp<br>
+			/moai.png<br>
+			/msty.css<br>
+			/cgis/easter/publicbox/*<br>
+			/cgis/cgi_developers/publicbox/*<br>
+			@@.<br>
+		</div>
+	</div>
+	<br>
+	<b>protected_urpセクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		Moaiはこのセクションで指定されたURPのパターンにマッチした場合、Moai_AuthenticKeyが正しく指定されている場合のみ<br>
+		URPの中身のファイル取得を認めます.<br>
+		URPが意味するものがCGIスクリプトの場合は、Moai_AuthenticKeyが正しく指定されている場合のみ<br>
+		その実行を認めます.<br>
+		<br>
+		例. <br>
+		<div class=MstyComment>
+			@@L protected_urp<br>
+			/protected/*<br>
+			/doc_root/protected/*<br>
+			/cgis/protected/*<br>
+			@@.<br>
+		</div>
+		<br>
+		この例では、/protected/file や protected/dir/file といったファイルを参照するために<br>
+		Moai_AuthenticKeyを正しく付加する必要があります.<br>
+		また/cgis/protected/cgi_script.cgi のようなCGIを実行するために<br>
+		同様にMoai_AuthenticKeyを正しく付加する必要があります.<br>
+	</div>
+	<br>
+	<b>fsys_map_listセクション</b><br>
+	<br>
+	<div class=MstyIndent>
+		Moaiは このセクションの右辺の文字列リストにおいて、第1番目で指定されたURL上のパスへのアクセスについては<br>
+		第2番目で指定されたファイルシステム上の実ディレクトリへアクセスしたのと等価になります.<br>
+		Moaiではこれを「第1番目が第2番目にマッピングされている」などと呼びます.<br>
+		(UNIXシステムなどにおけるマウントと形式的には同じ概念です).<br>
+		第2番目の文字列には#[profile_dir]#を含めることができ、これはMoai config.myfにおけるprofile_dirの値に変換されます.<br>
+		<br>
+		さらに文字列リストにおいて第3番目の文字列が存在する場合、それを環境変数とみなします.<br>
+		そしてその環境変数がOSにおいて定義されている場合、Moaiは第2番目の替わりに第3番目の環境変数の値を<br>
+		実ディレクトリとしてマッピングします. 定義されていない場合は、第2番目を実ディレクトリとしてマッピングします.<br>
+		<br>
+		<div class=MstyComment>
+			@@V fsys_map_list<br>
+			favorite = { ['/cgis/easter/favorite'] ['#[profile_dir]#/favorite'] ['EST_FAVORITE_DIR'] }<br>
+			stockbox = { ['/cgis/easter/stockbox'] ['#[profile_dir]#/stockbox'] ['EST_STOCKBOX_DIR'] }<br>
+			userbox  = { ['/cgis/easter/userbox']  ['#[profile_dir]#/userbox']  ['EST_USERBOX_DIR'] }<br>
+			@@.<br>
+		</div><br>
+		<div class=MstyComment>
+			<b><u>Note.</u></b><br>
+			<br>
+			= より左の左辺値はMapping識別子と呼ばれ、それぞれの行について一意な文字列でなければなりません.<br>
+			( Mapping識別子は現バージョンのMoaiでは実際には使われていませんが、<br>
+			fsys_map_list セクションの仕様では一応これの付加は必須としてあります ).<br>
+		</div><br>
 	</div>
 	<br>
 	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
@@ -861,10 +1150,8 @@ POST時の確認メッセージ表示(post_confirm機能)
 		</li>
 	</ul>
 	<br>
-	pluginの実体はpluginsフォルダ内にある<b>TARGET_NAME</b>.dll(またはLinuxなどの場合<b>TARGET_NAME</b>.so)という<br>
-	ファイルになります. これらの独自に作ってみたいというC言語プログラマの方は
-	<a class=MstyElemLink href="/moai1.1/hacking.html">ハッキング</a>
-	にそのヒントを記述しておいたので<br>
+	pluginの実体はpluginsフォルダ内の<b>TARGET_NAME</b>.dll(Linuxなどの場合<b>TARGET_NAME</b>.so)というファイルです.<br>
+	これらの独自に作ってみたいというC言語プログラマの方は<a class=MstyElemLink href="/moai1.1/hacking.html#plugin">こちら</a>にそのヒントを記述しておいたので<br>
 	興味があれば参照してください.<br>
 	<br>
 	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
@@ -910,8 +1197,8 @@ POST時の確認メッセージ表示(post_confirm機能)
 <u><b>リンク</b></u>
 <ul>
 	<li><a class=MstyElemLink href="#TopBar">一番上へ</a></li>
-	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">Moai公式サイト(github)</a></li>
-	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(github)</a></li>
+	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(オンライン)</a></li>
+	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">znk_project(github)</a></li>
 </ul><br>
 
 </body>

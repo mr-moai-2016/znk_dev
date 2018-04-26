@@ -1,26 +1,3 @@
-#include <CB_virtualizer.h>
-#include <CB_fgp_info.h>
-#include <CB_ua_info.h>
-#include <CB_config.h>
-#include <CB_custom_automatic.h>
-#include <CB_custom_postvars.h>
-#include <CB_custom_feature.h>
-#include <CB_custom_cookie.h>
-
-#include <Rano_cgi_util.h>
-#include <Rano_html_ui.h>
-#include <Rano_log.h>
-
-#include <Znk_str.h>
-#include <Znk_str_path.h>
-#include <Znk_stdc.h>
-#include <Znk_htp_util.h>
-#include <Znk_dir.h>
-#include <Znk_zlib.h>
-#include <Znk_net_base.h>
-
-#include <stdlib.h>
-
 /**
  * CustomBoy Engine (introduced by Ver2.0 2017.3)
  *
@@ -44,6 +21,29 @@
  *  In no event will the authors be held liable for any damages arising
  *  from the use of this software.
  */
+#include <CB_virtualizer.h>
+#include <CB_fgp_info.h>
+#include <CB_ua_info.h>
+#include <CB_config.h>
+#include <CB_custom_automatic.h>
+#include <CB_custom_postvars.h>
+#include <CB_custom_feature.h>
+#include <CB_custom_cookie.h>
+
+#include <Rano_cgi_util.h>
+#include <Rano_html_ui.h>
+#include <Rano_log.h>
+
+#include <Znk_str.h>
+#include <Znk_str_path.h>
+#include <Znk_stdc.h>
+#include <Znk_htp_util.h>
+#include <Znk_dir.h>
+#include <Znk_zlib.h>
+#include <Znk_net_base.h>
+
+#include <stdlib.h>
+
 
 static char st_moai_authentic_key[ 256 ] = "";
 
@@ -206,7 +206,7 @@ parseQueryString( RanoCGIEVar* evar )
 			ZnkStr_set( category, ZnkVar_cstr( varp ) );
 		}
 
-		varp = ZnkVarpAry_find_byName_literal( cb_vars, "cb_AuthenticKey", false );
+		varp = ZnkVarpAry_find_byName_literal( cb_vars, "Moai_AuthenticKey", false );
 		if( varp && ZnkS_eq( st_moai_authentic_key, ZnkVar_cstr(varp) ) ){
 			is_authenticated = true;
 		}
@@ -276,7 +276,7 @@ parseQueryString( RanoCGIEVar* evar )
 			break;
 		}
 
-		ZnkBird_regist( bird, "cb_AuthenticKey",  st_moai_authentic_key );
+		ZnkBird_regist( bird, "Moai_AuthenticKey",  st_moai_authentic_key );
 		ZnkBird_regist( bird, "msg",  ZnkStr_cstr(msg) );
 		ZnkBird_regist( bird, "nego_target",  CBConfig_theNegotiatingTarget() );
 		RanoCGIUtil_printTemplateHTML( evar, bird, template_html_file );

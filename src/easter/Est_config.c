@@ -29,6 +29,8 @@
 
 static char          st_moai_authentic_key[ 256 ] = "";
 static ZnkStr        st_moai_dir = NULL;
+
+static char          st_acceptable_host[ 256 ] = "ANY";
 static char          st_filters_dir[ 256 ] = "filters";
 
 static ZnkMyf        st_easter_myf;
@@ -49,6 +51,7 @@ static ZnkStr     st_stockbox_dir = NULL;
 static ZnkStr     st_userbox_dir  = NULL;
 static ZnkStr     st_topics_dir  = NULL;
 static char       st_xhr_dmz[ 256 ] = "";
+static uint16_t   st_moai_port = 8124;
 static uint16_t   st_xhr_dmz_port = 8125;
 static char       st_parent_proxy[ 4096 ] = "NONE";
 static size_t     st_count = 0;
@@ -230,6 +233,12 @@ EstConfig_initiate( RanoCGIEVar* evar, const char* moai_dir, size_t count )
 			ZnkVarpAry vars = ZnkMyf_find_vars( config, "config" );
 			if( vars ){
 				ZnkVarp var = NULL;
+
+				var = ZnkVarpAry_findObj_byName_literal( vars, "acceptable_host", false );
+				if( var ){
+					ZnkS_copy( st_acceptable_host, sizeof(st_acceptable_host), ZnkVar_cstr(var), Znk_NPOS );
+				}
+
 				var = ZnkVarpAry_findObj_byName_literal( vars, "filters_dir", false );
 				if( var ){
 					ZnkS_copy( st_filters_dir, sizeof(st_filters_dir), ZnkVar_cstr(var), Znk_NPOS );
@@ -261,6 +270,12 @@ EstConfig_initiate( RanoCGIEVar* evar, const char* moai_dir, size_t count )
 				ZnkS_copy( st_parent_proxy, sizeof(st_parent_proxy), ZnkVar_cstr(var), Znk_NPOS );
 				if( ZnkS_eq(st_parent_proxy,":0") ){
 					ZnkS_copy( st_parent_proxy, sizeof(st_parent_proxy), "NONE", Znk_NPOS );
+				}
+
+				var = ZnkVarpAry_findObj_byName_literal( vars, "moai_port", false );
+				if( var ){
+					const char* moai_port_str = ZnkVar_cstr( var );
+					ZnkS_getU16U( &st_moai_port, moai_port_str );
 				}
 
 				var = ZnkVarpAry_findObj_byName_literal( vars, "xhr_dmz_port", false );
@@ -446,14 +461,20 @@ EstConfig_initiate( RanoCGIEVar* evar, const char* moai_dir, size_t count )
 	RanoModuleAry_loadAllModules( st_mod_ary, st_target_myf, path_filters, path_plugins );
 
 	if( ZnkS_empty( st_xhr_dmz ) ){
-		uint32_t private_ip = 0;
-		/***
-		 * ÅV‚ÌPrivateIP‚ðŽ©“®Žæ“¾‚·‚é.
-		 */
-		if( ZnkNetIP_getPrivateIP32( &private_ip ) ){
-			ZnkNetIP_getIPStr_fromU32( private_ip, st_xhr_dmz, sizeof(st_xhr_dmz) );
-			Znk_snprintf( st_xhr_dmz + Znk_strlen(st_xhr_dmz), sizeof(st_xhr_dmz) - Znk_strlen(st_xhr_dmz),
-					":%zu", st_xhr_dmz_port );
+		if( ZnkS_eq( st_acceptable_host, "LOOPBACK" ) ){
+			Znk_snprintf( st_xhr_dmz, sizeof(st_xhr_dmz), "127.0.0.1:%u", st_xhr_dmz_port );
+		} else {
+			uint32_t private_ip = 0;
+			/***
+			 * ÅV‚ÌPrivateIP‚ðŽ©“®Žæ“¾‚·‚é.
+			 */
+			if( ZnkNetIP_getPrivateIP32( &private_ip ) ){
+				char private_ipstr[ 64 ] = "";
+				ZnkNetIP_getIPStr_fromU32( private_ip, private_ipstr, sizeof(private_ipstr) );
+				Znk_snprintf( st_xhr_dmz, sizeof(st_xhr_dmz), "%s:%u", private_ipstr, st_xhr_dmz_port );
+			} else {
+				Znk_snprintf( st_xhr_dmz, sizeof(st_xhr_dmz), "127.0.0.1:%u", st_xhr_dmz_port );
+			}
 		}
 	}
 
@@ -582,10 +603,19 @@ EstConfig_XhrDMZ( void )
 const char*
 EstConfig_XhrAuthHost( void )
 {
-	/***
-	 * ‚Æ‚è‚ ‚¦‚¸ŒÅ’è.
-	 */
-	return "127.0.0.1:8124";
+	static char st_xhr_authhost[ 256 ] = "";
+	if( ZnkS_empty( st_xhr_authhost ) ){
+		Znk_snprintf( st_xhr_authhost, sizeof(st_xhr_authhost), "127.0.0.1:%zu", st_moai_port );
+	}
+	return st_xhr_authhost;
+}
+bool
+EstConfig_isXhrAuthHost( const RanoCGIEVar* evar )
+{
+	const char* server_port = evar->server_port_;
+	uint16_t server_port_u16 = 0;
+	ZnkS_getU16U( &server_port_u16, server_port );
+	return (bool)( st_moai_port == server_port_u16 );
 }
 
 const char*
@@ -939,6 +969,22 @@ EstConfigManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, cons
 
 	ZnkBird_regist( bird, "Moai_AuthenticKey", authentic_key );
 	ZnkBird_regist( bird, "ermsg", ZnkStr_cstr(ermsg) );
+	ZnkHtpURL_negateHtmlTagEffection( msg ); /* for XSS */
+	{
+		ZnkSRef old_ptn = { 0 };
+		ZnkSRef new_ptn = { 0 };
+		ZnkSRef_set_literal( &old_ptn, "\n" );
+		ZnkSRef_set_literal( &new_ptn, "<br>\n" );
+		ZnkStrEx_replace_BF( msg, 0, old_ptn.cstr_, old_ptn.leng_, new_ptn.cstr_, new_ptn.leng_, Znk_NPOS, Znk_NPOS ); 
+	}
+	{
+		ZnkStr hint_table = EstHint_getHintTable( "config" );
+		if( hint_table ){
+			ZnkBird_regist( bird, "hint_table", ZnkStr_cstr(hint_table) );
+		} else {
+			ZnkBird_regist( bird, "hint_table", "" );
+		}
+	}
 	ZnkBird_regist( bird, "msg",   ZnkStr_cstr(msg) );
 	RanoCGIUtil_printTemplateHTML( evar, bird, template_html_file );
 	ZnkBird_destroy( bird );

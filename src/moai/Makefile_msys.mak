@@ -120,11 +120,13 @@ install_data:
 	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/moai1.1 
 	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/moai2.0 
 	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/imgs 
+	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/public 
 	for tgt in config.myf ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/ ; fi ; done
 	for tgt in hosts.myf ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/ ; fi ; done
 	for tgt in config_cgi.myf ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/ ; fi ; done
 	for tgt in target.myf ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/ ; fi ; done
 	for tgt in moai_without_proxy.bat ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/ ; fi ; done
+	for tgt in moai_without_console.bat ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/ ; fi ; done
 	for tgt in default/filters/*.myf ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/default/filters/ ; fi ; done
 	for tgt in doc_root/*.html ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/ ; fi ; done
 	for tgt in doc_root/*.css ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/ ; fi ; done
@@ -138,6 +140,7 @@ install_data:
 	for tgt in doc_root/imgs/*.png ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/imgs/ ; fi ; done
 	for tgt in doc_root/imgs/*.jpg ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/imgs/ ; fi ; done
 	for tgt in doc_root/imgs/*.gif ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/imgs/ ; fi ; done
+	for tgt in doc_root/public/moai.png ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/doc_root/public/ ; fi ; done
 	for tgt in moai_for_android.sh ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/ ; fi ; done
 
 # Install exec rule.

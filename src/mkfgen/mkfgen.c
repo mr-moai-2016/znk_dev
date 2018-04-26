@@ -1353,7 +1353,7 @@ generateMkf( ZnkVarpAry info,
 }
 
 static void
-generateMkfVersion( void )
+generateMkfVersion( const char* makefile_version_landmark )
 {
 	if( ZnkDir_getType( "Makefile_version.mak" ) != ZnkDirType_e_File ){
 		ZnkFile fp = Znk_fopen( "Makefile_version.mak", "wb" );
@@ -1363,10 +1363,9 @@ generateMkfVersion( void )
 			if( ZnkStrPath_searchParentDir( include_mkver_dir, depth, "Makefile_version.mak", ZnkDirType_e_File, '/' ) ){
 				Znk_fprintf( fp, "include %sMakefile_version.mak", ZnkStr_cstr(include_mkver_dir) );
 			} else {
-				static const char* landmark_dir = "libZnk";
 				ZnkStr_set( include_mkver_dir, "../" ); /* reset */
-				if( ZnkStrPath_searchParentDir( include_mkver_dir, depth, landmark_dir, ZnkDirType_e_Directory, '/' ) ){
-					Znk_fprintf( fp, "include %s%s/Makefile_version.mak", ZnkStr_cstr(include_mkver_dir), landmark_dir );
+				if( ZnkStrPath_searchParentDir( include_mkver_dir, depth, makefile_version_landmark, ZnkDirType_e_Directory, '/' ) ){
+					Znk_fprintf( fp, "include %s%s/Makefile_version.mak", ZnkStr_cstr(include_mkver_dir), makefile_version_landmark );
 				}
 			}
 			Znk_fclose( fp );
@@ -1392,7 +1391,6 @@ int main(int argc, char **argv)
 		ZnkStrAry  dependency_libs_common = NULL;
 		ZnkStrAry  src_suffix_list = NULL;
 		ZnkStrAry  rc_list = NULL;
-		//ZnkStrAry  submkf_list = NULL;
 		ZnkStrAry  sublibs_list = NULL;
 		ZnkStrAry  tkns = NULL;
 		ZnkVarp    varp;
@@ -1411,7 +1409,8 @@ int main(int argc, char **argv)
 		ZnkStrAry dir_list = ZnkStrAry_create( true );
 		ZnkStrAry list = ZnkStrAry_create( true );
 		ZnkStrAry ignore_list = ZnkMyf_find_lines( conf_myf, "ignore_list" );
-		ZnkStr gslconv = ZnkStr_new( "$(MKFSYS_DIR)/gslconv.exe" );
+		ZnkStr gslconv          = ZnkStr_new( "$(MKFSYS_DIR)/gslconv.exe" );
+		ZnkStr makefile_version_landmark = ZnkStr_new( "libZnk" );
 
 		MkfSeek_listDir( list, dir_list, ".", ignore_list, isInterestExt );
 
@@ -1448,6 +1447,10 @@ int main(int argc, char **argv)
 		varp = ZnkVarpAry_find_byName_literal( vars, "include_makefile_version", false );
 		if( varp ){
 			is_include_makefile_version = ZnkS_eq( ZnkVar_cstr( varp ), "true" );
+		}
+		varp = ZnkVarpAry_find_byName_literal( vars, "makefile_version_landmark", false );
+		if( varp ){
+			ZnkStr_set( makefile_version_landmark, ZnkVar_cstr( varp ) );
 		}
 		/***
 		 * gslconvÇÃà íuÇì¡ï Ç…éwíËÇµÇΩÇ¢èÍçá.
@@ -1512,13 +1515,14 @@ int main(int argc, char **argv)
 		}
 
 		if( is_include_makefile_version ){
-			generateMkfVersion();
+			generateMkfVersion( ZnkStr_cstr(makefile_version_landmark) );
 		}
 
 		ZnkVarpAry_destroy( product_list );
 		ZnkStrAry_destroy( tkns );
 		ZnkStr_delete( info_name );
 		ZnkStr_delete( gslconv );
+		ZnkStr_delete( makefile_version_landmark );
 		ZnkStrAry_destroy( list );
 		ZnkStrAry_destroy( dir_list );
 		MkfInstall_dispose( &mkf_inst );

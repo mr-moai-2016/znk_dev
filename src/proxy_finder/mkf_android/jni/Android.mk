@@ -6,23 +6,17 @@ ifndef MY_LIBS_ROOT
   MY_LIBS_ROOT := ../..
 endif
 
-# Declaring a prebuilt external-static-library module
-include $(CLEAR_VARS)
-LOCAL_MODULE := libRano
-LOCAL_SRC_FILES := $(MY_LIBS_ROOT)/libRano/mkf_android/libs/$(TARGET_ARCH_ABI)/libRano.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-# Declaring a prebuilt external-static-library module
+# Declaring a prebuilt external-dynamic-library module
 include $(CLEAR_VARS)
 LOCAL_MODULE := libZnk
-LOCAL_SRC_FILES := $(MY_LIBS_ROOT)/libZnk/mkf_android/libs/$(TARGET_ARCH_ABI)/libZnk.a
-include $(PREBUILT_STATIC_LIBRARY)
+LOCAL_SRC_FILES := $(MY_LIBS_ROOT)/libZnk/mkf_android/libs/$(TARGET_ARCH_ABI)/libZnk.so
+include $(PREBUILT_SHARED_LIBRARY)
 
-# Declaring a prebuilt external-static-library module
+# Declaring a prebuilt external-dynamic-library module
 include $(CLEAR_VARS)
-LOCAL_MODULE := libZnk/zlib
-LOCAL_SRC_FILES := $(MY_LIBS_ROOT)/libZnk/zlib/mkf_android/libs/$(TARGET_ARCH_ABI)/libZnk/zlib.a
-include $(PREBUILT_STATIC_LIBRARY)
+LOCAL_MODULE := libRano
+LOCAL_SRC_FILES := $(MY_LIBS_ROOT)/libRano/mkf_android/libs/$(TARGET_ARCH_ABI)/libRano.so
+include $(PREBUILT_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := proxy_finder
@@ -37,6 +31,6 @@ LOCAL_SRC_FILES := \
 	$S/main.c \
 
 # Refer to prebuilt external-dynamic-libraries
-LOCAL_SHARED_LIBRARIES :=
+LOCAL_SHARED_LIBRARIES := libZnk libRano
 include $(BUILD_EXECUTABLE)
 

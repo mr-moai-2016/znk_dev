@@ -115,7 +115,7 @@ replaceUploadFile_forMPFD( const ZnkVarpAry hpvs, const char* query_post_var_nam
 			//RanoLog_printf( "replaceUploadFile_forMPFD : q=[%s]\n", q );
 			ZnkStr_assign( ZnkVar_misc( varp ), 0, q, Znk_NPOS );
 			if( fp ){
-				ZnkBfr bfr = varp->prim_.u_.bfr_;
+				ZnkBfr bfr = ZnkVar_bfr( varp );
 				ZnkBfr_clear( bfr );
 				while( true ){
 					readed_byte = Znk_fread( buf, sizeof(buf), fp );
@@ -145,7 +145,7 @@ replaceUploadFile_forMPFD( const ZnkVarpAry hpvs, const char* query_post_var_nam
 			ZnkStr_assign( ZnkVar_misc( varp ), 0, q, Znk_NPOS );
 			ZnkVarpAry_push_bk( hpvs, varp );
 
-			bfr = varp->prim_.u_.bfr_;
+			bfr = ZnkVar_bfr( varp );
 			while( true ){
 				readed_byte = Znk_fread( buf, sizeof(buf), fp );
 				if( readed_byte == 0 ){

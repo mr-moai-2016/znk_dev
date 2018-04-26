@@ -64,7 +64,7 @@ $O:
 
 # Product files rule.
 $(EXE_FILE0): $(OBJS0)
-	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.a $(MY_LIBS_ROOT)/libZnk/zlib/out_dir/$(ABINAME)/libzlib.a -lws2_32 
+	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.a -lws2_32 
 
 
 ##

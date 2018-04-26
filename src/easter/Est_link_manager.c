@@ -291,6 +291,7 @@ EstLinkManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const 
 	ZnkStr     new_linkid = ZnkStr_new( "" );
 	bool   is_authenticated = false;
 	bool   is_unescape_val = false;
+	const bool is_xhr_authhost = EstConfig_isXhrAuthHost( evar );
 	ZnkVarp varp;
 	const char* profile_dir = EstConfig_profile_dir();
 	char link_myf_path[ 256 ] = "";
@@ -309,6 +310,10 @@ EstLinkManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const 
 	} else {
 	}
 	ZnkStr_addf( msg, "is_authenticated=[%d]\n", is_authenticated );
+	ZnkStr_addf( msg, "is_xhr_authhost=[%d]\n",  is_xhr_authhost );
+	ZnkStr_addf( msg, "xhr_authhost=[%s]\n",  EstConfig_XhrAuthHost() );
+	ZnkStr_addf( msg, "evar->server_name_=[%s]\n", evar->server_name_ );
+	ZnkStr_addf( msg, "evar->server_port_=[%s]\n", evar->server_port_ );
 
 	ZnkStr_addf( msg, "query_string=[%s]\n", evar->query_string_ );
 

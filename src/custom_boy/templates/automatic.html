@@ -5,8 +5,8 @@
 	<META http-equiv="Content-Style-Type" content="text/css">
 	<link href="/msty.css" rel="stylesheet" type="text/css">
 	<title>VirtualUSERS</title>
-	<script type="text/javascript" src="/cgis/custom_boy/publicbox/fp.js"></script>
-	<script type="text/javascript" src="/cgis/custom_boy/publicbox/custom_boy.js"></script>
+	<script type="text/javascript" src="/cgis/custom_boy/publicbox/fp.js?Moai_AuthenticKey=#[Moai_AuthenticKey]#"></script>
+	<script type="text/javascript" src="/cgis/custom_boy/publicbox/custom_boy.js?Moai_AuthenticKey=#[Moai_AuthenticKey]#"></script>
 	
 </head>
 <body bgcolor="#EEFFFF" text="#008000" link="#0000EE" vlink="#0000EE" alink="#FF0000">
@@ -22,7 +22,7 @@
 <br><b>VirtualUSERS</b><br>
 
 <form action="/cgis/custom_boy/custom_boy.cgi?cb_target=#[cb_target]#&amp;cb_type=automatic" method="POST" name=fm_main>
-<input type=hidden name=cb_AuthenticKey value="#[cb_AuthenticKey]#">
+<input type=hidden name=Moai_AuthenticKey value="#[Moai_AuthenticKey]#">
 
 <table class=MstyManagerTable>
 
@@ -71,6 +71,11 @@ CustomBoyの思考ルーチンはこの指定が示す範囲に収まるようにランダム化を行い、<br>
 <table>
 #[CustomCookie_ui]#
 </table>
+<br>
+<div class=MstyComment>
+Cookieの値を直接修正したり削除したい場合はこちらから行えます.<br>
+<a class=MstyElemLink href="/cgis/custom_boy/custom_boy.cgi?cb_target=futaba&amp;cb_type=cookie" >CustomCookie</a>
+</div>
 </fieldset></td></tr>
 
 <tr><td colspan=2 bgcolor="#ccffdd"><font color="#558855"><pre>#[msg]#</pre></font></td></tr>

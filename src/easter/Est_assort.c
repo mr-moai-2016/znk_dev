@@ -50,7 +50,7 @@ openInfoListMyf( const char* myf_file_path, bool is_modesty )
 static bool
 registInfoListMyf( const char* dst_topdir, const char* ext, const char* subdir_xx,
 		const char* md5_of_file, const char* dst_file_path, const char* file_tags, const char* comment,
-		bool is_marge_tags, bool is_modesty )
+		bool is_marge_tags, bool is_modesty, ZnkStr msg )
 {
 	bool       result = false;
 	char       myf_file_path[ 256 ] = "";
@@ -64,6 +64,7 @@ registInfoListMyf( const char* dst_topdir, const char* ext, const char* subdir_x
 	getInfoListMyfPath( myf_file_path, sizeof(myf_file_path), dst_topdir, ext, subdir_xx );
 	myf = openInfoListMyf( myf_file_path, is_modesty );
 	if( myf == NULL ){
+		ZnkStr_addf( msg, "registInfoListMyf : openInfoListMyf is failure.\n" );
 		goto FUNC_END;
 	}
 
@@ -75,6 +76,7 @@ registInfoListMyf( const char* dst_topdir, const char* ext, const char* subdir_x
 	if( is_modesty ){
 		vars = ZnkMyf_find_vars( myf, file_key );
 		if( vars == NULL ){
+			ZnkStr_addf( msg, "registInfoListMyf : file_key=[%s] is missing.\n", file_key );
 			goto FUNC_END;
 		}
 	} else {
@@ -251,7 +253,7 @@ getMD5CheckSum( ZnkMD5CheckSum* checksum, const char* file_path )
 bool
 EstAssort_renameFile_toMD5ofFile( const char* src_file_path, const char* dst_topdir, ZnkStr msg, size_t* processed_count,
 		const char* file_tags, const char* comment, bool is_marge_tags,
-		ZnkStr renamed_filename )
+		ZnkStr renamed_filename, bool* ans_is_moved_file )
 {
 	ZnkMD5CheckSum checksum = {{ 0 }};
 	const char* md5_of_file = NULL;
@@ -261,6 +263,7 @@ EstAssort_renameFile_toMD5ofFile( const char* src_file_path, const char* dst_top
 	ZnkStr dst_file_path = ZnkStr_new( "" );
 	bool is_modesty = false;
 	bool is_src_delete = true;
+	bool is_moved_file = false;
 
 	getMD5CheckSum( &checksum, src_file_path );
 	md5_of_file = ZnkMD5CheckSum_cstr( &checksum );
@@ -271,16 +274,25 @@ EstAssort_renameFile_toMD5ofFile( const char* src_file_path, const char* dst_top
 			ext, subdir_xx,
 			md5_of_file, ext );
 
-	if( !EstDirUtil_moveFile( src_file_path, dst_topdir, ZnkStr_cstr(renamed_filename), msg, dst_file_path, is_src_delete ) ){
-		/***
-		 * ファイル移動に失敗した場合は、info_list.myf内に該当項目が既に存在する場合のみ
-		 * その情報を更新する(存在しない場合は何もしない).
-		 */
-		is_modesty = true;
+	is_moved_file = EstDirUtil_moveFile( src_file_path, dst_topdir, ZnkStr_cstr(renamed_filename), msg, dst_file_path, is_src_delete );
+
+	/***
+	 * ファイル移動に失敗した場合は、info_list.myf内に該当項目が既に存在する場合のみ
+	 * その情報を更新する(存在しない場合は何もしない).
+	 */
+	is_modesty = !is_moved_file;
+
+	/***
+	 * ファイル移動に成功したかどうかを関数外から知りたい場合がある.
+	 * (例えば別途移動元の情報を保持しているメタファイルがあったとして、
+	 * ファイル移動に失敗している場合は、そのメタファイルの移動元の情報を削除してはならない.)
+	 */
+	if( ans_is_moved_file ){
+		*ans_is_moved_file = is_moved_file;
 	}
 
 	result = registInfoListMyf( dst_topdir, ext, subdir_xx,
-			md5_of_file, ZnkStr_cstr(dst_file_path), file_tags, comment, is_marge_tags, is_modesty );
+			md5_of_file, ZnkStr_cstr(dst_file_path), file_tags, comment, is_marge_tags, is_modesty, msg );
 	if( result && processed_count ){
 		++(*processed_count);
 	}
@@ -511,7 +523,7 @@ EstAssort_doOneNewly( const char* file_tags, const char* comment, bool is_marge_
 			ZnkStr_addf( msg, "  verify : src_fpath=[%s] is file.\n", src_fpath );
 			EstAssort_renameFile_toMD5ofFile( src_fpath, box_fsys_dir, msg, &processed_count,
 					file_tags, comment, is_marge_tags,
-					renamed_filename );
+					renamed_filename, NULL );
 
 			ZnkStr_setf( dst_fsys_path, "%s/%s", box_fsys_dir, ZnkStr_cstr(renamed_filename) );
 			EstRecentory_add2( recent, ZnkStr_cstr(renamed_filename), box_vname, ZnkStr_cstr(dst_fsys_path), src_vpath, msg );

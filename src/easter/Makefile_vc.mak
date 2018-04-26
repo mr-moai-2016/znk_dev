@@ -229,7 +229,7 @@ Est_search_manager.obj: Est_search_manager.h Est_boxmap_viewer.h Est_ui.h Est_bo
 Est_sqi.obj: Est_sqi.h Est_tag.h
 Est_tag.obj: Est_tag.h Est_unid.h
 Est_tag_manager.obj: Est_tag_manager.h Est_config.h Est_ui.h Est_unid.h Est_hint_manager.h Est_assort_ui.h Est_assort.h Est_tag.h Est_base.h
-Est_topic.obj: Est_topic.h Est_config.h Est_ui.h Est_ui_base.h Est_box.h Est_box_ui.h Est_base.h Est_assort.h Est_assort_ui.h Est_search_manager.h Est_recentory.h Est_finf.h Est_assort_list.h
+Est_topic.obj: Est_topic.h Est_config.h Est_ui.h Est_ui_base.h Est_box.h Est_box_ui.h Est_base.h Est_assort.h Est_assort_ui.h Est_search_manager.h Est_recentory.h Est_finf.h Est_assort_list.h Est_hint_manager.h
 Est_ui.obj: Est_ui.h Est_ui_base.h Est_config.h Est_assort.h Est_base.h Est_box_ui.h
 Est_ui_base.obj: Est_ui_base.h Est_box_base.h
 Est_unid.obj:

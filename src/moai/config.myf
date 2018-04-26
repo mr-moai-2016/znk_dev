@@ -73,10 +73,9 @@
 #   MoaiがXhrDMZ(XMLHttpRequest DMZ)として使用するポート番号を指定する.
 #   Moaiはこのポートでアクセスして来たホストをXhrDMZとみなす.
 #   その際に指定するポート番号はmoai_portとは異なるものを指定すること.
-#   これが空の場合はプライベートIPアドレスを自動的に取得し、それをXhrDMZとして使う.
-#   しかしながら他サーバからの接続の場合、peer_ipaddrは固定になってしまうわけで
-#   プライベートIPアドレスでXhrDMZを代用するは問題が起きる.
-#   その場合でもXhrDMZを有効にするにはここでのポートの指定は必須である.
+#   これが空の場合はデフォルトで8125となる.
+#   acceptable_hostがANYの場合はプライベートIPアドレスを自動的に取得し、それをXhrDMZとして使う.
+#   acceptable_hostがLOOPBACKの場合は127.0.0.1をXhrDMZとして使う.
 #
 #   XhrDMZでは、CGIの実行がより限定されたものになる.
 #   またユーザにとって秘匿性の高いファイルアクセスを禁止する一方、
@@ -92,7 +91,7 @@ blocking_mode = ['off']
 filters_dir = ['filters']
 profile_dir = ['../moai_profile']
 
-acceptable_host = ['ANY']
+acceptable_host = ['LOOPBACK']
 server_name = ['']
 moai_port = ['8124']
 xhr_dmz_port = ['8125']

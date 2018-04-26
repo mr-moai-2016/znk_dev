@@ -298,9 +298,9 @@ viewCache( ZnkBird bird, RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, co
 		//if( dir_type != EstBoxDir_e_Favorite ){
 		Znk_UNUSED( dir_type );
 		{
-			ZnkStr arg = ZnkStr_newf( "cache_path=%s&est_cache_begin=%zu&est_cache_end=%zu#TagsView", cache_path, begin_idx, end_idx );
+			ZnkStr arg = ZnkStr_newf( "cache_path=%s&est_cache_begin=%zu&est_cache_end=%zu", cache_path, begin_idx, end_idx );
 			EstAssortUI_makeCategorySelectBar( category_select_bar, current_category_id, current_category_name,
-					"cache", "view", ZnkStr_cstr(arg) );
+					"cache", "view", ZnkStr_cstr(arg), "#TagsView" );
 			EstAssortUI_makeTagsView( assort_ui, NULL, current_category_id, NULL, comment, false );
 			ZnkStr_delete( arg );
 		}

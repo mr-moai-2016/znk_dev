@@ -149,13 +149,17 @@ favoritize_file_func( EstBoxDirType box_dir_type, const char* fsys_path, const c
 	ZnkStr      renamed_filename = info->renamed_filename_;
 	/* box_fsys_dir 直下 finf_list.myfへ追加. */
 	const char* comment = ZnkStr_cstr( info->comment_ );
+	bool is_moved_file = false;
 
 	EstFInfList_registFileByMD5( info->finf_list_, box_vname, fsys_path,
 			ZnkStr_cstr(info->file_tags_), comment, info->is_marge_tags_ );
 
-	if( EstAssort_renameFile_toMD5ofFile( fsys_path, box_fsys_dir, msg, &info->processed_count_,
-				ZnkStr_cstr(info->file_tags_), comment, info->is_marge_tags_, renamed_filename )
-	){
+	ZnkStr_addf( msg, "favoritize_file_func : fsys_path=[%s] unesc_vpath=[%s]\n", fsys_path, unesc_vpath );
+	EstAssort_renameFile_toMD5ofFile( fsys_path, box_fsys_dir, msg, &info->processed_count_,
+				ZnkStr_cstr(info->file_tags_), comment, info->is_marge_tags_, renamed_filename,
+				&is_moved_file );
+	if( is_moved_file ){
+		/* ファイル本体の移動に成功している場合のみ、これを実行 */
 		EstAssort_remove( box_dir_type, fsys_path, msg );
 	}
 	ZnkStr_setf( info->dst_fsys_path_, "%s/%s", box_fsys_dir, ZnkStr_cstr(renamed_filename) );
@@ -444,7 +448,7 @@ EstBox_makeFInfList( const char* box_fsys_dir, const char* box_vname )
 					const char* comment   = "";
 					const bool is_marge_tags = false;
 					EstAssort_renameFile_toMD5ofFile( fsys_path, box_fsys_dir, msg, &processed_count,
-							file_tags, comment, is_marge_tags, renamed_filename );
+							file_tags, comment, is_marge_tags, renamed_filename, NULL );
 				}
 			}
 		}

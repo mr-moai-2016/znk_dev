@@ -583,6 +583,7 @@ EstImgViewer_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const ch
 	} else {
 	}
 	ZnkStr_addf( msg, "is_authenticated=[%d]\n", is_authenticated );
+	ZnkStr_addf( msg, "pst_str=[%s]\n", ZnkStr_cstr(pst_str) );
 
 	var_cache_path = ZnkVarpAry_find_byName_literal( post_vars, "vpath", false );
 	if( var_cache_path == NULL ){
@@ -846,7 +847,6 @@ EstImgViewer_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const ch
 
 		{
 			ZnkVarp current_category     = ZnkVarpAry_find_byName_literal( post_vars, "category_key", false );
-			ZnkStr  arg = ZnkStr_newf( "dummy=0#TagsView" );
 			if( current_category ){
 				current_category_id = ZnkVar_cstr( current_category );
 			} else {
@@ -857,8 +857,7 @@ EstImgViewer_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const ch
 				current_category_id = EstTag_getCategoryKey( tags_myf, 0 );
 			}
 			EstAssortUI_makeCategorySelectBar( category_select_bar, current_category_id, current_category_name,
-					"img_viewer", "view", ZnkStr_cstr(arg) );
-			ZnkStr_delete( arg );
+					"img_viewer", "view", "", "#TagsView" );
 		}
 
 		EstAssortUI_makeTagsView( tags_view, tags_list, current_category_id, ZnkStr_cstr(assort_msg), ZnkStr_cstr(comment), false );

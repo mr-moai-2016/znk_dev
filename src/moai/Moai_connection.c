@@ -167,9 +167,9 @@ MoaiConnection_connectO( const char* goal_hostname, uint16_t goal_port,
 		 * IPアドレスの解決ができればConnectInprogressとしてtrueを返す場合がある.
 		 * この場合はConnectのTimeoutで防衛するしかない.
 		 */
-		RanoLog_printf2( "  Connecting... [%s:%u] O_sock=[%d]\n", cnct_hostname, cnct_port, mcn->O_sock_ );
+		RanoLog_printf( "  Connecting... [%s:%u] O_sock=[%d]\n", cnct_hostname, cnct_port, mcn->O_sock_ );
 		if( !ZnkSocket_connectToServer( mcn->O_sock_, cnct_hostname, cnct_port, &err, &mcn->is_connect_inprogress_ ) ){
-			RanoLog_printf2( "  MoaiConnection_connectO : Error : cnct_host=[%s:%u] [%s] close O_sock=[%d]\n",
+			RanoLog_printf( "  MoaiConnection_connectO : Error : cnct_host=[%s:%u] [%s] close O_sock=[%d]\n",
 					cnct_hostname, cnct_port, ZnkErr_cstr(err), mcn->O_sock_ );
 			ZnkSocket_close( mcn->O_sock_ );
 			mcn->O_sock_ = ZnkSocket_INVALID;
@@ -201,7 +201,7 @@ MoaiConnection_connectFromISock( const char* hostname, uint16_t port, ZnkSocket 
 	mcn = MoaiConnection_connectO( hostname, port, cnct_hostname, cnct_port, I_sock, mfds );
 	O_sock = MoaiConnection_O_sock( mcn );
 	if( O_sock == ZnkSocket_INVALID ){
-		RanoLog_printf2( "  %s : Error connectO : goal_host=[%s:%u] cnct_host=[%s:%u]\n",
+		RanoLog_printf( "  %s : Error connectO : goal_host=[%s:%u] cnct_host=[%s:%u]\n",
 				label, hostname, port, cnct_hostname, cnct_port );
 		return false;
 	}
@@ -209,12 +209,12 @@ MoaiConnection_connectFromISock( const char* hostname, uint16_t port, ZnkSocket 
 	MoaiConnection_pushConnectedEvent( mcn, cb_func, info_id );
 	if( MoaiConnection_isConnectInprogress( mcn ) ){
 		/* 非ブロッキングモードにおけるconnect進行中(inprogress)状態. */
-		RanoLog_printf2( "  Connecting Inprogress : goal_host=[%s:%u] cnct_host=[%s:%u]\n",
+		RanoLog_printf( "  Connecting Inprogress : goal_host=[%s:%u] cnct_host=[%s:%u]\n",
 				hostname, port, cnct_hostname, cnct_port );
 		MoaiFdSet_addConnectingSock( mfds, O_sock );
 	} else {
 		/* connectが即時成功した場合 : 直ちに呼び出す */
-		RanoLog_printf2( "  Connected : goal_host=[%s:%u] cnct_host=[%s:%u]\n",
+		RanoLog_printf( "  Connected : goal_host=[%s:%u] cnct_host=[%s:%u]\n",
 				hostname, port, cnct_hostname, cnct_port );
 		MoaiConnection_invokeCallback( mcn, mfds );
 	}
@@ -281,7 +281,7 @@ MoaiConnection_invokeCallback( MoaiConnection mcn, MoaiFdSet mfds )
 				info_id = atInfoID( mcn->info_id_list_, idx );
 				MoaiInfoID_getStr( info_id, &id_str );
 				info = MoaiInfo_find( info_id );
-				RanoLog_printf2( "  MoaiConnection_invokeCallback idx=[%zu] info_id=[%s] req_method=[%s] req_urp=[%s]\n",
+				RanoLog_printf( "  MoaiConnection_invokeCallback idx=[%zu] info_id=[%s] req_method=[%s] req_urp=[%s]\n",
 						idx, id_str.buf_,
 						ZnkHtpReqMethod_getCStr( info->req_method_ ),
 						ZnkStr_cstr(info->req_urp_) );
@@ -334,6 +334,7 @@ MoaiConnection_clear( MoaiConnection mcn, MoaiFdSet mfds )
 		mcn->I_is_keep_alive_ = false;
 		mcn->O_sock_          = ZnkSocket_INVALID;
 		mcn->req_content_length_remain_ = 0;
+		RanoLog_printf( "  mcn->req_content_length_remain_=0 (MoaiConnection_clear)\n" );
 		mcn->res_content_length_remain_ = 0;
 		//mcn->exile_time_ = getCurrentSec();
 		mcn->exile_time_ = 0;

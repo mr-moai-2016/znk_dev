@@ -131,6 +131,20 @@ LOCAL_SHARED_LIBRARIES := libZnk libRano
 include $(BUILD_EXECUTABLE)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := hello_template
+LOCAL_CFLAGS += -I.. \
+	-I$(MY_LIBS_ROOT)/libZnk \
+	-I$(MY_LIBS_ROOT)/libRano \
+
+LOCAL_SRC_FILES := \
+	$S/cgi_util.c \
+	$S/hello_template.c \
+
+# Refer to prebuilt external-dynamic-libraries
+LOCAL_SHARED_LIBRARIES := libZnk libRano
+include $(BUILD_EXECUTABLE)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := progress
 LOCAL_CFLAGS += -I.. \
 	-I$(MY_LIBS_ROOT)/libZnk \

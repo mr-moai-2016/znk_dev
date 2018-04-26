@@ -10,7 +10,7 @@
 
 void
 EstAssortUI_makeCategorySelectBar( ZnkStr assort_ui, const char* current_category_id, ZnkStr current_category_name,
-		const char* manager, const char* command, const char* arg )
+		const char* manager, const char* command, const char* arg, const char* anchor )
 {
 	ZnkMyf       tags_myf = EstConfig_tags_myf();
 	ZnkStr       additional_arg = ZnkStr_newf( !ZnkS_empty(arg) ? "&%s" : "", arg );
@@ -28,9 +28,10 @@ EstAssortUI_makeCategorySelectBar( ZnkStr assort_ui, const char* current_categor
 		}
 
 		ZnkStr_addf( assort_ui,
-				"<a class=%s onclick=\"EjsAssort_submitCommandAndArg( document.fm_main, '%s', '%s', 'category_key=%s%s' )\">",
+				"<a class=%s onclick=\"EjsAssort_submitCommandEx( document.fm_main, '%s', '%s', 'category_key=%s%s', '%s' )\">",
 				now_selected ? "MstyNowSelectedLink" : "MstyElemLink",
-				manager, command, category_key, ZnkStr_cstr(additional_arg) );
+				manager, command, category_key, ZnkStr_cstr(additional_arg),
+				anchor );
 		ZnkStr_addf( assort_ui, "%s</a> \n", category_name );
 	}
 	ZnkStr_add( assort_ui, "<br>\n" );
@@ -169,7 +170,7 @@ EstAssortUI_makeTagsView( ZnkStr assort_ui,
 				const char* enable_tag = ZnkStrAry_at_cstr( enable_tag_list, enable_idx );
 				ZnkStr_addf( assort_ui, "%s ", enable_tag );
 				if( (enable_idx+1) % 4 == 0 ){
-					ZnkStr_add( assort_ui, "<br>\n", enable_tag );
+					ZnkStr_add( assort_ui, "<br>\n" );
 				}
 			}
 			ZnkStr_addf( assort_ui, "</div>\n" );

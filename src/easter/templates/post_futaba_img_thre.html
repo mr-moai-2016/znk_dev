@@ -7,14 +7,20 @@
 	<title>Easter HyperPost</title>
 </head>
 
-<script type="text/javascript" src="/cgis/easter/publicbox/hint.js"></script>
-<script type="text/javascript" src="/cgis/easter/publicbox/assort.js"></script>
-<script type="text/javascript" src="/cgis/easter/publicbox/preview.js"></script>
 <style type="text/css"><!-- /* for futaba like. */
 	.ftdc{ color:#800000; background-color:#eaa080; }
 	.ftdc_extra{ color:#808000; background-color:#eae080; }
 --></style>
 
+<script type="text/javascript"><!--
+var st_Moai_AuthenticKey = "#[Moai_AuthenticKey]#";
+var st_func_tbls = [];
+#[hint_table]#
+//--></script>
+<script type="text/javascript" src="/cgis/easter/publicbox/hint.js"></script>
+<script type="text/javascript" src="/cgis/easter/publicbox/assort.js"></script>
+<script type="text/javascript" src="/cgis/easter/publicbox/preview.js"></script>
+	
 <body bgcolor="#EEFFEE" text="#808000" link="#0000EE" vlink="#0000EE" alink="#FF0000">
 
 <a name="user-content-index"></a>
@@ -26,13 +32,15 @@
 <a class=MstyElemLink  href="/easter?est_manager=config&amp;Moai_AuthenticKey=#[Moai_AuthenticKey]#" >設定</a> &nbsp;
 <br>
 
-<b>Easter Hyper POST <font size=-1>for futaba</font></b><br>
+<b>Easter HyperPost <font size=-1>for futaba</font></b><br>
 <table class=MstyManagerTable>
 
 <tr><td>
 <br>
 <font size=-1>
-「#[send_button_name]#」ボタンにより実際に送信されます.<br>
+	「#[send_button_name]#」ボタンにより実際に送信されます.
+	<a class=MstyQandALink href="javascript:void(0);" onclick="displayQandA( 'Hint', 'aboutHypePost' );"><img src='/cgis/easter/publicbox/icons/question_16.png'></a>
+	<div id=aboutHypePost></div>
 </font>
 </td></tr>
 

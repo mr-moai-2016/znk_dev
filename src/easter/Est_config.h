@@ -63,6 +63,8 @@ const char*
 EstConfig_XhrDMZ( void );
 const char*
 EstConfig_XhrAuthHost( void );
+bool
+EstConfig_isXhrAuthHost( const RanoCGIEVar* evar );
 
 const char*
 EstConfig_authenticKey( void );

@@ -81,7 +81,7 @@ $O:
 
 # Product files rule.
 $(EXE_FILE0): $(OBJS0)
-	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/cygZnk.a $(MY_LIBS_ROOT)/libZnk/zlib/out_dir/$(ABINAME)/cygzlib.a -lpthread -ldl -lstdc++ 
+	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/cygZnk.a -lpthread -ldl -lstdc++ 
 
 
 ##

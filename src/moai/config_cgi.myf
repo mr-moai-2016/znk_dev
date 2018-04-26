@@ -40,32 +40,32 @@ cgi = ['']
 @@.
 
 ##
-# Moaiは以下の指定で左のパターンで開始されるURPを自動的に右のパターンで開始するものへ変換する.
-# (複数指定可能)
-#
+# MoaiはURLの第1番目の / から第2番目の / までに続く部分の文字列を別の文字列へ置換することができる.
 # これをMoaiではURPAliasと呼ぶ.
 # これは長いURPを単に簡略化するだけのために導入された機能である.
 #
-# 例. 以下のように指定した場合
-#     easter = { ['/easter'] ['/cgis/easter/easter.cgi'] }
+# 以下の指定では、左値のパターンを右値のパターンで置換する.
+# (複数指定可能)
 #
-#     /easter  だけの場合は /cgis/easter/easter.cgi
-#     /easter/ と続く場合は /cgis/easter/easter.cgi/
-#     /easter? と続く場合は /cgis/easter/easter.cgi?
-#     /easter# と続く場合は /cgis/easter/easter.cgi#
+# 例. 
+#     easter = ['cgis/easter/easter.cgi']
+#
+#     /easter     だけの場合は /cgis/easter/easter.cgi
+#     /easter/... と続く場合は /cgis/easter/easter.cgi/...
+#     /easter?... と続く場合は /cgis/easter/easter.cgi?...
+#     /easter#... と続く場合は /cgis/easter/easter.cgi#...
 #     と展開される.
+#
 #     /easter  の後ろに上記以外の文字が続く場合は何も展開されずそのままとなる.
 #
-#     尚、左辺(この例の場合 easter = の部分 )のname値は便宜上記述するだけであり、なんでもよい.
-#
 @@V urp_alias_list
-easter = { ['/easter'] ['/cgis/easter/easter.cgi'] }
+easter = ['cgis/easter/easter.cgi']
 @@.
 
 ##
-# Moaiは cgis/<一つ以上のディレクトリ>/CGIスクリプト というパターンが与えられた場合のみデフォルトで
+# Moaiは cgis/<一つ以上のディレクトリ>/CGIスクリプト というパターンが与えられた場合のみ
 # その実行が許可されている.
-# (その他のパターンでは実行は一切許可されない)
+# (その他のパターンでは(aliasを除いては)実行は一切許可されない)
 #
 # しかし上記を満たすディレクトリ配下であっても、一部のパターンで例外的にCGIスクリプトの実行を許可しないようにもできる.
 # 以下ではそのディレクトリのパターンを指定する.
@@ -82,7 +82,7 @@ easter = { ['/easter'] ['/cgis/easter/easter.cgi'] }
 # またそれがWebにアクセスした際のキャッシュファイルなどを保存しておくためのディレクトリをcgis配下に用意するものとする.
 # このようなやや特殊な状況で、この指定が必要になることがある.
 # キャッシュファイルの中にcgiスクリプトが含まれている可能性もあり、それがどんな内容であるかは一般的には予測不能である.
-# 従ってそれをローカルで不用意に実行させるのは認めるべきではない.
+# 従ってそれをローカルで不用意に実行させるのを認めるべきではない.
 #
 @@L cgi_exec_deny_urp
 /cgis/easter/tmp/*
@@ -93,18 +93,20 @@ easter = { ['/easter'] ['/cgis/easter/easter.cgi'] }
 /cgis/easter/userbox/*
 /cgis/custom_boy/cachebox/*
 /cgis/custom_boy/tmp/*
+/cgis/proxy_finder/cachebox/*
+/cgis/proxy_finder/tmp/*
 @@.
 
 ##
 # Moaiは 下記で指定されたパターンについてはXhrDMZからのアクセスに限りファイル取得を認める.
 # (複数指定可能)
-# また逆に言えば、これ以外のディレクトリ内のファイルは、他特別な指定がなされていない限り
-# 他マシンから参照することは不可能であることも意味する.
+# また逆に(XhrDMZではない)通常のMoai WebServerを介しては、これらを参照することは不可能であるものとする
 #
 # ここで指定したフォルダ内には、ネット上から取得したファイルのキャッシュなどを格納しておくとよい.
+# (つまり通常のMoai WebServerでは不用意に表示すべきでないものをここに格納するということである).
 # なぜならばそのようなファイルには未知のXMLHttpRequest(JavascriptからHTTPを発行する機能)が含まれている可能性があるためである.
-# このようなファイルをローカルから不用意にブラウザに表示させては危険を伴うため、
-# 隔離された仮想ホストであるXhrDMZから表示させることを強くお勧めする.
+# このようなファイルをローカルから不用意に正規のMoai WebServerの方で表示させては、
+# (Moai WebServer上の)他のCGI群への危険因子となるため、隔離された仮想ホストであるXhrDMZから表示させることをお勧めする.
 #
 @@L xhrdmz_only_urp
 /cgis/easter/cachebox/*
@@ -124,17 +126,31 @@ easter = { ['/easter'] ['/cgis/easter/easter.cgi'] }
 @@.
 
 ##
-# Moaiは cgis/<一つ以上のディレクトリ>/ というディレクトリ配下において
-# さらに下記で指定されたディレクトリが存在した場合、このディレクトリ配下においては
-# いかなる場合もその中身のファイル取得を認める.
+# Moaiは下記で指定されたURPのパターンにマッチした場合、いかなる場合もそのURPの中身のファイル取得を認める.
 # (すなわち AuthenticHostやXhrDMZからのアクセスも可能であり、AuthenticKeyも必要としない).
-# また逆に言えば、これ以外のディレクトリ内のファイルは、他特別な指定がなされていない限り
-# 他マシンから参照することは不可能であることも意味する.
+# また逆に言えば、これ以外のディレクトリ内のファイルは特別な指定がなされていない限り
+# XhrDMZから参照することは不可能であることも意味する.
 #
 # ここで指定したフォルダ内にはネットワーク上の他マシンに公開しても全く問題ないようなファイルのみを格納すべきである.
 #
-@@L publicbox_list
-publicbox
+@@L public_urp
+/moai.png
+/msty.css
+/cgis/easter/publicbox/*
+/cgis/cgi_developers/publicbox/*
+@@.
+
+##
+# Moaiは下記で指定されたURPのパターンにマッチした場合、Moai_AuthenticKeyが正しく指定されている場合のみ
+# URPの中身のファイル取得を認める.
+# URPが意味するものがCGIスクリプトの場合は、Moai_AuthenticKeyが正しく指定されている場合のみ
+# その実行を認める.
+#
+@@L protected_urp
+/protected/*
+/doc_root/protected/*
+/cgis/protected/*
+/cgis/cgi_developers/protected/*
 @@.
 
 ##

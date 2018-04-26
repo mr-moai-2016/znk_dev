@@ -65,7 +65,7 @@ $O:
 
 # Product files rule.
 $(EXE_FILE0): $(OBJS0) 
-	$(LINKER) /OUT:$(EXE_FILE0)  $(OBJS0) $(SUB_LIBS) $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/Znk.lib $(MY_LIBS_ROOT)/libZnk/zlib/out_dir/$(ABINAME)/zlib.lib ws2_32.lib 
+	$(LINKER) /OUT:$(EXE_FILE0)  $(OBJS0) $(SUB_LIBS) $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/Znk.lib ws2_32.lib 
 
 
 # Suffix rule.

@@ -87,9 +87,15 @@ OBJS7=\
 	$O/cgi_util.o \
 	$O/transfer_chunked.o \
 
-BASENAME8=progress
-EXE_FILE8=$O/progress.cgi
+BASENAME8=hello_template
+EXE_FILE8=$O/hello_template.cgi
 OBJS8=\
+	$O/cgi_util.o \
+	$O/hello_template.o \
+
+BASENAME9=progress
+EXE_FILE9=$O/progress.cgi
+OBJS9=\
 	$O/cgi_util.o \
 	$O/progress.o \
 
@@ -122,6 +128,9 @@ PRODUCT_EXECS= \
 PRODUCT_EXECS= \
 	__mkg_sentinel_target__ \
 	$(EXE_FILE8) \
+PRODUCT_EXECS= \
+	__mkg_sentinel_target__ \
+	$(EXE_FILE9) \
 
 RUNTIME_FILES= \
 	__mkg_sentinel_target__ \
@@ -131,7 +140,7 @@ RUNTIME_FILES= \
 
 
 # Entry rule.
-all: $O $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8) 
+all: $O $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8) $(EXE_FILE9) 
 
 # Mkdir rule.
 $O:
@@ -166,6 +175,9 @@ $(EXE_FILE7): $(OBJS7)
 $(EXE_FILE8): $(OBJS8)
 	$(LINKER) -o $(EXE_FILE8) $(OBJS8) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk-$(DL_VER).dll.a $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano-$(DL_VER).dll.a
 
+$(EXE_FILE9): $(OBJS9)
+	$(LINKER) -o $(EXE_FILE9) $(OBJS9) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk-$(DL_VER).dll.a $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano-$(DL_VER).dll.a
+
 
 ##
 # Pattern rule.
@@ -193,28 +205,25 @@ __mkg_sentinel_target__:
 
 # Install data rule.
 install_data:
-	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/bbs 
-	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/up 
 	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox 
-	for tgt in bbs/* ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/bbs/ ; fi ; done
-	for tgt in up/* ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/up/ ; fi ; done
 	for tgt in *.c ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/ ; fi ; done
 	for tgt in *.cpp ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/ ; fi ; done
 	for tgt in *.html ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/ ; fi ; done
 	for tgt in *.js ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox/ ; fi ; done
 
 # Install exec rule.
-install_exec: $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8)
-	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers 
-	for tgt in $(EXE_FILE0) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE1) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE2) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE3) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE4) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE5) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE6) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE7) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
-	for tgt in $(EXE_FILE8) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/ ; fi ; done
+install_exec: $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8) $(EXE_FILE9)
+	mkdir -p ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected 
+	for tgt in $(EXE_FILE0) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE1) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE2) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE3) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE4) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE5) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE6) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE7) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE8) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
+	for tgt in $(EXE_FILE9) ; do if test -e "$$tgt" ; then $(CP) "$$tgt" ../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected/ ; fi ; done
 
 # Install dlib rule.
 install_dlib:
@@ -235,6 +244,7 @@ cgi_util.o: cgi_util.h
 evar1.o: cgi_util.h
 evar2.o:
 hello.o: cgi_util.h
+hello_template.o:
 post1.o: cgi_util.h
 post2.o:
 progress.o:

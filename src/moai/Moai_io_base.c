@@ -103,6 +103,7 @@ MoaiIO_sendResponseFile( ZnkSocket sock, const char* filename, MoaiIOFilterFunc 
 			}
 			ZnkBfr_append_dfr( bfr, buf, read_size );
 		}
+		Znk_fclose( fp );
 		if( io_filter_func ){
 			io_filter_func( bfr, content_type );
 		}
@@ -112,7 +113,6 @@ MoaiIO_sendResponseFile( ZnkSocket sock, const char* filename, MoaiIOFilterFunc 
 			result = false;
 		}
 		ZnkBfr_destroy( bfr );
-		Znk_fclose( fp );
 		result = true;
 	}
 	return result;

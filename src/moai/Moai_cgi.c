@@ -79,7 +79,7 @@ sendHtpHdrOfCGI_forChunked( ZnkStr hdr_str, ZnkSocket sock )
 	formatTimeString( timeBuf, sizeof(timeBuf), 0 );
 
 	/***
-	 * 注意: Transfer-Encoding chunked は HTTP 1.1からサポートされる機能である.
+	 * 注意: Transfer-Encoding chunked は HTTP 1.1 からサポートされる機能である.
 	 * 従って以下のHTTP/1.1 を替わりにHTTP/1.0と書くことはできない.
 	 * (もしHTTP/1.0と書いた場合、ブラウザは正しくchunkedデータを処理しない)
 	 */
@@ -174,47 +174,6 @@ sendResponseOfCGI( ZnkBfr bfr, ZnkSocket sock )
 	}
 	return ret;
 }
-
-#if 0
-/***
- * endには必ずヘッダ境界の開始位置を指定.
- */
-static bool
-checkValidHeader( ZnkStr str, size_t end )
-{
-	size_t idx = 0;
-	char ch = 0;
-	int state = 0;
-	for( idx=0; idx<end; ++idx ){
-		ch = ZnkStr_at( str, idx );
-		switch( ch ){
-		case '\n':
-			if( state != 1 ){
-				/* 異常: :がまだ登場していないにも関わらず改行が発生 */
-				return false;
-			}
-			state = 0;
-			continue;
-		case '\r':
-		case '\t':
-			continue;
-		case ':':
-			state = 1;
-			continue;
-		default:
-			break;
-		}
-		if( ch < 0x20 && ch >= 0x80 ){
-			/* この範囲にあるコードが来た場合は異常とする */
-			return false;
-		}
-	}
-	/***
-	 * 少なくとも : が登場した後に終了とならなければならない
-	 */
-	return (bool)( state == 1 );
-}
-#endif
 
 /***
  * \r\r\n => \r\n 変換をしなければならない.
@@ -339,52 +298,28 @@ getHdrStrSanitizedRRN( ZnkStr hdr_str, ZnkBfr bfr, size_t hdr_end )
 
 }
 
-
-#if 0
 static void
-sanitizeRRN( ZnkStr str )
+setupServerNameAndServerPort( bool is_xhr_dmz )
 {
-	static bool   st_initialized = false;
-	static size_t st_occ_tbl_rrn[256]    = {0};
-	static const uint8_t* rrn    = (uint8_t*)"\r\r\n";
-	size_t pos = Znk_NPOS;
-	ZnkStr hdr_str = ZnkStr_new( "" );
 
-	if( !st_initialized ){
-		ZnkMem_getLOccTable_forBMS( st_occ_tbl_rrn,    rrn,    3 );
-		st_initialized = true;
-	}
-
-	pos = seekHdrTerminate( str );
-
-	if( pos == Znk_NPOS ){
-		/***
-		 * ヘッダ境界は存在しないと考えられる.
-		 * この場合ヘッダも存在しないため何も変換はしない.
-		 */
+	if( ZnkS_eq( MoaiServerInfo_acceptable_host(), "ANY" ) ){ 
+		const uint32_t private_ip = MoaiServerInfo_private_ip();
+		char private_ipstr[ 64 ] = "";
+		ZnkNetIP_getIPStr_fromU32( private_ip, private_ipstr, sizeof(private_ipstr) );
+		ZnkEnvVar_set( "SERVER_NAME", private_ipstr );
 	} else {
-		/***
-		 * ヘッダ境界が存在する.
-		 */
-		if( checkValidHeader( str, pos ) ){
-			ZnkStr_assign( hdr_str, 0, ZnkStr_cstr( str ), pos );
-			ZnkStrEx_replace_BMS( hdr_str, 0,
-					(const char*)rrn, 3, st_occ_tbl_rrn,
-					"\r\n", 2,
-					Znk_NPOS, Znk_NPOS );
-			ZnkBfr_replace( str, 0, pos, (uint8_t*)ZnkStr_cstr( hdr_str ), ZnkStr_leng( hdr_str ) );
-		} else {
-			/***
-			 * このヘッダ境界はデータ中に含まれているパターンであるとみなし、
-			 * 何も変換しない.
-			 */
-		}
-
+		/* Anyway, we set as LOOPBACK */
+		ZnkEnvVar_set( "SERVER_NAME", "127.0.0.1" );
 	}
 
-	ZnkStr_delete( hdr_str );
+	{
+		const uint16_t port = is_xhr_dmz ?
+			MoaiServerInfo_XhrDMZPort() : MoaiServerInfo_port();
+		char port_buf[ 64 ] = "";
+		Znk_snprintf( port_buf, sizeof(port_buf), "%u", port );
+		ZnkEnvVar_set( "SERVER_PORT", port_buf );
+	}
 }
-#endif
 
 /***
  * CGI environment variable list :
@@ -415,7 +350,7 @@ sanitizeRRN( ZnkStr str )
  *   この要求をフォワードしたプロキシサーバーのIPアドレス.
  */
 static void
-setupEnv_forGET( ZnkVarpAry hdr_vars, ZnkStr query_str, RanoModule mod )
+setupEnv_forGET( ZnkVarpAry hdr_vars, ZnkStr query_str, RanoModule mod, bool is_xhr_dmz )
 {
 	/* for PHP */
 	{
@@ -442,23 +377,14 @@ setupEnv_forGET( ZnkVarpAry hdr_vars, ZnkStr query_str, RanoModule mod )
 
 	/* Phase-2 : Seaver Info */
 	{
-		if( ZnkS_eq( MoaiServerInfo_acceptable_host(), "ANY" ) ){ 
-			const uint32_t private_ip = MoaiServerInfo_private_ip();
-			char private_ipstr[ 64 ] = "";
-			ZnkNetIP_getIPStr_fromU32( private_ip, private_ipstr, sizeof(private_ipstr) );
-			ZnkEnvVar_set( "SERVER_NAME", private_ipstr );
-		} else {
-			/* Anyway, we set as LOOPBACK */
-			ZnkEnvVar_set( "SERVER_NAME", "127.0.0.1" );
-		}
-		{
-			const uint16_t port = MoaiServerInfo_port();
-			char port_buf[ 64 ] = "";
-			Znk_snprintf( port_buf, sizeof(port_buf), "%u", port );
-			ZnkEnvVar_set( "SERVER_PORT", port_buf );
-		}
+		setupServerNameAndServerPort( is_xhr_dmz );
 		ZnkEnvVar_set( "SERVER_PROTOCOL", "HTTP/1.1" );
-		ZnkEnvVar_set( "SERVER_SOFTWARE", "Moai" );
+		if( is_xhr_dmz ){
+			ZnkEnvVar_set( "SERVER_SOFTWARE", "Moai XhrDMZ" );
+		} else {
+			ZnkEnvVar_set( "SERVER_SOFTWARE", "Moai WebServer" );
+		}
+
 		ZnkEnvVar_set( "REMOTE_ADDR", "127.0.0.1" );
 		ZnkEnvVar_set( "REMOTE_HOST", "127.0.0.1" );
 	}
@@ -479,10 +405,10 @@ setupEnv_forGET( ZnkVarpAry hdr_vars, ZnkStr query_str, RanoModule mod )
 			{
 				size_t idx;
 				size_t size = ZnkHtpHdrs_val_size( varp );
-				RanoLog_printf( "HTTP_COOKIE debug\n" );
+				RanoLog_printf( "MoaiCGI : HTTP_COOKIE debug\n" );
 				for( idx=0; idx<size; ++idx ){
 					val = ZnkHtpHdrs_val( varp, 0 );
-					RanoLog_printf( "cookie_val[%zu]=[%s]\n", idx, ZnkStr_cstr(val) );
+					RanoLog_printf( "MoaiCGI : cookie_val[%zu]=[%s]\n", idx, ZnkStr_cstr(val) );
 				}
 			}
 		}
@@ -500,7 +426,7 @@ setupEnv_forGET( ZnkVarpAry hdr_vars, ZnkStr query_str, RanoModule mod )
 }
 
 static void
-setupEnv_forPOST( ZnkVarpAry hdr_vars, size_t content_length, ZnkStr query_str, RanoModule mod )
+setupEnv_forPOST( ZnkVarpAry hdr_vars, size_t content_length, ZnkStr query_str, RanoModule mod, bool is_xhr_dmz )
 {
 	/* for PHP */
 	{
@@ -539,24 +465,20 @@ setupEnv_forPOST( ZnkVarpAry hdr_vars, size_t content_length, ZnkStr query_str, 
 
 	/* Phase-2 : Seaver Info */
 	{
-		{
-			uint32_t private_ip = MoaiServerInfo_private_ip();
-			char private_ipstr[ 64 ] = "";
-			ZnkNetIP_getIPStr_fromU32( private_ip, private_ipstr, sizeof(private_ipstr) );
-			ZnkEnvVar_set( "SERVER_NAME", private_ipstr );
-		}
-		{
-			const uint16_t port = MoaiServerInfo_port();
-			char port_buf[ 64 ] = "";
-			Znk_snprintf( port_buf, sizeof(port_buf), "%u", port );
-			ZnkEnvVar_set( "SERVER_PORT", port_buf );
-		}
+		setupServerNameAndServerPort( is_xhr_dmz );
 		ZnkEnvVar_set( "SERVER_PROTOCOL", "HTTP/1.1" );
-		ZnkEnvVar_set( "SERVER_SOFTWARE", "Moai" );
+		if( is_xhr_dmz ){
+			ZnkEnvVar_set( "SERVER_SOFTWARE", "Moai XhrDMZ" );
+		} else {
+			ZnkEnvVar_set( "SERVER_SOFTWARE", "Moai WebServer" );
+		}
 
+		/* TODO */
 		ZnkEnvVar_set( "REMOTE_ADDR", "127.0.0.1" );
 		ZnkEnvVar_set( "REMOTE_HOST", "127.0.0.1" );
-		// ZnkEnvVar_set( "REMOTE_PORT", "0" );
+#if 0
+		ZnkEnvVar_set( "REMOTE_PORT", "0" );
+#endif
 
 	}
 
@@ -590,22 +512,12 @@ setupEnv_forPOST( ZnkVarpAry hdr_vars, size_t content_length, ZnkStr query_str, 
 static void
 sendChunk( ZnkSocket sock, ZnkBfr bfr )
 {
-	//ZnkBfr chnk = ZnkBfr_create_null();
 	char chunk_size_line[ 256 ] = "";
 	Znk_snprintf( chunk_size_line, sizeof(chunk_size_line), "%zx\r\n", ZnkBfr_size(bfr) );
-
-#if 1
 	ZnkSocket_send_cstr( sock, chunk_size_line );
 	ZnkSocket_send( sock, ZnkBfr_data(bfr), ZnkBfr_size(bfr) );
 	ZnkSocket_send_cstr( sock, "\r\n" );
-#else
-	ZnkBfr_append_dfr( chnk, (uint8_t*)chunk_size_line, Znk_strlen(chunk_size_line) );
-	ZnkBfr_append_dfr( chnk, ZnkBfr_data(bfr), ZnkBfr_size(bfr) );
-	ZnkBfr_append_dfr( chnk, (uint8_t*)"\r\n", 2 );
-	ZnkSocket_send( sock, ZnkBfr_data(chnk), ZnkBfr_size(chnk) );
-#endif
 	ZnkBfr_clear( bfr );
-	//ZnkBfr_destroy( chnk );
 }
 
 
@@ -669,7 +581,7 @@ closeHandle( HANDLE handle ){
 }
 
 static void
-ReadAndHandleOutput2( HANDLE hPipeRead, ZnkSocket sock, bool use_chunked_mode )
+ReadAndHandleOutput_forWin32( HANDLE hPipeRead, ZnkSocket sock, bool use_chunked_mode )
 {
 	uint8_t ubuf[ 4096 ] = { 0 };
 	DWORD   nBytesRead = 0;
@@ -679,10 +591,10 @@ ReadAndHandleOutput2( HANDLE hPipeRead, ZnkSocket sock, bool use_chunked_mode )
 
 	/***
 	 * use_chunked_mode ではReadFileが成功したら
-	 * HTTPとしてはchunked形式として即ソケットへ送る.
+	 * HTTPとしては chunked 形式として即ソケットへ送る.
 	 * ただし最初のヘッダ部だけはまず完全に読み込む.
 	 */
-	RanoLog_printf( "ReadAndHandleOutput2 : begin.\n" );
+	RanoLog_printf( "MoaiCGI : ReadAndHandleOutput_forWin32 : begin.\n" );
 	while( true ){
 		result = ReadFile( hPipeRead, ubuf, sizeof(ubuf), &nBytesRead, NULL );
 		if( !result || nBytesRead == 0 ){
@@ -697,7 +609,7 @@ ReadAndHandleOutput2( HANDLE hPipeRead, ZnkSocket sock, bool use_chunked_mode )
 			}
 		}
 		if( ubuf[ nBytesRead-1 ] == '\0' ){
-			RanoLog_printf( "ReadAndHandleOutput2 : null-terminate.\n" );
+			RanoLog_printf( "MoaiCGI : ReadAndHandleOutput_forWin32 : null-terminate.\n" );
 		}
 		ZnkBfr_append_dfr( bfr, ubuf, nBytesRead );
 
@@ -798,7 +710,7 @@ ReadAndHandleOutput2( HANDLE hPipeRead, ZnkSocket sock, bool use_chunked_mode )
 			 */
 			sendHtpHdrOfCGI_withContentLength( hdr_str, sock, content_length );
 			/***
-			 * body部(一般にバイナリの可能性もある)を送信.
+			 * body部( 一般にバイナリの可能性もある )を送信.
 			 */
 			ZnkSocket_send( sock, ZnkBfr_data(bfr), ZnkBfr_size(bfr) );
 		}
@@ -807,18 +719,18 @@ ReadAndHandleOutput2( HANDLE hPipeRead, ZnkSocket sock, bool use_chunked_mode )
 	}
 
 	ZnkBfr_destroy( bfr );
-	RanoLog_printf( "ReadAndHandleOutput2 : end.\n" );
+	RanoLog_printf( "MoaiCGI : ReadAndHandleOutput_forWin32 : end.\n" );
 }
 
 static int
-waitForCGIEnd( HANDLE hChildProcess, HANDLE hOutputRead, HANDLE hInputWrite, ZnkSocket sock )
+waitForCGIEnd_forWin32( HANDLE hChildProcess, HANDLE hOutputRead, HANDLE hInputWrite, ZnkSocket sock )
 {
 	int result = 0;
 	DWORD r = 0;
 	/**
 	 * 標準出力の捕捉はメインスレッドでの無限ループで行う.
 	 */
-	ReadAndHandleOutput2( hOutputRead, sock, true );
+	ReadAndHandleOutput_forWin32( hOutputRead, sock, true );
 	if( !closeHandle(hOutputRead) ){
 		//printError("closeHandle:hOutputRead");
 	}
@@ -873,7 +785,7 @@ waitForCGIEndThread( void* arg )
 
 	Znk_free( cpinfo );
 
-	result = waitForCGIEnd( hChildProcess, hOutputRead, hInputWrite, sock );
+	result = waitForCGIEnd_forWin32( hChildProcess, hOutputRead, hInputWrite, sock );
 
 	appointCGISockAsExile( sock );
 
@@ -913,7 +825,7 @@ PrepAndLaunchRedirectedChild( const char* cmd, const char* curdir_new, HANDLE hC
 
 	/***
 	 * CreateProcessの第5引数にTRUEを指定すれば、ハンドルは作成したプロセスに継承される.
-	 * 第6引数にCREATE_NO_WINDOWを指定すると、作成したプロセスでコンソールが表示されなくなる.
+	 * 第6引数に CREATE_NO_WINDOW を指定すると、作成したプロセスでコンソールが示されなくなる.
 	 *
 	 * Launch the process that you want to redirect (in this case, Child.exe).
 	 * Make sure Child.exe is in the same directory as redirect.c launch redirect
@@ -947,44 +859,6 @@ PrepAndLaunchRedirectedChild( const char* cmd, const char* curdir_new, HANDLE hC
 	return hChildProcess;
 }
 
-/**
- * Monitors handle for input. Exits when child exits or pipe breaks.
- */
-#if 0
-static void
-ReadAndHandleOutput( HANDLE hPipeRead, ZnkSocket sock )
-{
-	char   lpBuffer[512];
-	DWORD  nBytesRead = 0;
-	ZnkStr str = ZnkStr_new( "" );
-	BOOL   result;
-
-	/***
-	 * この処理ではまずすべてを読み込むまで待つ.
-	 */
-	while( true ){
-		lpBuffer[0] = '\0';
-		result = ReadFile( hPipeRead, lpBuffer, sizeof(lpBuffer), &nBytesRead, NULL );
-		if( !result || nBytesRead == 0 ){
-			if( GetLastError() == ERROR_BROKEN_PIPE ){
-				/***
-				 * pipe done - normal exit path.
-				 */
-				break;
-			} else {
-				printError("ReadFile"); /* Something bad happened. */
-				break;
-			}
-		}
-		ZnkStr_append( str, lpBuffer, nBytesRead );
-	}
-
-	sanitizeRRN( str );
-	sendResponseOfCGI( str, sock );
-	ZnkStr_delete( str );
-}
-#endif
-
 static int
 runCGIProcess_forWin32( const char* cmd, const char* curdir_new, ZnkSocket sock,
 		uint8_t* data, size_t data_size,
@@ -1017,11 +891,15 @@ runCGIProcess_forWin32( const char* cmd, const char* curdir_new, ZnkSocket sock,
 
 
 	/***
-	 * とりあえずstderrへの出力の場合はCGIへは反映させないようにする.
-	 * ただし単にここを無効にしただけでは、Moai側のコンソールに表示する
-	 * などといったことは出来ない.
+	 * 以下は思惑通りにいかない.
+	 * 調査はとりあえず保留.
 	 */
 #if 0
+	/***
+	 * とりあえずstderrへの出力の場合はCGIへは反映させないようにする.
+	 * ただし単にここを無効にしただけでは、Moai 側のコンソールに出力する
+	 * などといったことは出来ない.
+	 */
 	/***
 	 * Create a duplicate of the output write handle for the std error write handle.
 	 * This is necessary in case the child application closes one of its std output handles.
@@ -1034,12 +912,6 @@ runCGIProcess_forWin32( const char* cmd, const char* curdir_new, ZnkSocket sock,
 	{
 		printError("DuplicateHandle:hOutputWrite");
 	}
-#endif
-
-#if 0
-	/***
-	 * これは思惑通りにいかない.
-	 */
 	{
 		HANDLE hStdError = GetStdHandle( STD_ERROR_HANDLE );
 		if( hStdError != INVALID_HANDLE_VALUE ){
@@ -1128,6 +1000,11 @@ runCGIProcess_forWin32( const char* cmd, const char* curdir_new, ZnkSocket sock,
 				printError("WriteFile");
 			}
 		}
+		/***
+		 * 最後のterminate nulは必要.
+		 * CGI側でfgetcなどでのstdinの入力待ちが存在する場合に
+		 * それをこれで確実に終らせなければならない.
+		 */
 		if( !WriteFile( hInputWrite, "\0", 1, &nBytesWrote, NULL) ){
 			if( GetLastError() == ERROR_NO_DATA ){
 				/* Pipe was closed (normal exit path). */
@@ -1172,7 +1049,7 @@ runCGIProcess_forWin32( const char* cmd, const char* curdir_new, ZnkSocket sock,
 		 * 一番よいのは登録されたすべてのスレッドからもっとも早く終了したものを捕捉することで
 		 * Windows ならWaitForMultipleObjectsExを使えば実現できそうだがとりあえず現段階ではメインスレッドで待つ仕様にしておく.
 		 */
-		result = waitForCGIEnd( hChildProcess, hOutputRead, hInputWrite, sock );
+		result = waitForCGIEnd_forWin32( hChildProcess, hOutputRead, hInputWrite, sock );
 	}
 
 	return result;
@@ -1197,7 +1074,7 @@ typedef struct {
 } ChildProcessInfo;
 
 static void
-ReadAndHandleOutput2( int fd_OutputRead, ZnkSocket sock, bool use_chunked_mode )
+ReadAndHandleOutput_forUNIX( int fd_OutputRead, ZnkSocket sock, bool use_chunked_mode )
 {
 	uint8_t ubuf[ 4096 ] = { 0 };
 	long    readed_size = 0;
@@ -1207,10 +1084,10 @@ ReadAndHandleOutput2( int fd_OutputRead, ZnkSocket sock, bool use_chunked_mode )
 
 	/***
 	 * use_chunked_mode ではReadFileが成功したら
-	 * HTTPとしてはchunked形式として即ソケットへ送る.
+	 * HTTPとしては chunked 形式として即ソケットへ送る.
 	 * ただし最初のヘッダ部だけはまず完全に読み込む.
 	 */
-	RanoLog_printf( "ReadAndHandleOutput2 : begin.\n" );
+	RanoLog_printf( "MoaiCGI : ReadAndHandleOutput_forUNIX : begin.\n" );
 	while( true ){
 		ubuf[ 0 ] = '\0';
 		readed_size = read( fd_OutputRead, ubuf, sizeof(ubuf)-1 );
@@ -1221,7 +1098,7 @@ ReadAndHandleOutput2( int fd_OutputRead, ZnkSocket sock, bool use_chunked_mode )
 			break;
 		}
 		if( ubuf[ readed_size-1 ] == '\0' ){
-			RanoLog_printf( "ReadAndHandleOutput2 : null-terminate.\n" );
+			RanoLog_printf( "MoaiCGI : ReadAndHandleOutput_forUNIX : null-terminate.\n" );
 		}
 		ZnkBfr_append_dfr( bfr, ubuf, readed_size );
 
@@ -1314,7 +1191,7 @@ ReadAndHandleOutput2( int fd_OutputRead, ZnkSocket sock, bool use_chunked_mode )
 			 */
 			sendHtpHdrOfCGI_withContentLength( hdr_str, sock, content_length );
 			/***
-			 * body部(一般にバイナリの可能性もある)を送信.
+			 * body部( 一般にバイナリの可能性もある )を送信.
 			 */
 			ZnkSocket_send( sock, ZnkBfr_data(bfr), ZnkBfr_size(bfr) );
 		}
@@ -1323,54 +1200,24 @@ ReadAndHandleOutput2( int fd_OutputRead, ZnkSocket sock, bool use_chunked_mode )
 	}
 
 	ZnkBfr_destroy( bfr );
-	RanoLog_printf( "ReadAndHandleOutput2 : end.\n" );
+	RanoLog_printf( "MoaiCGI : ReadAndHandleOutput_forUNIX : end.\n" );
 }
 
 static int
-waitForCGIEnd( pid_t child_process_pid, int fd_OutputRead, int fd_InputWrite, ZnkSocket sock )
+waitForCGIEnd_forUNIX( pid_t child_process_pid, int fd_OutputRead, int fd_InputWrite, ZnkSocket sock )
 {
-	int result = 0;
+	int result  = 0;
 	int state   = 0;
 	int options = 0;
-	//DWORD r = 0;
 	/**
 	 * 標準出力の捕捉はメインスレッドでの無限ループで行う.
 	 */
-	ReadAndHandleOutput2( fd_OutputRead, sock, true );
+	ReadAndHandleOutput_forUNIX( fd_OutputRead, sock, true );
 
 	close( fd_OutputRead );
 	close( fd_InputWrite );
 
 	result = waitpid( child_process_pid, &state, options );
-#if 0
-	r = WaitForSingleObject( hChildProcess, INFINITE );
-	switch( r ){
-	case WAIT_FAILED:
-		printError("WaitForSingleObject");
-		result = -1;
-		break;
-	case WAIT_ABANDONED:
-		RanoLog_printf("MoaiCGI : wait result=WAIT_ABANDONED\n");
-		result = -1;
-		break;
-	case WAIT_OBJECT_0: //正常終了
-		RanoLog_printf("MoaiCGI : wait result=WAIT_OBJECT_0\n");
-		result = 0;
-		break;
-	case WAIT_TIMEOUT:
-		RanoLog_printf("MoaiCGI : wait result=WAIT_TIMEOUT\n");
-		result = -1;
-		break;
-	default:
-		RanoLog_printf("MoaiCGI : wait result=[%d]\n", r);
-		result = -1;
-		break;
-	}
-
-	if( !closeHandle(hChildProcess) ){
-		//printError("closeHandle:hChildProcess");
-	}
-#endif
 
 	--st_cgi_count;
 	return result;
@@ -1390,14 +1237,13 @@ waitForCGIEndThread( void* arg )
 
 	Znk_free( cpinfo );
 
-	result = waitForCGIEnd( child_process_pid, fd_OutputRead, fd_InputWrite, sock );
+	result = waitForCGIEnd_forUNIX( child_process_pid, fd_OutputRead, fd_InputWrite, sock );
 
 	appointCGISockAsExile( sock );
 
 	RanoLog_printf( "MoaiCGI : waitForCGIEndThread end.\n" );
 	return Znk_force_ptr_cast( void*, result );
 }
-
 
 static ZnkStrAry
 makeCmdList( const char* cmd, const char*** cmd_argv_and )
@@ -1426,92 +1272,65 @@ makeCmdList( const char* cmd, const char*** cmd_argv_and )
 int
 popen2( const char* cmd_file, const char** cmd_argv, const char* curdir_new, int* fd_r, int* fd_w )
 {
-	int pipe_c2p[2], pipe_p2c[2];
+	int pipe_c2p[ 2 ];
+	int pipe_p2c[ 2 ];
 	int pid;
 
 	/* Create two of pipes. */
-	if(pipe(pipe_c2p)<0){
-		perror("popen2");
-		return(-1);
+	if( pipe( pipe_c2p ) < 0 ){
+		perror( "popen2" );
+		return -1;
 	}
-	if(pipe(pipe_p2c)<0){
-		perror("popen2");
-		close(pipe_c2p[R]);
-		close(pipe_c2p[W]);
-		return(-1);
+	if( pipe(pipe_p2c) < 0 ){
+		perror( "popen2" );
+		close( pipe_c2p[R] );
+		close( pipe_c2p[W] );
+		return -1;
 	}
 
 	/* Invoke processs */
-	if((pid=fork())<0){
-		perror("popen2");
-		close(pipe_c2p[R]);
-		close(pipe_c2p[W]);
-		close(pipe_p2c[R]);
-		close(pipe_p2c[W]);
-		return(-1);
+	if( ( pid=fork() ) < 0 ){
+		perror( "popen2" );
+		close( pipe_c2p[R] );
+		close( pipe_c2p[W] );
+		close( pipe_p2c[R] );
+		close( pipe_p2c[W] );
+		return -1;
 	}
-	if(pid==0){
+	if( pid == 0 ){
 		/* I'm Child */
-		close(pipe_p2c[W]);
-		close(pipe_c2p[R]);
-		dup2(pipe_p2c[R],0); /* Parent2Childで子側からは読みとなる、つまりこのパイプの出口. それを標準入力へ上書きコピー. */
-		dup2(pipe_c2p[W],1); /* Child2Parentで子側からは書きとなる、つまりこのパイプの入口. それを標準出力へ上書きコピー. */
-		close(pipe_p2c[R]);
-		close(pipe_c2p[W]);
+		close( pipe_p2c[W] );
+		close( pipe_c2p[R] );
+		dup2( pipe_p2c[R], 0 ); /* Parent2Childで子側からは読みとなる、つまりこのパイプの出口. それを標準入力へ上書きコピー. */
+		dup2( pipe_c2p[W], 1 ); /* Child2Parentで子側からは書きとなる、つまりこのパイプの入口. それを標準出力へ上書きコピー. */
+		close( pipe_p2c[R] );
+		close( pipe_c2p[W] );
 		ZnkDir_changeCurrentDir( curdir_new );
-		//if(execlp("sh","sh","-c",command,NULL)<0){
-		//if( execlp( command, command, NULL ) < 0 ){
-		if( execvp( cmd_file, Znk_force_ptr_cast(char* const*, cmd_argv) ) < 0 ){
-			perror("popen2:execvp");
-			close(pipe_p2c[R]);
-			close(pipe_c2p[W]);
-			exit(1);
+		if( execvp( cmd_file, Znk_force_ptr_cast( char* const*, cmd_argv ) ) < 0 ){
+			perror( "popen2:execvp" );
+			close( pipe_p2c[R] );
+			close( pipe_c2p[W] );
+			exit( EXIT_FAILURE );
 		}
 	}
 	/* I'm Parent */
-	close(pipe_p2c[R]);
-	close(pipe_c2p[W]);
+	close( pipe_p2c[R] );
+	close( pipe_c2p[W] );
 	*fd_w = pipe_p2c[W]; /* Parent2Childで親側からは書きとなる、つまりこのパイプの入口 */
 	*fd_r = pipe_c2p[R]; /* Child2Parentで親側からは読みとなる、つまりこのパイプの出口 */
 	
 	return pid;
 }
 
-
-#if 0
-static void
-readFD_andSend( int fd_r, ZnkSocket sock )
-{
-	char buf[ 512+1 ];
-	ZnkStr str = ZnkStr_new( "" );
-	int size;
-	while( true ){
-		buf[ 0 ] = '\0';
-		size = read( fd_r, buf, sizeof(buf)-1 );
-		if( size >= 0 ){
-			buf[ size ] = '\0';
-		}
-		if( size <= 0 ){
-			break;
-		}
-		ZnkStr_append( str, buf, size );
-	}
-
-	sanitizeRRN( str );
-	sendResponseOfCGI( str, sock );
-	ZnkStr_delete( str );
-}
-#endif
-
 static int
 runCGIProcess_forUNIX( const char* cmd, const char* curdir_new, ZnkSocket sock,
 		uint8_t* data, size_t data_size,
 		bool is_write_terminate_nul )
 {
-	int fd_r = -1;
-	int fd_w = -1;
+	int   fd_r = -1;
+	int   fd_w = -1;
 	pid_t child_process_pid = -1;
-	int result = 0;
+	int   result = 0;
 
 	const char** cmd_argv = NULL;
 	ZnkStrAry    cmd_list = makeCmdList( cmd, &cmd_argv );
@@ -1520,7 +1339,7 @@ runCGIProcess_forUNIX( const char* cmd, const char* curdir_new, ZnkSocket sock,
 
 	/***
 	 * 最後のterminate nulは必要.
-	 * CGI側でstdinの入力待ちが存在する場合に
+	 * CGI側でfgetcなどでのstdinの入力待ちが存在する場合に
 	 * それをこれで確実に終らせなければならない.
 	 */
 	write( fd_w, data, data_size );
@@ -1528,7 +1347,6 @@ runCGIProcess_forUNIX( const char* cmd, const char* curdir_new, ZnkSocket sock,
 		write( fd_w, "\0", 1 );
 	}
 
-	//readFD_andSend( fd_r, sock );
 	++st_cgi_count;
 	if( st_cgi_count < st_cgi_count_max ){
 		MoaiConnection mcn = NULL;
@@ -1564,7 +1382,7 @@ runCGIProcess_forUNIX( const char* cmd, const char* curdir_new, ZnkSocket sock,
 		 * 一番よいのは登録されたすべてのスレッドからもっとも早く終了したものを捕捉することで
 		 * Windows ならWaitForMultipleObjectsExを使えば実現できそうだがとりあえず現段階ではメインスレッドで待つ仕様にしておく.
 		 */
-		result = waitForCGIEnd( child_process_pid, fd_r, fd_w, sock );
+		result = waitForCGIEnd_forUNIX( child_process_pid, fd_r, fd_w, sock );
 	}
 
 
@@ -1584,18 +1402,18 @@ runCGIProcess_forUNIX( const char* cmd, const char* curdir_new, ZnkSocket sock,
 int
 MoaiCGI_runGet( const char* cmd, const char* curdir_new, ZnkSocket sock, RanoModule mod,
 		const size_t hdr_size, ZnkStrAry hdr1st, ZnkVarpAry hdr_vars,
-		size_t content_length, ZnkBfr stream, ZnkStr query_str )
+		size_t content_length, ZnkBfr stream, ZnkStr query_str, bool is_xhr_dmz )
 {
 
 #if defined(Znk_TARGET_WINDOWS)
 	static const bool enable_std_input = false;
-	setupEnv_forGET( hdr_vars, query_str, mod );
+	setupEnv_forGET( hdr_vars, query_str, mod, is_xhr_dmz );
 	return runCGIProcess_forWin32( cmd, curdir_new, sock,
 			ZnkBfr_data(stream)+hdr_size, ZnkBfr_size(stream)-hdr_size,
 			enable_std_input );
 
 #elif defined(Znk_TARGET_UNIX)
-	setupEnv_forGET( hdr_vars, query_str, mod );
+	setupEnv_forGET( hdr_vars, query_str, mod, is_xhr_dmz );
 	/***
 	 * QUERY_STRINGが存在する場合
 	 * PHPではおそらくQUERY_STRING全体がそこにあるかどうかをチェックしているようで
@@ -1610,18 +1428,18 @@ MoaiCGI_runGet( const char* cmd, const char* curdir_new, ZnkSocket sock, RanoMod
 int
 MoaiCGI_runPost( const char* cmd, const char* curdir_new, ZnkSocket sock, RanoModule mod,
 		const size_t hdr_size, ZnkStrAry hdr1st, ZnkVarpAry hdr_vars,
-		size_t content_length, ZnkBfr stream, ZnkStr query_str )
+		size_t content_length, ZnkBfr stream, ZnkStr query_str, bool is_xhr_dmz )
 {
 
 #if defined(Znk_TARGET_WINDOWS)
 	static const bool enable_std_input = true;
-	setupEnv_forPOST( hdr_vars, content_length, query_str, mod );
+	setupEnv_forPOST( hdr_vars, content_length, query_str, mod, is_xhr_dmz );
 	return runCGIProcess_forWin32( cmd, curdir_new, sock,
 			ZnkBfr_data(stream)+hdr_size, ZnkBfr_size(stream)-hdr_size,
 			enable_std_input );
 
 #elif defined(Znk_TARGET_UNIX)
-	setupEnv_forPOST( hdr_vars, content_length, query_str, mod );
+	setupEnv_forPOST( hdr_vars, content_length, query_str, mod, is_xhr_dmz );
 	return runCGIProcess_forUNIX( cmd, curdir_new, sock, 
 			ZnkBfr_data(stream)+hdr_size, ZnkBfr_size(stream)-hdr_size,
 			true );

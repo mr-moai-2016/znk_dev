@@ -5,5 +5,6 @@ set LIST=%LIST% easter
 set LIST=%LIST% custom_boy
 set LIST=%LIST% proxy_finder 
 set LIST=%LIST% cgi_developers
+set LIST=%LIST% guest
 set LIST=%LIST% plugin_futaba
 set LIST=%LIST% plugin_5ch

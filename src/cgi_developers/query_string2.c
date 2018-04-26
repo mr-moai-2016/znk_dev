@@ -1,5 +1,6 @@
 #include <Rano_cgi_util.h>
 #include <Znk_varp_ary.h>
+#include <Znk_htp_util.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -30,13 +31,17 @@ show_result( const ZnkVarpAry post_vars )
 	printf( "<pre>\n" );
 	printf( "PostVars from Query String: \n" );
 	{
+		ZnkStr msg = ZnkStr_new( "" );
 		size_t i; 
 		for( i=0; i<ZnkVarpAry_size(post_vars); ++i ){
 			ZnkVarp     var  = ZnkVarpAry_at( post_vars, i );
 			const char* name = ZnkVar_name_cstr(var);
 			const char* val  = ZnkVar_cstr(var);
-			printf( "%s = [%s]\n", name, val );
+			ZnkStr_addf( msg, "%s = [%s]\n", name, val );
 		}
+		ZnkHtpURL_negateHtmlTagEffection( msg ); /* for XSS */
+		fputs( ZnkStr_cstr(msg), stdout );
+		ZnkStr_delete( msg );
 	}
 	printf( "</pre>" );
 

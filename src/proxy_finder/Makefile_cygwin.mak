@@ -72,6 +72,8 @@ PRODUCT_EXECS= \
 
 RUNTIME_FILES= \
 	__mkg_sentinel_target__ \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/cygZnk.dll \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/cygRano.dll \
 
 
 
@@ -85,7 +87,7 @@ $O:
 
 # Product files rule.
 $(EXE_FILE0): $(OBJS0)
-	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/cygRano.a $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/cygZnk.a $(MY_LIBS_ROOT)/libZnk/zlib/out_dir/$(ABINAME)/cygzlib.a -lpthread -ldl -lstdc++ 
+	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/cygZnk.dll $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/cygRano.dll
 
 
 ##

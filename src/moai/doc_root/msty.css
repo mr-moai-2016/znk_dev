@@ -196,6 +196,16 @@
 	text-decoration: none;
     word-break: normal;
 }
+.MstyFrame {
+	color: #000;
+	border: 1px solid #3D803D;
+	padding: 5px 5px;
+	display: inline-block;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	text-decoration: none;
+    word-break: normal;
+}
 
 .MstyElemLink {
 	color: #000;
@@ -476,6 +486,9 @@
 .MstyRight {
 	text-align: right;
 }
+.MstyCenter {
+	text-align: right;
+}
 .MstyFloatLeft {
 	float: left;
 }
@@ -491,3 +504,12 @@
 .MstyIndent {
 	margin-left: 30px;
 }
+.MstyLogo {
+	display: inline-block;
+	position: relative;
+	min-height: 1px;
+	padding-right: 15px;
+	padding-left: 15px;
+	text-align: center
+}
+

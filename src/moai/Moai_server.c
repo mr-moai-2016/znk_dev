@@ -140,7 +140,7 @@ scanHttpFirst( MoaiContext ctx, MoaiConnection mcn,
 	MoaiInfo* draft_info = ctx->draft_info_;
 	char sock_str[ 4096 ];
 	bool response_for_req_HEAD = false;
-	bool enable_safe_dump = false;
+	bool enable_safe_dump = true;
 
 	/***
 	 * ここではパイプライン化され、複数存在する場合は最後の要素を返すことになるが、
@@ -178,8 +178,9 @@ scanHttpFirst( MoaiContext ctx, MoaiConnection mcn,
 			MoaiIO_addAnalyzeLabel( ctx->msgs_, sock, ctx->result_size_, "scanHttpFirst:first_recv" );
 			/***
 			 * 特にCONNECTの場合、RecvZeroを検出したのがI側であれ、O側であれ、
-			 * CONNECT通信の終了を意味し、その相手側も閉じなければならないことに注意するkj.
+			 * CONNECT通信の終了を意味し、その相手側も閉じなければならないことに注意する.
 			 */
+			RanoLog_printf( "Moai : MoaiConnection_erase (first_recv)\n" );
 			MoaiConnection_erase( mcn, mfds );
 			if( ctx->result_size_ == 0 ){
 				ZnkStr_add( ctx->msgs_, "RecvZero.\n" );
@@ -517,7 +518,7 @@ scanHttpFirst( MoaiContext ctx, MoaiConnection mcn,
 					if( slash && slash < colon ){
 						/***
 						 * オーソリティ部より後ろにはURLエンコーディングなどにより
-						 * :が含まれる可能性がある. もしcolonがslashより後ろのときは
+						 * : が含まれる可能性がある. もしcolonがslashより後ろのときは
 						 * このケースであると考えられるため、このcolonは無視する必要がある.
 						 */
 						port = 80;
@@ -566,10 +567,13 @@ scanHttpFirst( MoaiContext ctx, MoaiConnection mcn,
 	 */
 	if( ctx->req_method_ == ZnkHtpReqMethod_e_HEAD ){
 		mcn->req_content_length_remain_ = 0;
+		RanoLog_printf( "Moai : mcn->req_content_length_remain_=0 (ReqMethod HEAD)\n" );
 	} else if( sock_type == MoaiSockType_e_Inner ){
 		mcn->req_content_length_remain_ = ctx->body_info_.content_length_;
+		RanoLog_printf( "Moai : mcn->req_content_length_remain_=[%zu] (body content_length Inner)\n", mcn->req_content_length_remain_ );
 	} else if( sock_type == MoaiSockType_e_Outer ){
 		mcn->res_content_length_remain_ = ctx->body_info_.content_length_;
+		RanoLog_printf( "Moai : mcn->req_content_length_remain_=[%zu] (body content_length Outer)\n", mcn->req_content_length_remain_ );
 	}
 
 	/***
@@ -592,6 +596,7 @@ scanHttpFirst( MoaiContext ctx, MoaiConnection mcn,
 			} else {
 				mcn->req_content_length_remain_ -= recved_content_length;
 			}
+			RanoLog_printf( "Moai : mcn->req_content_length_remain_=[%zu] (recved)\n", mcn->req_content_length_remain_ );
 		}
 	} else if( sock_type == MoaiSockType_e_Outer ){
 		if( mcn->res_content_length_remain_ ){
@@ -829,6 +834,7 @@ requestOnConnectCompleted_GET( ZnkSocket O_sock,
 		ZnkErr_internf( &err,
 				"  ZnkSocket_send : Failure : SysErr=[%s:%s]",
 				err_info->sys_errno_key_, err_info->sys_errno_msg_ );
+		RanoLog_printf( "Moai : MoaiConnection_erase (requestOnConnectCompleted_GET)\n" );
 		MoaiConnection_erase( mcn, mfds );
 		return MoaiRASResult_e_Ignored;
 	}
@@ -860,6 +866,7 @@ sendOnConnected_POST( MoaiConnection mcn, MoaiFdSet mfds, MoaiInfoID info_id )
 
 	if( MoaiPost_sendRealy( info_id, true, O_sock, mfds ) ){
 		mcn->req_content_length_remain_ = 0;
+		RanoLog_printf( "Moai : mcn->req_content_length_remain_=0 (sendOnConnected_POST)\n" );
 	}
 	if( !ZnkFdSet_set( fdst_observe, O_sock ) ){
 		MoaiFdSet_reserveConnectSock( mfds, O_sock );
@@ -1043,6 +1050,7 @@ doLocalProxy( MoaiContext ctx, MoaiConnection mcn, MoaiFdSet mfds, RanoHtpType h
 				ZnkErr_internf( &err,
 						"  ZnkSocket_send : Failure : SysErr=[%s:%s]",
 						err_info->sys_errno_key_, err_info->sys_errno_msg_ );
+				RanoLog_printf( "Moai : MoaiConnection_erase (doLocalProxy)\n" );
 				MoaiConnection_erase( mcn, mfds );
 				return MoaiRASResult_e_Ignored;
 			}

@@ -10,7 +10,7 @@ Znk_EXTERN_C_BEGIN
 bool
 EstAssort_renameFile_toMD5ofFile( const char* src_file_path, const char* dst_topdir, ZnkStr msg, size_t* processed_count,
 		const char* file_tags, const char* comment, bool is_marge_tags,
-		ZnkStr renamed_filename );
+		ZnkStr renamed_filename, bool* ans_is_moved_file );
 
 bool
 EstAssort_getEssential( ZnkStr comment,

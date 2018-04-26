@@ -1,5 +1,20 @@
 #include "cgi_util.h"
 #include <stdio.h>
+#include <string.h>
+
+static const char*
+rejectHtmlTag( const char* cstr )
+{
+	/***
+	 * 一応最低限のXSS対策はしておく.
+	 * 本来はもっと真面目に無効化処理を行うべきですが、これは所詮サンプルなので極力簡単化するため、
+	 * HTMLタグを含む可能性がある時点でNULLを返して弾くという猛烈な制限をかけて対処しています.
+	 */
+	if( cstr && ( strchr( cstr, '<' ) || strchr( cstr, '>' ) ) ){
+		return NULL;
+	}
+	return cstr;
+}
 
 static void
 show_result( const CGIEVar* evar )
@@ -28,18 +43,18 @@ show_result( const CGIEVar* evar )
 	printf( "Moai CGI Enviroment Variables:<br>\n" );
 
 	printf( "<pre>\n" );
-	printf( "server_name=[%s]\n",     evar->server_name_ );
-	printf( "server_port=[%s]\n",     evar->server_port_ );
-	printf( "content_type=[%s]\n",    evar->content_type_ );
-	printf( "content_length=[%s]\n",  evar->content_length_ );
-	printf( "remote_addr=[%s]\n",     evar->remote_addr_ );
-	printf( "remote_host=[%s]\n",     evar->remote_host_ );
-	printf( "remote_port=[%s]\n",     evar->remote_port_ );
-	printf( "request_method=[%s]\n",  evar->request_method_ );
-	printf( "query_string=[%s]\n",    evar->query_string_ );
-	printf( "http_cookie=[%s]\n",     evar->http_cookie_ );
-	printf( "http_user_agent=[%s]\n", evar->http_user_agent_ );
-	printf( "http_accept=[%s]\n",     evar->http_accept_ );
+	printf( "server_name=[%s]\n",     rejectHtmlTag(evar->server_name_) );
+	printf( "server_port=[%s]\n",     rejectHtmlTag(evar->server_port_) );
+	printf( "content_type=[%s]\n",    rejectHtmlTag(evar->content_type_) );
+	printf( "content_length=[%s]\n",  rejectHtmlTag(evar->content_length_) );
+	printf( "remote_addr=[%s]\n",     rejectHtmlTag(evar->remote_addr_) );
+	printf( "remote_host=[%s]\n",     rejectHtmlTag(evar->remote_host_) );
+	printf( "remote_port=[%s]\n",     rejectHtmlTag(evar->remote_port_) );
+	printf( "request_method=[%s]\n",  rejectHtmlTag(evar->request_method_) );
+	printf( "query_string=[%s]\n",    rejectHtmlTag(evar->query_string_) );
+	printf( "http_cookie=[%s]\n",     rejectHtmlTag(evar->http_cookie_) );
+	printf( "http_user_agent=[%s]\n", rejectHtmlTag(evar->http_user_agent_) );
+	printf( "http_accept=[%s]\n",     rejectHtmlTag(evar->http_accept_) );
 	printf( "</pre>" );
 
 	printf( "</body></html>\n" );

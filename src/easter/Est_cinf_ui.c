@@ -17,7 +17,6 @@ EstCInfListUI_make( ZnkStr ans, ZnkVarpAry cinf_list,
 		end_idx = size;
 	}
 	if( begin_idx < end_idx ){
-		bool debug = false;
 		size_t idx;
 		ZnkStr esc_url = ZnkStr_new( "" );
 		ZnkStr unesc_url = ZnkStr_new( "" );

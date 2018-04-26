@@ -374,14 +374,14 @@ filterPlaneTxt( ZnkStr planetxt, void* arg )
 					ZnkStr_assign( new_url, 0, p, leng );
 				}
 
-				ZnkStr_set( new_str, "<a class=EasterOpenLink href=\"" );
+				ZnkStr_set( new_str, "<a class=MstyOpenLink href=\"" );
 				ZnkStr_add( new_str, ZnkStr_cstr(new_url) );
 				ZnkStr_add( new_str, "\" target=_blank> <font color=\"#404000\"> Open </font>" );
 				ZnkStr_add( new_str, "</a>" );
 				if( target ){
-					ZnkStr_addf( new_str, "<span class=easter_autolink_target>%s</span>", ZnkStr_cstr(new_url) );
+					ZnkStr_addf( new_str, "<span class=MstyAutoLinkTarget>%s</span>", ZnkStr_cstr(new_url) );
 				} else {
-					ZnkStr_addf( new_str, "<span class=easter_autolink_other>%s</span>", ZnkStr_cstr(new_url) );
+					ZnkStr_addf( new_str, "<span class=MstyAutoLinkOther>%s</span>", ZnkStr_cstr(new_url) );
 				}
 		
 				ZnkStr_replace( planetxt, pos, leng, ZnkStr_cstr(new_str), ZnkStr_leng(new_str) );
@@ -419,14 +419,14 @@ filterPlaneTxt( ZnkStr planetxt, void* arg )
 					ZnkStr_assign( new_url, 0, p, leng );
 				}
 
-				ZnkStr_set( new_str, "<a class=EasterOpenLink href=\"" );
+				ZnkStr_set( new_str, "<a class=MstyOpenLink href=\"" );
 				ZnkStr_add( new_str, ZnkStr_cstr(new_url) );
 				ZnkStr_add( new_str, "\" target=_blank> <font color=\"#404000\"> Open </font>" );
 				ZnkStr_add( new_str, "</a>" );
 				if( target ){
-					ZnkStr_addf( new_str, "<span class=easter_autolink_target>%s</span>", ZnkStr_cstr(new_url) );
+					ZnkStr_addf( new_str, "<span class=MstyAutoLinkTarget>%s</span>", ZnkStr_cstr(new_url) );
 				} else {
-					ZnkStr_addf( new_str, "<span class=easter_autolink_other>%s</span>", ZnkStr_cstr(new_url) );
+					ZnkStr_addf( new_str, "<span class=MstyAutoLinkOther>%s</span>", ZnkStr_cstr(new_url) );
 				}
 		
 				ZnkStr_replace( planetxt, pos, leng, ZnkStr_cstr(new_str), ZnkStr_leng(new_str) );

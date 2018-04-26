@@ -10,7 +10,7 @@ EstAssortUI_make( ZnkStr assort_ui, const char* tag_editor_msg, ZnkStrAry enable
 
 void
 EstAssortUI_makeCategorySelectBar( ZnkStr assort_ui, const char* current_category_id, ZnkStr current_category_name,
-		const char* manager, const char* command, const char* arg );
+		const char* manager, const char* command, const char* arg, const char* anchor );
 
 void
 EstAssortUI_makeTagsView( ZnkStr assort_ui,

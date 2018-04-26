@@ -10,8 +10,9 @@
 <a name=TopBar></a>
 <p><b><img src="/imgs/here_landmark.png"> Moai2.0ドキュメント</b></p>
 
-<a class=MstyElemLink href="/">トップページ</a> &nbsp;
-<a class=MstyElemLink href="/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<a class=MstyElemLink        href="/">トップページ</a> &nbsp;
+<a class=MstyNowSelectedLink href="/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<a class=MstyElemLink        href="/moai1.1/index.html">Moai1.1ドキュメント</a> &nbsp;
 <br> <br>
 <a class=MstyElemLink        href="/moai2.0/install.html">インストールガイド</a> &nbsp;
 <a class=MstyElemLink        href="/moai2.0/moai_reference.html">Moai本体</a> &nbsp;
@@ -366,10 +367,34 @@ Moaiのソースコードの入手方法
 <ul>
 	<font >
 		既にVCはお使いのPCにインストールされていることを前提としよう.<br>
-		Moai Ver2.0以降で導入された新しいビルドシステムでは、インストールされているVCは自動的に認識されるので、<br>
-		以下で特に環境変数を指定する必要はないが、ZNK_VSCOMNTOOLSで明示的に指定した場合はその値が優先される.<br>
-		この場合、%ZNK_VSCOMNTOOLS%\vsvars32.bat が存在するものと仮定してそのbatファイルを実行することにより、<br>
-		必要な環境変数の設定が行われる.<br>
+		Moai Ver2.0以降で導入された新しいビルドシステムでは、インストールされているVCはほとんどの場合自動的に認識される.<br>
+		特に VC6.0以上VC14.0以下のx86環境向けなら自動的に認識する.<br>
+		これ以外のVCの場合は認識しないかもしれない.<br>
+		もしも認識しない場合は環境変数ZNK_VSCOMNTOOLSで明示的に指定しなければならない.<br>
+		以下のNoteを参考にして欲しい.<br>
+		<br>
+		<div class=MstyComment>
+			<u><b>Note</b></u><br>
+			<br>
+			この場合、%ZNK_VSCOMNTOOLS%に以下のbatファイルが存在するかどうかがチェックされ、<br>
+			存在するならそれを実行することにより、必要な環境変数の設定が行われる.<br>
+			<br>
+			<ul>
+				<li>vsvars32.bat</li>
+				<li>vsvars64.bat</li>
+				<li>vsvarsamd64.bat</li>
+				<li>VsDevCmd.bat</li>
+			</ul>
+			<br>
+			よってお使いのVCにおいて上記のbatファイルのあるフォルダ位置がわかれば、<br>
+			ZNK_VSCOMNTOOLSにはそのフォルダのフルパスを指定すればよいことになる.<br>
+			<br>
+			さらに ZNK_VC_SETENV32_CMD と ZNK_VC_SETENV64_CMD という環境変数も用意されており、<br>
+			これらには上記のbatファイルのフルパスを直接指定することもできる.<br>
+			前者がx86向けコンパイル用の環境変数設定用batファイルのフルパスであり、<br>
+			後者がx64向けコンパイル用の環境変数設定用batファイルのフルパスである.<br>
+			これらの環境変数が明示的に指定されている場合は、ZNK_VSCOMNTOOLSよりも優先される.<br>
+		</div>
 		<br>
 		では手順の説明に入ろう.<br>
 		まずsrcフォルダの直下にある<b>make_world.bat</b>を実行する.<br>
@@ -416,8 +441,9 @@ Moaiのソースコードの入手方法
 			通常は我々がこれを手動で全部設定する必要はなく、VCのインストールディレクトリ配下に<br>
 			これらを自動設定するためのbatファイルが存在するのでそれを使う. <br>
 			<br>
-			これはVCのバージョンによって場所と名前と中身が異なるがVC6.0を除き、vsvars32.bat という名前になっている.<br>
-			尚、VC7.0以降、VCがインストールされた場合は VS??COMNTOOLS (??にはバージョン番号が入る)という形式の<br>
+			これはVCのバージョンによって場所と名前と中身が異なるが例えばVC7.0以上VC14.0以下のx86環境向けなら<br>
+			vsvars32.bat という名前になっている.<br>
+			この環境のVCがインストールされた場合は VS??COMNTOOLS (??にはバージョン番号が入る)という形式の<br>
 			環境変数が設定される. これを利用してvsvars32.batの場所を特定することができる.<br>
 			<br>
 		</div>
@@ -1067,8 +1093,8 @@ Moaiのソースコードの入手方法
 <u><b>リンク</b></u>
 <ul>
 	<li><a class=MstyElemLink href="#TopBar">一番上へ</a></li>
-	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">Moai 公式サイト(github)</a></li>
-	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moai ドキュメント(github)</a></li>
+	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(オンライン)</a></li>
+	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">znk_project(github)</a></li>
 </ul><br>
 
 </body>

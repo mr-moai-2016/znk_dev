@@ -237,6 +237,24 @@ isEndOfCGIScriptName( char ch )
 	return false;
 }
 
+#if 0
+bool
+MoaiCGIManager_isAuthenticReqUrp( const char* req_urp )
+{
+	if( ZnkS_isBegin( req_urp, "/cgis/" ) ){
+		/* /cgis/authentic/... ‚Æ‚¢‚¤ƒpƒ^[ƒ“‚Å‚ ‚é‚©‚Ç‚¤‚©. */
+		const char* p = req_urp + Znk_strlen_literal("/cgis/");
+		const char* q = Znk_strchr( p, '/' );
+		if( q && q > p ){
+			if( (q-p) == Znk_strlen_literal("authentic") &&  ZnkS_eqEx( p, "authentic", q-p ) ){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+#endif
+
 bool
 MoaiCGIManager_isValidReqUrp_forRun( const char* req_urp )
 {
@@ -290,6 +308,7 @@ MoaiCGIManager_isValidReqUrp_forPathBegin( const char* req_urp, const char* path
 	return false;
 }
 
+#if 0
 bool
 MoaiCGIManager_isValidReqUrp_forBox( const char* req_urp, const char* box_list_name )
 {
@@ -321,12 +340,13 @@ MoaiCGIManager_isValidReqUrp_forBox( const char* req_urp, const char* box_list_n
 	}
 	return false;
 }
+#endif
 
 const bool
 MoaiCGIManager_mapFSysDir( ZnkStr fsys_path, const char* profile_dir )
 {
-	if( ZnkStr_isBegin( fsys_path, "./doc_root" ) ){
-		const char* p = ZnkStr_cstr( fsys_path ) + Znk_strlen_literal( "./doc_root" );
+	if( ZnkStr_isBegin( fsys_path, "./" ) ){
+		const char* p = ZnkStr_cstr( fsys_path ) + 1;
 		ZnkVarpAry fsys_map_list = st_config_cgi_myf ?
 			ZnkMyf_find_vars( st_config_cgi_myf, "fsys_map_list" ) : NULL;
 		if( fsys_map_list ){
@@ -337,31 +357,15 @@ MoaiCGIManager_mapFSysDir( ZnkStr fsys_path, const char* profile_dir )
 				const ZnkStrAry sda = ZnkVar_str_ary( var );
 				const char* req_url = ZnkStrAry_at_cstr( sda, 0 );
 				if( ZnkS_isBegin( p, req_url ) ){
-#if 1
+					/* found */
 					ZnkBird bird = ZnkBird_create( "#[", "]#" );
 					static const size_t default_idx = 1;
 					static const size_t envvar_idx  = 2;
 					RanoConfUtil_initByStrAry_withEnvVar( fsys_path, sda, default_idx, envvar_idx,
-							0, Znk_strlen_literal("./doc_root" ) + Znk_strlen(req_url) );
+							0, 1 /* strlen(".") */ + Znk_strlen(req_url) );
 					ZnkBird_regist( bird, "profile_dir", profile_dir );
 					ZnkBird_extend_self( bird, fsys_path, ZnkStr_leng(fsys_path) );
 					ZnkBird_destroy( bird );
-#else
-					/* found */
-					const char* real_fsys_path = ZnkStrAry_at_cstr( sda, 1 );
-					const char* envvar_name = NULL;
-					char*       envvar_val  = NULL;
-					if( ZnkStrAry_size(sda) >= 3 ){
-						envvar_name = ZnkStrAry_at_cstr( sda, 2 );
-						envvar_val  = ZnkEnvVar_get( envvar_name );
-						if( envvar_val ){
-							/* defined in OS */
-							real_fsys_path = envvar_val;
-						}
-					}
-					ZnkStr_replace( fsys_path, 0, Znk_strlen_literal("./doc_root" ) + Znk_strlen(req_url), real_fsys_path, Znk_NPOS );
-					ZnkEnvVar_free( envvar_val );
-#endif
 					return true;
 				}
 			}

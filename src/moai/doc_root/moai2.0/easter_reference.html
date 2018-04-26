@@ -12,6 +12,7 @@
 
 <a class=MstyElemLink href="/">トップページ</a> &nbsp;
 <a class=MstyNowSelectedLink href="/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<a class=MstyElemLink        href="/moai1.1/index.html">Moai1.1ドキュメント</a> &nbsp;
 <br> <br>
 <a class=MstyElemLink        href="/moai2.0/install.html">インストールガイド</a> &nbsp;
 <a class=MstyElemLink        href="/moai2.0/moai_reference.html">Moai本体</a> &nbsp;
@@ -106,7 +107,7 @@
 	<br>
 	しかしその前に！<br>
 	もし今回が新しくMoaiをダウンロードした直後、初めてのMoai起動ならば、<br>
-	まず<a class=MstyAppLink href="http://127.0.0.1:8124/cgis/custom_boy/custom_boy.cgi?cb_target=futaba&cb_type=automatic" target=_blank>VirtualUSERS</a>の画面より、仮想ブラウザ環境をあなた用に変更/構築しておきましょう.<br>
+	まず<a class=MstyElemLink href=/moai2.0/virtual_users.html>VirtualUSERS</a>より、仮想環境をあなた用に変更しておいた方がよいでしょう.<br>
 	<br>
 	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
 </div><br>
@@ -135,8 +136,82 @@ Easter リンクマネージャー
 	この場合は、本当に単なるブックマークとしての使い方になります.<br>
 	登録したリンクには <img src=/imgs/others_16.png> のようなマークがつきます.<br>
 	<br>
-	最も基本的な使い方については <img src=/imgs/question_16.png> をクリックしていただければ「ヒント」が表示されますので、<br>
-	ドキュメントを読むのが面倒な方はそちらも活用してください.<br>
+	<b>リンクの登録/編集</b><br>
+	<br>
+	<div class=MstyIndent>
+		新しいリンクを登録するには以下の手順を行って下さい.<br>
+		<ol>
+			<li>「リンクの新規登録」ボタンを押し、「Linkの新規登録」用のUIを表示させます.</li>
+			<br>
+			<li>「URL」入力フィールド欄に登録したいサイトのURLをそのままコピペします.<br>
+			(これは通常のURL、あるいはEasterで開いたときのURL(Easter URL)でもどちらでもかまいません).</li>
+			<br>
+			<li>必要であれば「説明」入力フィールド欄に登録したURLについての説明を入力します.<br>
+			これが登録後「仮想環境のスタート」に表示される文字列となります.<br>
+			(ここに何も入力しなかった場合はURLが表示されます).</li>
+			<br>
+			<li>「上記で登録」ボタンを押します.<br>
+			これにより上の「仮想環境のスタート」に今入力したものが一つ追加されます.</li>
+		</ol>
+		<br>
+		既に登録したリンクの内容を修正するには以下の手順を行ってください.<br>
+		<ol>
+			<li>LinkManagerにおける「仮想環境のスタート」に列挙されているリンクのうち、<br>
+			修正したいものに一つチェックを入れます.<br>
+			(もし複数チェックを入れた場合は、一番上のものが選択されたとみなされます).</li>
+			<br>
+			<li>「選択したリンクを編集」ボタンを押します.<br>
+			選択したリンクの現在の内容が入力フィールドに表示されますのでこれを新しい内容に書き換えます.</li>
+			<br>
+			<li>「上記で登録」ボタンを押します.<br>
+			これにより上の「仮想環境のスタート」に修正が反映されます.</li>
+		</ol>
+	</div>
+	<br>
+	<b>リンクの並び替え</b><br>
+	<br>
+	<div class=MstyIndent>
+		「チェックしたリンクを一番上へ」ボタンを押すと、<br>
+		「仮想環境のスタート」でチェックを入れた項目が並びとして一番上へ移動します.<br>
+		このボタンだけでも一応任意の並び替えはできます.<br>
+	
+		リンクにはサイト毎にカテゴリが設定されています.<br>
+		これはURLのホスト名よりEasterが自動判断します.<br>
+		例えば *.2chan.net ならカテゴリは「ふたばちゃんねる」であるといった具合です.<br>
+		現在Easterが用意しているサイト毎のカテゴリは「ふたばちゃんねる」、「５ちゃんねる」、「その他」の３つがあります.<br>
+	
+		「カテゴリ毎に集める」ボタンを使うとリンクを簡単にカテゴリ毎に揃えることができます.<br>
+		たとえば「５ちゃんねる」のカテゴリに属するリンクをすべて一番上方へと移動して揃えたいとしましょう.<br>
+		以下の手順になります.<br>
+		<ol>
+			<li>「仮想環境のスタート」に列挙されているリンクのうち、<br>
+			カテゴリが「５ちゃんねる」であるものに一つチェックを入れます.<br>
+			(５ちゃんねるのリンクのうち、一番上にある一つを選ぶと良いでしょう).</li>
+			<br>
+			<li>「選択したリンクを一番上へ」ボタンを押します.<br>
+			これにより、今チェックを入れたリンクが一番上方へと移動します.</li>
+			<br>
+			<li>「カテゴリを集める」ボタンを押します.<br>
+			これにより、残りの全ての５ちゃんねるのリンクが一括して一番上方へと集められます.</li>
+		</ol>
+		実のところ、これはこのボタンの正確な仕様を記載したものではなく、<br>
+		一番上以外のカテゴリのリンクも出現順に集められるのですが、<br>
+		分かりにくくなるためその説明は割愛します.<br>
+		それは説明するより実際に色々並び替えを試してもらった方が状況を掴みやすいかもしれません.<br>
+	</div>
+	<br>
+	<b>リンクの削除</b><br>
+	<br>
+	<div class=MstyIndent>
+		不要なリンクを削除するには以下の手順を行ってください.<br>
+		<ol>
+			<li>「仮想環境のスタート」に列挙されているリンクのうち、<br>
+			削除したいものにチェックを入れます.</li>
+			<br>
+			<li>「選択したリンクを削除」ボタンを押します.<br>
+			これにより上の「仮想環境のスタート」にチェックを入れたもののみが削除されます.</li>
+		</ol>
+	</div>
 	<br>
 	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
 </div><br>
@@ -158,7 +233,7 @@ EasterURL
 		<li><b>192.168.0.1:8125</b><br>
 		あなたのマシンで今起動しているMoaiへの接続を意味します.<br>
 		ここでのIPとポート番号はMoaiがセキュリティーの観点から厳格に規定したものが使われます.<br>
-		(これをMoai XhrDMZと呼びます. XhrDMZでは通常、IPはLAN上でのものが採用されます.<br>
+		(これをMoai XhrDMZと呼びます. XhrDMZでは通常、IPは127.0.0.1またはLAN上でのものが採用されます.<br>
 		またポート番号はこの場合に限り8124ではなく8125になります.)<br>
 		</li>
 		<br>
@@ -364,8 +439,8 @@ Easter HyperPost
 <u><b>リンク</b></u>
 <ul>
 	<li><a class=MstyElemLink href="#TopBar">一番上へ</a></li>
-	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">Moai公式サイト(github)</a></li>
-	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(github)</a></li>
+	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(オンライン)</a></li>
+	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">znk_project(github)</a></li>
 </ul><br>
 
 </body>

@@ -56,6 +56,8 @@ PRODUCT_EXECS= \
 
 RUNTIME_FILES= \
 	__mkg_sentinel_target__ \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/Znk-$(DL_VER).dll \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/Rano-$(DL_VER).dll \
 
 
 
@@ -69,7 +71,7 @@ $O:
 
 # Product files rule.
 $(EXE_FILE0): $(OBJS0) 
-	$(LINKER) /OUT:$(EXE_FILE0)  $(OBJS0) $(SUB_LIBS) $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/Rano.lib $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/Znk.lib $(MY_LIBS_ROOT)/libZnk/zlib/out_dir/$(ABINAME)/zlib.lib ws2_32.lib 
+	$(LINKER) /OUT:$(EXE_FILE0)  $(OBJS0) $(SUB_LIBS) $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/Znk-$(DL_VER).imp.lib $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/Rano-$(DL_VER).imp.lib
 
 
 # Suffix rule.

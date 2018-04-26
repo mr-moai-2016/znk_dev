@@ -3,7 +3,7 @@
 @@V config
 my_libs_root = ['..']
 template_dir = ['../../mkfsys/template']
-install_dir = ['../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers']
+install_dir = ['../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/protected']
 install_data_dir = ['../../moai-v$(REL_VER)-$(PLATFORM)/cgis/cgi_developers/publicbox']
 special_exe_sfx = ['cgi']
 runtime_install = ['false']
@@ -54,6 +54,7 @@ exec query_string2 query_string2.c
 exec post1 post1.c
 exec post2 post2.c
 exec transfer_chunked transfer_chunked.c
+exec hello_template hello_template.c
 exec progress progress.c
 @@.
 
@@ -64,8 +65,6 @@ exec progress progress.c
 @@.
 
 @@L install_data_list
-bbs/*
-up/*
 *.c
 *.cpp
 *.html

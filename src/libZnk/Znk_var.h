@@ -43,6 +43,12 @@ ZnkVar_prim_type( ZnkVar* var )
 	return ZnkPrim_type( &var->prim_ );
 }
 
+Znk_INLINE ZnkBfr
+ZnkVar_bfr( ZnkVar* var )
+{
+	assert( ZnkVar_prim_type(var) == ZnkPrim_e_Bfr );
+	return var->prim_.u_.bfr_;
+}
 Znk_INLINE void
 ZnkVar_set_val_Bfr( ZnkVar* var, const uint8_t* data, size_t data_size )
 {

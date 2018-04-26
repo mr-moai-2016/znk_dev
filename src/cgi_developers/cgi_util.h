@@ -20,15 +20,16 @@ CGIUtil_sleep( size_t msec );
 /***
  * @brief
  * 標準入力からのデータをstdin_bfrへと格納する.
- * stdin_bfrには最低でも content_length バイト以上のメモリが確保されていなければならない.
+ * stdin_bfrには最低でも stdin_bfr_size バイト以上のメモリが確保されていなければならない.
  *
  * @return
  * 実際に取得されたバイト数を返す.
  * すなわちこれがcontent_lengthと同じ場合はすべて取得できており、
- * そうでなければ、予期せぬEOFが発生した可能性がある.
+ * そうでなければ、content_length が stdin_bfr_size より大きいか、
+ * さもなければ予期せぬEOFが発生した可能性がある.
  */
 size_t
-CGIUtil_getStdInStr( char* stdin_bfr, size_t content_length );
+CGIUtil_getStdInStr( char* stdin_bfr, size_t stdin_bfr_size, size_t content_length );
 
 
 /***

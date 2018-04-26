@@ -13,6 +13,7 @@
 
 <a class=MstyElemLink href="/">トップページ</a> &nbsp;
 <a class=MstyNowSelectedLink href="/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<a class=MstyElemLink        href="/moai1.1/index.html">Moai1.1ドキュメント</a> &nbsp;
 <br> <br>
 <a class=MstyNowSelectedLink href="/moai2.0/install.html">インストールガイド</a> &nbsp;
 <a class=MstyElemLink        href="/moai2.0/moai_reference.html">Moai本体</a> &nbsp;
@@ -100,30 +101,60 @@
 	尚、Moaiではレジストリ等の書き込みは一切行われません.<br>
 	<br>
 	<div class=MstyComment>
-	<u><b>参考</b></u><br> <br>
-	Moaiの初回起動時、Windowsのファイアウォール機能により、以下のダイアログが表示されることがあります.<br>
-	<div class=MstyComment>
-	外部マシンからのアクセスを許すサーバ機能を持つアプリケーションを起動した場合、<br>
-	Windowsファイアウォールはこの確認ダイアログを出します.<br>
-	技術的に言えば、プログラムのソースコード上において、<br>
-	INADDR_ANYを指定してWinSock2 APIでのbind を実行した場合となります.
-	</div>
-	<br>
-	<img src=/imgs/screenshot_warning_on_win32.png width=75%><br>
-	<br>
-	<img src=/imgs/screenshot_warning_on_win7.png width=75%><br>
-	<br>
-	この場合「ブロックしない」あるいは「アクセスを許可」等を選んでおくとよいでしょう.<br>
-	また仮に「ブロックする」や「キャンセル」を選んでも、このツールをローカルプロキシとして使う分には<br>
-	特に問題ありません. <br> 
-	<br>
-	Moaiを他のLAN上のマシンなどから経由して利用をしたいというような極めて特殊な用途の場合は、<br>
-	このブロックを解除する必要があるかもしれません.<br>
-	<br>
+		<u><b>セキュリティの重要な警告ダイアログについて</b></u><br>
+		<br>
+		Moaiの初回起動時、Windowsのファイアウォール機能により、以下のダイアログが表示されることがあります.<br>
+		<div class=MstyComment>
+			外部マシンからのアクセスを許すサーバ機能を持つアプリケーションを起動した場合、<br>
+			Windowsファイアウォールはこの確認ダイアログを出します.<br>
+			技術的に言えば、プログラムのソースコード上において、<br>
+			INADDR_ANYを指定してWinSock2 APIでのbind を実行した場合となります.
+		</div>
+		<br>
+		<img src=/imgs/screenshot_warning_on_win32.png width=75%><br>
+		<br>
+		<img src=/imgs/screenshot_warning_on_win7.png width=75%><br>
+		<br>
+		この場合「ブロックしない」あるいは「アクセスを許可」等を選んでおくとよいでしょう.<br>
+		また仮に「ブロックする」や「キャンセル」を選んでも、このツールをローカルマシンでのみ使う分には<br>
+		特に問題ありません. <br> 
+		( Moaiを他のLAN上のマシンなどから経由して利用をしたいというような極めて特殊な用途の場合は、<br>
+		このブロックを解除する必要があるかもしれません. )<br>
+		<br>
 	</div>
 	<br>
 	Moaiを明示的に終了させる必要性は通常ありませんが、<br>
 	終了させたい場合はMoaiのウィンドウを閉じましょう.<br>
+	<div class=MstyComment>
+		<u><b>参考</b></u><br>
+		<br>
+		それならばもうWindowsサービスにしてしまえば？と思われる方もいるかもしれません.<br>
+		WindowsサービスとはWindowsを起動したときに自動的に起動し、<br>
+		Windows が動作中はずっとバックグラウンドで動作するというものです.<br>
+		<br>
+		しかしMoaiではこれはサポートしていません.<br>
+		Windowsサービスとして起動させるためにはそれ用に特別な実装をしなければならないし、<br>
+		レジストリへの登録も発生しますから、アンインストーラも考慮しなければならなくなります.<br>
+		そしてそのようにしてシステムを複雑化させた代償の割に得られるものも少ないと思うからです.<br>
+		<br>
+		Windows起動時に毎回Moaiを起動しても別にたいした手間ではないし、<br>
+		その方がMoaiが起動中であることがわかりやすいと思いますが、<br>
+		あなたがもしその手間を省きたいならMoaiをWindowsのスタートアップに登録する方法があります.<br>
+		方法は簡単でmoai.exeへのショートカットを作り、これをあなたのWindowsの「スタートアップ」フォルダにコピーするだけです.<br>
+		Windowsを再起動してみて、Moaiが自動的に起動するなら成功です.<br>
+		<br>
+		さらにMoai起動時にコンソールウィンドウを表示させたくないと思われる方もいるかもしれません.<br>
+		コマンドプロンプト上から以下のように実行するとコンソールウィンドウを表示させずにMoaiを起動することができます.<br>
+		<br>
+		<div class=MstyComment>
+			start /MIN moai.exe
+		</div>
+		<br>
+		付属するmoai_without_console.bat はこれを実行するものです.<br>
+		このショートカットをスタートアップフォルダにコピーすれば、見かけ上はWindowsサービスと同じく、<br>
+		Windows起動時にバックグラウンドで自動起動するような感じになるでしょう.<br>
+		ただしこの場合、Moaiを終了させるにはタスクマネージャーからMoaiのタスク(プロセス)を終了させる必要があります.<br>
+	</div>
 	<br>
 	アンインストールするには展開フォルダをそのまま削除する形になりますが、<br>
 	基本的に<b><font color=red>moai_profileフォルダだけは削除せず残しておいてください.</font></b><br>
@@ -438,8 +469,8 @@
 <u><b>リンク</b></u>
 <ul>
 	<li><a class=MstyElemLink href="#TopBar">一番上へ</a></li>
-	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">Moai公式サイト(github)</a></li>
-	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(github)</a></li>
+	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(オンライン)</a></li>
+	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">znk_project(github)</a></li>
 </ul><br>
 
 </body>

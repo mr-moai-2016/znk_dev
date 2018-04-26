@@ -236,7 +236,13 @@ FUNC_END:
 	 *
 	 * CGIHelper_printTemplateHTML ‚Å‚Í‚±‚Ì‚æ‚¤‚È–„‚ß‚İ‚ğ“WŠJ‚·‚éˆ—‚ğs‚Á‚Ä‚¢‚Ü‚·.
 	 */
-	CGIHelper_printTemplateHTML( evar, bird, template_html_file, authentic_key, ermsg );
+	if( !CGIHelper_printTemplateHTML( evar, bird, template_html_file, authentic_key, ermsg ) ){
+		printf( "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" );
+		printf( "<html><body>\n" );
+		printf( "Cannot open template HTML file. [%s]\n", template_html_file );
+		printf( "</body></html>\n" );
+		fflush( stdout );
+	}
 
 	ZnkBird_destroy( bird );
 	ZnkMyf_destroy( conf_myf );

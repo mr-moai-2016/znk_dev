@@ -53,6 +53,8 @@ var st_func_tbls = [];
 <tr><td colspan=2>
 <font size=-1>
 <span style="vertical-align:-40%; margin-right:4px"><img src='/cgis/easter/publicbox/icons/question_16.png'></span>マークをクリックすると使い方のヒントが表示されます.<br> <br>
+<a class=MstyQandALink href="javascript:void(0);" onclick="displayQandA( 'Hint', 'aboutCategoryEditor' );"><img src='/cgis/easter/publicbox/icons/question_16.png'></a>
+<div id=aboutCategoryEditor></div>
 </font>
 </td></tr>
 
@@ -64,15 +66,11 @@ var st_func_tbls = [];
 <br>
 <input class=MstyInputField type=text name=EstCM_new_category placeholder="カテゴリー名の指定" value="" size=20>
 <a class=MstyElemLinkRed href="javascript:EjsAssort_submitCommandAndArg( document.fm_main, 'tag_manager', 'regist_new_category', 'edit_mode=category' )">新規登録</a>
-<a class=MstyQandALink href="javascript:void(0);" onclick="displayQandA( 'startLink' );"><img src='/cgis/easter/publicbox/icons/question_16.png'></a>
-<font size=-1><div id=startLink></div></font>
 <br>
 #[regist_msg_cstr]#
 </td></tr>
 
 <tr><td colspan=2><fieldset class=MstyStdFieldSet><legend>このカテゴリーに含まれるグループ</legend>
-<a class=MstyQandALink href="javascript:void(0);" onclick="displayQandA( 'startLink' );"><img src='/cgis/easter/publicbox/icons/question_16.png'></a>
-<font size=-1><div id=startLink></div></font>
 <font size=-1>チェックをOn/Offすることで、このカテゴリーに含ませるグループを変更できます.</font>
 <br>
 #[groups_list]#
@@ -80,8 +78,6 @@ var st_func_tbls = [];
 
 <tr><td colspan=2><fieldset class=MstyStdFieldSet><legend>カテゴリー[#[current_category_name]#]の編集</legend>
 <font size=-1>現在のカテゴリーに関する設定です.
-<a class=MstyQandALink href="javascript:void(0);" onclick="displayQandA( 'editCategory' );"><img src='/cgis/easter/publicbox/icons/question_16.png'></a>
-<font size=-1><div id=editCategory></div></font>
 </font>
 #[editor_ui]#
 </fieldset></td></tr>

@@ -6,6 +6,8 @@
 #include <Znk_varp_ary.h>
 #include <Znk_htp_util.h>
 
+#define SJIS_YO "\x97\x5c" /* 予 */
+
 bool
 EstTag_registNew( ZnkMyf tags_myf, const char* tag, ZnkStr tagid, ZnkStr msg, const char* select_group )
 {
@@ -111,7 +113,7 @@ EstTag_removeGroup( ZnkMyf tags_myf, const char* query_group_key, ZnkStr msg )
 	ZnkStr  query_group_val = ZnkStr_new( query_group_var ? ZnkVar_cstr( query_group_var ) : "" );
 
 	if( ZnkS_eq( query_group_key, "group_0" ) ){
-		ZnkStr_addf( msg, "グループ[種類]はシステムで予約された特殊なグループであるため消去できません.<br>\n" );
+		ZnkStr_addf( msg, "グループ[種類]はシステムで" SJIS_YO "約された特殊なグループであるため消去できません.<br>\n" );
 		result = false;
 		goto FUNC_END;
 	}

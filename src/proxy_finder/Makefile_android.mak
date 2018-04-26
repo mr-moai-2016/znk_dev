@@ -112,6 +112,8 @@ PRODUCT_EXECS= \
 
 RUNTIME_FILES= \
 	__mkg_sentinel_target__ \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/libZnk.so \
+	$(MY_LIBS_ROOT)/$(DLIBS_DIR)/libRano.so \
 
 
 
@@ -128,7 +130,7 @@ $(EXE_FILE0): $(OBJS0)
 	$(LINKER) -Wl,--gc-sections -Wl,-z,nocopyreloc $(RPATH_LINK) \
 	-lgcc \
 	$(OBJS0) $(SUB_LIBS) \
-	-Wl,-rpath,. $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano.a $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.a $(MY_LIBS_ROOT)/libZnk/zlib/out_dir/$(ABINAME)/libzlib.a \
+	-Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.so $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano.so \
 	$(LINKER_OPT) \
 	-o $(EXE_FILE0)
 

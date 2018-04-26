@@ -29,21 +29,37 @@
 #define IS_OK( val ) (bool)( (val) != NULL )
 
 static void
+procSystemError( RanoCGIEVar* evar, const char* result_view, const char* msg )
+{
+	const char* xhr_auth_host = EstConfig_XhrAuthHost();
+	const char* template_html_file = "templates/system_error.html";
+	ZnkBird bird = ZnkBird_create( "#[", "]#" );
+	ZnkBird_regist( bird, "xhr_auth_host", xhr_auth_host );
+	ZnkBird_regist( bird, "result_view",   result_view );
+	ZnkBird_regist( bird, "msg",           msg );
+	RanoCGIUtil_printTemplateHTML( evar, bird, template_html_file );
+	ZnkBird_destroy( bird );
+}
+
+static void
 parseQueryString( RanoCGIEVar* evar )
 {
-	ZnkStr str = ZnkStr_new( evar->query_string_ );
+	const char* query_string = RanoCGIUtil_getQueryString( evar );
 	ZnkVarpAry post_vars = ZnkVarpAry_create( true );
 	bool is_unescape_val = false;
 	ZnkVarp varp;
 	ZnkStr msg = ZnkStr_new( "" );
+	const bool is_xhr_authhost = EstConfig_isXhrAuthHost( evar );
 
-	RanoCGIUtil_splitQueryString( post_vars, ZnkStr_cstr(str), ZnkStr_leng(str), is_unescape_val );
+	RanoCGIUtil_splitQueryString( post_vars, query_string, Znk_NPOS, is_unescape_val );
 
 
 	if(        IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "est_get", false ) )){
+		/* XhrDMZにおいても許可 */
 		RanoLog_printf( "parseQueryString: procGet\n" );
 		EstGet_procGet( evar, post_vars, ZnkVar_cstr(varp), false );
 	} else if( IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "est_view", false ) )){
+		/* XhrDMZにおいても許可 */
 		RanoLog_printf( "parseQueryString: procView\n" );
 		EstGet_procGet( evar, post_vars, ZnkVar_cstr(varp), true );
 	} else if( IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "est_reload", false ) )){
@@ -51,43 +67,64 @@ parseQueryString( RanoCGIEVar* evar )
 		RanoLog_printf( "parseQueryString: procReload\n" );
 		EstGet_procGet( evar, post_vars, ZnkVar_cstr(varp), false );
 	} else if( IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "est_head", false ) )){
+		/* XhrDMZにおいても許可 */
 		RanoLog_printf( "parseQueryString: procHead\n" );
 		EstGet_procHead( evar, post_vars, ZnkVar_cstr(varp) );
 	} else if( IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "est_post", false ) )){
+		/* XhrDMZにおいても許可 */
 		RanoLog_printf( "parseQueryString: procPost\n" );
 		EstPost_procPost( evar, post_vars, ZnkVar_cstr(varp), msg, EstFilter_main );
 	} else if( IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "est_post_ex", false ) )){
-		RanoLog_printf( "parseQueryString: procHyperPost\n" );
-		EstPost_procHyperPost( evar, post_vars, ZnkVar_cstr(varp), msg );
+		if( is_xhr_authhost ){
+			RanoLog_printf( "parseQueryString: procHyperPost\n" );
+			EstPost_procHyperPost( evar, post_vars, ZnkVar_cstr(varp), msg );
+		} else {
+			procSystemError( evar,
+					"非正規な方法によるアクセスとなっています.<br>"
+					"一旦トップページにお戻り下さい.",
+					ZnkStr_cstr(msg) );
+		}
 	} else if( IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "est_manager", false ) )){
 		const char* manager = ZnkVar_cstr(varp);
-
-		if( ZnkS_eq( manager, "link" ) ){
-			EstLinkManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
-		} else if( ZnkS_eq( manager, "cache" ) ) {
-			EstCacheManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
-		} else if( ZnkS_eq( manager, "search" ) ) {
-			EstSearchManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
-		} else if( ZnkS_eq( manager, "img_viewer" ) ) {
-			EstImgViewer_main( evar, post_vars, msg, EstConfig_authenticKey(), false );
-		} else if( ZnkS_eq( manager, "video_viewer" ) ) {
-			EstImgViewer_main( evar, post_vars, msg, EstConfig_authenticKey(), true );
-		} else if( ZnkS_eq( manager, "config" ) ) {
-			EstConfigManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
-		} else if( ZnkS_eq( manager, "topic" ) ) {
-			EstTopicManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
-		} else if( ZnkS_eq( manager, "tag_manager" ) ) {
-			EstTagManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+		if( is_xhr_authhost ){
+			if( ZnkS_eq( manager, "link" ) ){
+				EstLinkManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+			} else if( ZnkS_eq( manager, "cache" ) ) {
+				EstCacheManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+			} else if( ZnkS_eq( manager, "search" ) ) {
+				EstSearchManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+			} else if( ZnkS_eq( manager, "img_viewer" ) ) {
+				EstImgViewer_main( evar, post_vars, msg, EstConfig_authenticKey(), false );
+			} else if( ZnkS_eq( manager, "video_viewer" ) ) {
+				EstImgViewer_main( evar, post_vars, msg, EstConfig_authenticKey(), true );
+			} else if( ZnkS_eq( manager, "config" ) ) {
+				EstConfigManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+			} else if( ZnkS_eq( manager, "topic" ) ) {
+				EstTopicManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+			} else if( ZnkS_eq( manager, "tag_manager" ) ) {
+				EstTagManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+			}
+		} else {
+			procSystemError( evar,
+					"非正規な方法によるアクセスとなっています.<br>"
+					"一旦トップページにお戻り下さい.",
+					ZnkStr_cstr(msg) );
 		}
 
 	} else {
 		/* default */
-		EstLinkManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+		if( is_xhr_authhost ){
+			EstLinkManager_main( evar, post_vars, msg, EstConfig_authenticKey() );
+		} else {
+			procSystemError( evar,
+					"非正規な方法によるアクセスとなっています.<br>"
+					"一旦トップページにお戻り下さい.",
+					ZnkStr_cstr(msg) );
+		}
 	}
 
 	ZnkStr_delete( msg );
 	ZnkVarpAry_destroy( post_vars );
-	ZnkStr_delete( str );
 }
 
 static bool

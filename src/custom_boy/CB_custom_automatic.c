@@ -84,6 +84,9 @@ CBCustomAutomatic_main( RanoCGIEVar* evar, ZnkVarpAry cb_vars, const char* cb_sr
 	ZnkStr postvars_ui = ZnkStr_new( "" );
 	ZnkVarpAry input_hiddens = ZnkVarpAry_create( true );
 
+	/***
+	 * Not authenticated ‚Èê‡‚ÍCmd_e_Get‚µ‚©‹–‰Â‚µ‚È‚¢.
+	 */
 	CmdType cmd_type  = Cmd_e_Get;
 	if( is_authenticated ){
 		cmd_type  = getCmdType( cb_vars );

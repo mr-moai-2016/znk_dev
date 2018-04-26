@@ -121,7 +121,7 @@ FUNC_END:
 	return result;
 }
 
-void
+bool
 CGIHelper_printTemplateHTML( RanoCGIEVar* evar, ZnkBird bird, const char* template_html_file, const char* authentic_key, ZnkStr ermsg )
 {
 	if( authentic_key ){
@@ -131,5 +131,5 @@ CGIHelper_printTemplateHTML( RanoCGIEVar* evar, ZnkBird bird, const char* templa
 	ZnkHtpURL_negateHtmlTagEffection( ermsg ); /* for XSS */
 	RanoCGIUtil_replaceNLtoHtmlBR( ermsg );
 	ZnkBird_regist( bird, "ermsg", ZnkStr_cstr(ermsg) );
-	RanoCGIUtil_printTemplateHTML( evar, bird, template_html_file );
+	return RanoCGIUtil_printTemplateHTML( evar, bird, template_html_file );
 }

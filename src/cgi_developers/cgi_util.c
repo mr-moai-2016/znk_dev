@@ -59,6 +59,7 @@ copyStr_safely( char* buf, size_t buf_size, const char* cstr, size_t cstr_leng )
 }
 
 
+#if defined(TARGET_WINDOWS)
 static FILE* Internal_getStdFP( int no )
 {
 	switch( no ){
@@ -70,7 +71,7 @@ static FILE* Internal_getStdFP( int no )
 	}
 	return NULL;
 }
-
+#endif
 
 void
 CGIUtil_Internal_setMode( int no, int is_binary_mode )
@@ -99,24 +100,33 @@ CGIUtil_sleep( size_t msec )
 
 
 size_t
-CGIUtil_getStdInStr( char* stdin_bfr, size_t content_length )
+CGIUtil_getStdInStr( char* stdin_bfr, size_t stdin_bfr_size, size_t content_length )
 {
 	int chr  = 0;
 	size_t count = 0;
 
-	while( count < content_length ){
+	if( stdin_bfr_size == 0 ){
+		return 0;
+	}
+	while( count < content_length && count < stdin_bfr_size-1 ){
 		/* 渡されたデータを標準入力より取得する */
 		chr = fgetc( stdin );
 
 		/* データ終了のチェック */
-		if( chr == EOF ){
+		if( chr == EOF || chr == content_length ){
 			/* content_lengthに満たないうちに EOFが出現 */
-			return count;
-		} else {
+			break;
+		} else if( count < stdin_bfr_size ){
 			stdin_bfr[ count ] = (unsigned char)chr;
 			++count;
 		}
 	}
+	/***
+	 * count は最大でも stdin_bfr_size-1
+	 * すなわち最大でもstdin_bfrの最後を指し示す.
+	 * よって以下でstdin_bfrから確実にはみ出すことなくnull終端できる.
+	 */
+	stdin_bfr[ count ] = '\0';
 	return count;
 }
 

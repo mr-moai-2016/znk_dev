@@ -14,6 +14,8 @@
 #include <Znk_nset.h>
 #include <time.h>
 
+#define SJIS_YO "\x97\x5c" /* 予 */
+
 #define IS_OK( val ) (bool)( (val) != NULL )
 
 static void
@@ -31,7 +33,7 @@ registNewGroup( ZnkVarpAry post_vars, ZnkStr msg )
 			ZnkHtpURL_unescape_toStr( unesc_val, ZnkVar_cstr(varp), ZnkVar_str_leng(varp) );
 
 			if( ZnkS_eq( ZnkStr_cstr( unesc_val ), "未知のタグ" ) ){
-				ZnkStr_addf( msg, "そのグループ名はシステムで予約されており登録できません.\n" );
+				ZnkStr_addf( msg, "そのグループ名はシステムで" SJIS_YO "約されており登録できません.\n" );
 			} else {
 				ZnkStrAry id_list = ZnkStrAry_create( true );
 
@@ -392,14 +394,13 @@ EstTagManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const c
 	ZnkBird bird = ZnkBird_create( "#[", "]#" );
 	const char* template_html_file = "templates/tag_manager.html";
 	struct ZnkHtpHdrs_tag htp_hdrs = { 0 };
-	RanoModule mod = NULL;
-	ZnkStr     pst_str    = ZnkStr_new( "" );
-	bool    is_authenticated = false;
-	bool    is_unescape_val = false;
-	ZnkVarp varp;
-	ZnkVarp command = NULL;
-	ZnkStr  editor_ui  = ZnkStr_new( "" );
-	ZnkStr  editor_msg = ZnkStr_new( "" );
+	RanoModule  mod = NULL;
+	bool        is_authenticated = false;
+	bool        is_unescape_val  = false;
+	ZnkVarp     varp;
+	ZnkStr      pst_str    = ZnkStr_new( "" );
+	ZnkStr      editor_ui  = ZnkStr_new( "" );
+	ZnkStr      editor_msg = ZnkStr_new( "" );
 	const char* current_category_id = "category_all";
 	const char* edit_mode = "tag";
 
@@ -408,151 +409,164 @@ EstTagManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const c
 	if( IS_OK( varp = ZnkVarpAry_find_byName_literal( post_vars, "Moai_AuthenticKey", false ) )
 	  && ZnkS_eq( authentic_key, ZnkVar_cstr(varp) ) ){
 		is_authenticated = true;
-	} else {
 	}
 	ZnkStr_addf( msg, "is_authenticated=[%d]\n", is_authenticated );
 
-	ZnkStr_addf( msg, "query_string=[%s]\n", evar->query_string_ );
+	if( is_authenticated ){
+		ZnkVarp command = ZnkVarpAry_find_byName_literal( post_vars, "command", false );
+		ZnkStr_addf( msg, "query_string=[%s]\n", evar->query_string_ );
+		if( command ){
+			ZnkVarp current_category = ZnkVarpAry_find_byName_literal( post_vars, "category_key", false );
+			ZnkVarp edit_mode_var    = ZnkVarpAry_find_byName_literal( post_vars, "edit_mode", false );
 
-	command = ZnkVarpAry_find_byName_literal( post_vars, "command", false );
-	if( is_authenticated && command ){
-		ZnkVarp current_category = ZnkVarpAry_find_byName_literal( post_vars, "category_key", false );
-		ZnkVarp edit_mode_var    = ZnkVarpAry_find_byName_literal( post_vars, "edit_mode", false );
-
-		template_html_file = "templates/tag_manager.html";
-		if( edit_mode_var ){
-			edit_mode = ZnkVar_cstr( edit_mode_var );
-			if( ZnkS_eq( edit_mode, "group" ) ){
-				template_html_file = "templates/group_editor.html";
-			} else if( ZnkS_eq( edit_mode, "category" ) ){
-				template_html_file = "templates/category_editor.html";
+			template_html_file = "templates/tag_manager.html";
+			if( edit_mode_var ){
+				edit_mode = ZnkVar_cstr( edit_mode_var );
+				if( ZnkS_eq( edit_mode, "group" ) ){
+					template_html_file = "templates/group_editor.html";
+				} else if( ZnkS_eq( edit_mode, "category" ) ){
+					template_html_file = "templates/category_editor.html";
+				}
 			}
-		}
-		if( current_category ){
-			current_category_id = ZnkVar_cstr( current_category );
+			if( current_category ){
+				current_category_id = ZnkVar_cstr( current_category );
+			} else {
+				/***
+				 * current_category が明示的に指定されていない場合は一番先頭のものが選ばれているものとする.
+				 */
+				ZnkMyf tags_myf = EstConfig_tags_myf();
+				current_category_id = EstTag_getCategoryKey( tags_myf, 0 );
+			}
+
+			if( ZnkS_eq( ZnkVar_cstr( command ), "view" ) ){
+				/* none */
+			} else if( ZnkS_eq( ZnkVar_cstr( command ), "regist_new_tag" ) ){
+				EstAssort_registNewTag( post_vars, editor_msg, NULL );
+			} else if( ZnkS_eq( ZnkVar_cstr( command ), "move_tags" ) ){
+				ZnkVarp dst_varp = ZnkVarpAry_find_byName_literal( post_vars, "EstTM_dst_group_id", false );
+				if( dst_varp ){
+					const char* dst_group_id = ZnkVar_cstr(dst_varp);
+					moveTag( post_vars, editor_msg, dst_group_id );
+				}
+			} else if( ZnkS_eq( ZnkVar_cstr( command ), "remove_tag" ) ){
+				removeTag( post_vars, editor_msg );
+			} else if( ZnkS_eq( ZnkVar_cstr( command ), "age_tag" ) ){
+				ageTags( post_vars, editor_msg );
+
+			} else if( ZnkS_eq( ZnkVar_cstr( command ), "regist_new_group" ) ){
+				registNewGroup( post_vars, editor_msg );
+
+			} else if( ZnkS_eq( ZnkVar_cstr( command ), "remove_group" ) ){
+				removeGroup( post_vars, editor_msg );
+
+			} else if( ZnkS_eq( ZnkVar_cstr( command ), "age_group" ) ){
+				ageGroup( post_vars, editor_msg );
+
+			} else if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_category" ) ){
+				registNewCategory( post_vars, editor_msg );
+
+			} else if( ZnkS_eq( ZnkVar_cstr(command), "update_category" ) ){
+				updateCategory( post_vars, current_category_id, editor_msg );
+
+			} else if( ZnkS_eq( ZnkVar_cstr(command), "age_category" ) ){
+				ageCategory( current_category_id, editor_msg );
+
+			} else if( ZnkS_eq( ZnkVar_cstr(command), "remove_category" ) ){
+				if( removeCategory( current_category_id, editor_msg ) ){
+					/* 今消去したcurrent_category_idは既に存在しないので替わりに */
+					current_category_id = "category_all";
+				}
+
+			} else {
+				ZnkStr_addf( msg, "unknown command [%s].", ZnkVar_cstr(command) );
+			}
+
 		} else {
-			/***
-			 * current_category が明示的に指定されていない場合は一番先頭のものが選ばれているものとする.
-			 */
-			ZnkMyf tags_myf = EstConfig_tags_myf();
-			current_category_id = EstTag_getCategoryKey( tags_myf, 0 );
+			ZnkStr_add( msg, "command not found.\n" );
 		}
 
-		if( ZnkS_eq( ZnkVar_cstr( command ), "view" ) ){
-			/* none */
-		} else if( ZnkS_eq( ZnkVar_cstr( command ), "regist_new_tag" ) ){
-			EstAssort_registNewTag( post_vars, editor_msg, NULL );
-		} else if( ZnkS_eq( ZnkVar_cstr( command ), "move_tags" ) ){
-			ZnkVarp dst_varp = ZnkVarpAry_find_byName_literal( post_vars, "EstTM_dst_group_id", false );
-			if( dst_varp ){
-				const char* dst_group_id = ZnkVar_cstr(dst_varp);
-				moveTag( post_vars, editor_msg, dst_group_id );
+		if( ZnkS_eq( edit_mode, "tag" ) ){
+			ZnkStr tags_list = ZnkStr_new( "" );
+			ZnkStr category_select_bar = ZnkStr_new( "" );
+			ZnkStr current_category_name = ZnkStr_new( "" );
+			const char* editor_msg_cstr = ZnkStr_cstr(editor_msg);
+			const char* regist_msg_cstr = "";
+	
+			if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_tag" ) ){
+				editor_msg_cstr = "";
+				regist_msg_cstr = ZnkStr_cstr(editor_msg);
 			}
-		} else if( ZnkS_eq( ZnkVar_cstr( command ), "remove_tag" ) ){
-			removeTag( post_vars, editor_msg );
-		} else if( ZnkS_eq( ZnkVar_cstr( command ), "age_tag" ) ){
-			ageTags( post_vars, editor_msg );
-
-		} else if( ZnkS_eq( ZnkVar_cstr( command ), "regist_new_group" ) ){
-			registNewGroup( post_vars, editor_msg );
-
-		} else if( ZnkS_eq( ZnkVar_cstr( command ), "remove_group" ) ){
-			removeGroup( post_vars, editor_msg );
-
-		} else if( ZnkS_eq( ZnkVar_cstr( command ), "age_group" ) ){
-			ageGroup( post_vars, editor_msg );
-
-		} else if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_category" ) ){
-			registNewCategory( post_vars, editor_msg );
-
-		} else if( ZnkS_eq( ZnkVar_cstr(command), "update_category" ) ){
-			updateCategory( post_vars, current_category_id, editor_msg );
-
-		} else if( ZnkS_eq( ZnkVar_cstr(command), "age_category" ) ){
-			ageCategory( current_category_id, editor_msg );
-
-		} else if( ZnkS_eq( ZnkVar_cstr(command), "remove_category" ) ){
-			if( removeCategory( current_category_id, editor_msg ) ){
-				/* 今消去したcurrent_category_idは既に存在しないので替わりに */
-				current_category_id = "category_all";
+	
+			EstAssortUI_makeCategorySelectBar( category_select_bar, current_category_id, current_category_name,
+					"tag_manager", "view", "edit_mode=tag", "" );
+			EstAssortUI_makeTagsView( tags_list, NULL, current_category_id, NULL, NULL, true );
+			EstAssortUI_makeTagEditor( editor_ui, editor_msg_cstr, regist_msg_cstr, current_category_id );
+	
+			ZnkBird_regist( bird, "category_select_bar", ZnkStr_cstr(category_select_bar) );
+			ZnkBird_regist( bird, "current_category_name", ZnkStr_cstr(current_category_name) );
+			ZnkBird_regist( bird, "tags_list", ZnkStr_cstr(tags_list) );
+			ZnkStr_delete( category_select_bar );
+			ZnkStr_delete( current_category_name );
+			ZnkStr_delete( tags_list );
+	
+		} else if( ZnkS_eq( edit_mode, "group" ) ){
+			const char* editor_msg_cstr = ZnkStr_cstr(editor_msg);
+			const char* regist_msg_cstr = "";
+	
+			if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_group" ) ){
+				editor_msg_cstr = "";
+				regist_msg_cstr = ZnkStr_cstr(editor_msg);
 			}
-
+			EstAssortUI_makeGroupEditor( editor_ui, editor_msg_cstr );
+			ZnkBird_regist( bird, "regist_msg_cstr", regist_msg_cstr );
+	
+		} else if( ZnkS_eq( edit_mode, "category" ) ){
+			ZnkStr groups_list = ZnkStr_new( "" );
+			ZnkStr category_select_bar = ZnkStr_new( "" );
+			ZnkStr current_category_name = ZnkStr_new( "" );
+			ZnkStrAry enable_group_list = ZnkStrAry_create( true );
+			const char* editor_msg_cstr = ZnkStr_cstr(editor_msg);
+			const char* regist_msg_cstr = "";
+	
+			if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_category" ) ){
+				editor_msg_cstr = "";
+				regist_msg_cstr = ZnkStr_cstr(editor_msg);
+			}
+	
+			EstAssortUI_makeCategorySelectBar( category_select_bar, current_category_id, current_category_name,
+					"tag_manager", "view", "edit_mode=category", "" );
+			makeEnableGroupList( enable_group_list, current_category_id );
+			EstAssortUI_makeGroupsView( groups_list, enable_group_list, "category_all" );
+	
+			ZnkBird_regist( bird, "category_select_bar", ZnkStr_cstr(category_select_bar) );
+			ZnkBird_regist( bird, "current_category_name", ZnkStr_cstr(current_category_name) );
+			ZnkBird_regist( bird, "regist_msg_cstr", regist_msg_cstr );
+			ZnkBird_regist( bird, "groups_list", ZnkStr_cstr(groups_list) );
+			ZnkStr_delete( category_select_bar );
+			ZnkStr_delete( current_category_name );
+			ZnkStr_delete( groups_list );
+			ZnkStrAry_destroy( enable_group_list );
+	
+			EstAssortUI_makeCategoryEditor( editor_ui, editor_msg_cstr, current_category_id );
 		} else {
-			ZnkStr_addf( msg, "default:config unknown command [%s].", ZnkVar_cstr(command) );
 		}
-
+	
+		ZnkBird_regist( bird, "editor_ui", ZnkStr_cstr(editor_ui) );
+		ZnkBird_regist( bird, "Moai_AuthenticKey", authentic_key );
+		{
+			ZnkStr hint_table = EstHint_getHintTable( "tag_manager" );
+			if( hint_table ){
+				ZnkBird_regist( bird, "hint_table", ZnkStr_cstr(hint_table) );
+			} else {
+				ZnkBird_regist( bird, "hint_table", "" );
+			}
+		}
 	} else {
-		ZnkStr_add( msg, "default:others.\n" );
+		const char* xhr_auth_host = EstConfig_XhrAuthHost();
+		template_html_file = "templates/unauthorized.html";
+		ZnkBird_regist( bird, "xhr_auth_host", xhr_auth_host );
 	}
-
-	if( ZnkS_eq( edit_mode, "tag" ) ){
-		ZnkStr tags_list = ZnkStr_new( "" );
-		ZnkStr category_select_bar = ZnkStr_new( "" );
-		ZnkStr current_category_name = ZnkStr_new( "" );
-		const char* editor_msg_cstr = ZnkStr_cstr(editor_msg);
-		const char* regist_msg_cstr = "";
-
-		if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_tag" ) ){
-			editor_msg_cstr = "";
-			regist_msg_cstr = ZnkStr_cstr(editor_msg);
-		}
-
-		EstAssortUI_makeCategorySelectBar( category_select_bar, current_category_id, current_category_name,
-				"tag_manager", "view", "edit_mode=tag" );
-		EstAssortUI_makeTagsView( tags_list, NULL, current_category_id, NULL, NULL, true );
-		EstAssortUI_makeTagEditor( editor_ui, editor_msg_cstr, regist_msg_cstr, current_category_id );
-
-		ZnkBird_regist( bird, "category_select_bar", ZnkStr_cstr(category_select_bar) );
-		ZnkBird_regist( bird, "current_category_name", ZnkStr_cstr(current_category_name) );
-		ZnkBird_regist( bird, "tags_list", ZnkStr_cstr(tags_list) );
-		ZnkStr_delete( category_select_bar );
-		ZnkStr_delete( current_category_name );
-		ZnkStr_delete( tags_list );
-
-	} else if( ZnkS_eq( edit_mode, "group" ) ){
-		const char* editor_msg_cstr = ZnkStr_cstr(editor_msg);
-		const char* regist_msg_cstr = "";
-
-		if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_group" ) ){
-			editor_msg_cstr = "";
-			regist_msg_cstr = ZnkStr_cstr(editor_msg);
-		}
-		EstAssortUI_makeGroupEditor( editor_ui, editor_msg_cstr );
-		ZnkBird_regist( bird, "regist_msg_cstr", regist_msg_cstr );
-
-	} else if( ZnkS_eq( edit_mode, "category" ) ){
-		ZnkStr groups_list = ZnkStr_new( "" );
-		ZnkStr category_select_bar = ZnkStr_new( "" );
-		ZnkStr current_category_name = ZnkStr_new( "" );
-		ZnkStrAry enable_group_list = ZnkStrAry_create( true );
-		const char* editor_msg_cstr = ZnkStr_cstr(editor_msg);
-		const char* regist_msg_cstr = "";
-
-		if( ZnkS_eq( ZnkVar_cstr(command), "regist_new_category" ) ){
-			editor_msg_cstr = "";
-			regist_msg_cstr = ZnkStr_cstr(editor_msg);
-		}
-
-		EstAssortUI_makeCategorySelectBar( category_select_bar, current_category_id, current_category_name,
-				"tag_manager", "view", "edit_mode=category" );
-		makeEnableGroupList( enable_group_list, current_category_id );
-		EstAssortUI_makeGroupsView( groups_list, enable_group_list, "category_all" );
-
-		ZnkBird_regist( bird, "category_select_bar", ZnkStr_cstr(category_select_bar) );
-		ZnkBird_regist( bird, "current_category_name", ZnkStr_cstr(current_category_name) );
-		ZnkBird_regist( bird, "regist_msg_cstr", regist_msg_cstr );
-		ZnkBird_regist( bird, "groups_list", ZnkStr_cstr(groups_list) );
-		ZnkStr_delete( category_select_bar );
-		ZnkStr_delete( current_category_name );
-		ZnkStr_delete( groups_list );
-		ZnkStrAry_destroy( enable_group_list );
-
-		EstAssortUI_makeCategoryEditor( editor_ui, editor_msg_cstr, current_category_id );
-	} else {
-	}
-
-	ZnkBird_regist( bird, "editor_ui", ZnkStr_cstr(editor_ui) );
-	ZnkBird_regist( bird, "Moai_AuthenticKey", authentic_key );
+	
 	ZnkHtpURL_negateHtmlTagEffection( msg ); /* for XSS */
 	{
 		ZnkSRef old_ptn = { 0 };
@@ -561,19 +575,11 @@ EstTagManager_main( RanoCGIEVar* evar, ZnkVarpAry post_vars, ZnkStr msg, const c
 		ZnkSRef_set_literal( &new_ptn, "<br>\n" );
 		ZnkStrEx_replace_BF( msg, 0, old_ptn.cstr_, old_ptn.leng_, new_ptn.cstr_, new_ptn.leng_, Znk_NPOS, Znk_NPOS ); 
 	}
-	{
-		ZnkStr hint_table = EstHint_getHintTable( "tag_manager" );
-		if( hint_table ){
-			ZnkBird_regist( bird, "hint_table", ZnkStr_cstr(hint_table) );
-		} else {
-			ZnkBird_regist( bird, "hint_table", "" );
-		}
-	}
 	ZnkBird_regist( bird, "msg",   ZnkStr_cstr(msg) );
 	RanoCGIUtil_printTemplateHTML( evar, bird, template_html_file );
+
 	ZnkBird_destroy( bird );
 	ZnkStr_delete( pst_str );
-
 	ZnkStr_delete( editor_ui );
 	ZnkStr_delete( editor_msg );
 }

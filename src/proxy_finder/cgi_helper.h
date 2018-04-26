@@ -23,7 +23,7 @@ CGIHelper_initEsscential( ZnkVarpAry post_vars,
 		const char** moai_dir, const char** authentic_key, bool* is_authenticated,
 		ZnkStr ermsg );
 
-void
+bool
 CGIHelper_printTemplateHTML( RanoCGIEVar* evar, ZnkBird bird, const char* template_html_file, const char* authentic_key, ZnkStr ermsg );
 
 Znk_EXTERN_C_END

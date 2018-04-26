@@ -83,9 +83,13 @@ MoaiServerInfo_XhrDMZ( void )
 	 * config.myf ‚É‚¨‚¢‚ÄŽw’è‚à‰Â‚Å‚ ‚é‚æ‚¤‚É‚µ‚½‚¢.
 	 */
 	if( ZnkS_empty( st_xhr_dmz ) ){
-		char private_ipstr[ 64 ] = "";
-		ZnkNetIP_getIPStr_fromU32( st_private_ip, private_ipstr, sizeof(private_ipstr) );
-		Znk_snprintf( st_xhr_dmz, sizeof(st_xhr_dmz), "%s:%u", private_ipstr, st_xhr_dmz_port );
+		if( ZnkS_eq( st_acceptable_host, "LOOPBACK" ) ){
+			Znk_snprintf( st_xhr_dmz, sizeof(st_xhr_dmz), "127.0.0.1:%u", st_xhr_dmz_port );
+		} else {
+			char private_ipstr[ 64 ] = "";
+			ZnkNetIP_getIPStr_fromU32( st_private_ip, private_ipstr, sizeof(private_ipstr) );
+			Znk_snprintf( st_xhr_dmz, sizeof(st_xhr_dmz), "%s:%u", private_ipstr, st_xhr_dmz_port );
+		}
 	}
 	return st_xhr_dmz;
 }

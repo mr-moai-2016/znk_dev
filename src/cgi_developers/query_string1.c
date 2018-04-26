@@ -1,5 +1,20 @@
 #include "cgi_util.h"
 #include <stdio.h>
+#include <string.h>
+
+static const char*
+rejectHtmlTag( const char* cstr )
+{
+	/***
+	 * 一応最低限のXSS対策はしておく.
+	 * 本来はもっと真面目に無効化処理を行うべきですが、これは所詮サンプルなので極力簡単化するため、
+	 * HTMLタグを含む可能性がある時点でNULLを返して弾くという猛烈な制限をかけて対処しています.
+	 */
+	if( cstr && ( strchr( cstr, '<' ) || strchr( cstr, '>' ) ) ){
+		return NULL;
+	}
+	return cstr;
+}
 
 static void
 show_result( const char* query_string )
@@ -32,14 +47,14 @@ show_result( const char* query_string )
 		size_t i = 0; 
 		char key[ 256 ] = ""; 
 		char val[ 256 ] = ""; 
-		for( i=0; /* infinity */ ; ++i ){
+		for( i=0; i<64; ++i ){
 			int result = CGIUtil_getQueryStringToken( query_string, i,
 					key, sizeof(key),
 					val, sizeof(val) );
 			if( result == 0 ){
 				break;
 			}
-			printf( "%s = [%s]\n", key, val );
+			printf( "%s = [%s]\n", rejectHtmlTag(key), rejectHtmlTag(val) );
 		}
 	}
 	printf( "</pre>" );

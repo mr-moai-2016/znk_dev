@@ -17,7 +17,10 @@ generateJsMsgFunc( ZnkStr ans, const char* id, ZnkStrAry lines )
 	for( idx=0; idx<size; ++idx ){
 		line = ZnkStrAry_at_cstr( lines, idx );
 		ZnkStr_add( ans, "\tmsg += \"" );
-		ZnkStr_add( ans, ZnkStrAry_at_cstr( lines, idx ) );
+		if( line[ 0 ] == '\t' ){
+			ZnkStr_add( ans, "&nbsp;&nbsp;&nbsp;&nbsp;" );
+		}
+		ZnkStr_add( ans, line );
 		if(  ZnkS_isEnd( line, "<ol>" ) 
 		  || ZnkS_isEnd( line, "</ol>" ) )
 		{

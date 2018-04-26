@@ -778,7 +778,7 @@ makeEditUI( ZnkStr EstSM_edit_ui, ZnkVarpAry sqi_vars, const char* EstSM_topdir,
 		{
 			ZnkStr arg = ZnkStr_newf( "searched_key=%s", searched_key );
 			EstAssortUI_makeCategorySelectBar( EstSM_edit_ui, current_category_id, NULL,
-					"search", "edit", ZnkStr_cstr(arg) );
+					"search", "edit", ZnkStr_cstr(arg), "" );
 			ZnkStr_delete( arg );
 		}
 		EstAssortUI_makeTagsView( EstSM_edit_ui, enable_tag_list, current_category_id, "", comment, false );

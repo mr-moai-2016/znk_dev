@@ -13,6 +13,7 @@
 
 <a class=MstyElemLink href="/">トップページ</a> &nbsp;
 <a class=MstyNowSelectedLink href="/moai2.0/index.html">Moai2.0ドキュメント</a> &nbsp;
+<a class=MstyElemLink        href="/moai1.1/index.html">Moai1.1ドキュメント</a> &nbsp;
 <br> <br>
 <a class=MstyElemLink        href="/moai2.0/install.html">インストールガイド</a> &nbsp;
 <a class=MstyElemLink        href="/moai2.0/moai_reference.html">Moai本体</a> &nbsp;
@@ -48,9 +49,9 @@
 	この記事はまた、現在のznk_projectのファイル+ディレクトリ構造全体がどのようになっているかを解説するものでもあります.<br>
 	<br>
 	出来るだけ平易な説明を心がけたつもりですが、それでもかなり専門的な内容であることに変わりはなく、<br>
-	おそらくこれはMoai2.0ドキュメントの中でも最も難しいのものでしょう.<br>
+	おそらくこれはMoai2.0ドキュメント群の中でも最も難しいのものでしょう.<br>
 	マルチプラットフォームの静的ライブラリ、動的ライブラリ、そしてツールの開発に相当に慣れたプログラマの方を対象に<br>
-	この種のビルドシステムの一形態としてznk_projectが提供するモデルをご紹介します.<br>
+	この種のビルドシステムの一形態としてznk_projectが提供する抽象化モデルをご紹介します.<br>
 </div><br>
 <br>
 
@@ -88,41 +89,58 @@ mkfgenが扱うプロジェクトモデル
 
 	<ul>
 		<li><b>my_project ディレクトリ</b><br>
-		これはあなた専用のプログラム開発用ディレクトリとします.<br>
+		<br>
+		これはあなた専用のプログラム開発用ディレクトリであり、同時にすべてのものの最上層となるトップディレクトリです.<br>
 		即ちこの配下には、あなたが使うライブラリやツール群(極めて標準的なライブラリやコンパイラは除いて)一式が<br>
-		すべて格納されているものとします.<br>
-		つまりすべてのものの最上層となるトップディレクトリです.<br>
+		すべてが格納されているものとします.<br>
 		Moaiではznk_projectというディレクトリに相当するものと考えていいでしょう.<br>
 		</li>
 		<br>
 		<li><b>my_project/mkfsys ディレクトリ</b><br>
-		このディレクトリ内に mkfgen ツールの本体がが存在するものとします(詳しくは後述).<br>
+		<br>
+		このディレクトリ内には mkfgen ツールの本体やそれに関係するその他のビルド支援系ファイルが存在します(詳しくは後述).<br>
 		</li>
 		<br>
 		<li><b>my_project/src ディレクトリ</b><br>
-		このディレクトリにあなたがこれまで開発を行ってきたライブラリやツールのソースファイルが格納されているものとします.<br>
-		特にライブラリの場合、各ライブラリディレクトリの配下にout_dir/$(ABINAME)というディレクトリが作成され、<br>
-		そこにビルドされたライブラリの実体が格納されます.<br>
-		特にインポートライブラリをリンクする環境では、このout_dir/$(ABINAME)配下にあるインポートライブラリを直接参照しなければなりません.<br>
-		そういった意味で、このsrc ディレクトリはライブラリ群が格納されたものと見ることもできます.<br>
-		後述する configセクションの my_libs_root で src ディレクトリをこの意味で指定するケースがあり、
-		特に znk_projectの場合、すべてのツールとライブラリがこのケースに該当します.<br>
+		<br>
+		このディレクトリにあなたのソースファイルがすべて格納されているものとします.<br>
+		つまりあなたがこれまで開発を行ってきた(あるいはこれからも行うであろう)ライブラリやツールのソースファイルです.<br>
+		<br>
+		mkfgenが生成するMakefileでは、ビルド時にout_dir/$(ABINAME)というサブディレクトリを<b>その場に</b>作成します.<br>
+		特にライブラリの場合、そのソースディレクトリ配下のout_dirにビルドされたライブラリの実体が格納されるわけです.<br>
+		即ちこのsrc ディレクトリは生成されたライブラリ群が格納される場をも兼ねています.<br>
+		znk_projectのすべてのツールとライブラリでは、後述するconfigセクションの my_libs_root において<br>
+		src ディレクトリをこの意味で指定しています.<br>
+		<br>
+		このようにするメリットは、わざわざ生成したライブラリやヘッダ群を別のインストールディレクトリへ<br>
+		ずらずらとコピーする処理をMakefile内で記述するの省略できるということです.<br>
+		その分、ビルドサイクルにおけるトータルな時間も短縮されます.<br>
+		<br>
+		しかし勿論、そのようなコピーを行うようにした方がよい場合もあります.<br>
+		例えば、mkfgenが提供するプロジェクトモデルの範疇の外にあるツールから、そのライブラリを利用したい場合があります.<br>
+		mkfgenが生成するMakefileでは、特に汎用性の高い静的ライブラリと動的ライブラリについては、<br>
+		それぞれslibとdlibというディレクトリ配下へ、一応コピーする処理を行います.<br>
+		一方、インポートライブラリとヘッダについてはそのようなコピーを行いません.<br>
 		</li>
 		<br>
 		<li><b>my_project/my_tool-vX.Y-platform</b><br>
+		<br>
 		このディレクトリはあなたが開発を行ったツール(my_tool)のインストール先です.<br>
 		実行バイナリやランタイムライブラリ、必要な設定データなど一式が格納されているものとします.<br>
-		ここで my_tool や X, Y, platform の部分はツールやそのバージョン、プラットフォームによって変わります.<br>
+		ここで my_tool や X, Y, platform の部分はツールやそのバージョン、プラットフォームなどによって変わる文字列です.<br>
 		</li>
 		<br>
 		<li><b>my_project/my_profile</b><br>
+		<br>
 		このディレクトリでは、my_projectにおけるツールが共通して使うプロファイルデータが格納されているものとします.<br>
 		Moaiで言えば moai_profileディレクトリがこれにあたります.<br>
+		FirefoxなどにもProfileがありますが、イメージとしてはあれを意識したものです.<br>
 		これはツールの種類やバージョンを超えて共通して参照される場合もあり得るものとします.<br>
 		</li>
 		<br>
 		<li><b>my_project/src/my_tool ディレクトリ</b><br>
-		このディレクトリはあなたが開発を行っているツールmy_toolのソースディレクトリです. <br>
+		<br>
+		このディレクトリはsrc配下にあり、あなたが開発を行っているツールmy_toolのソースディレクトリです. <br>
 		この中に上記のCファイルに加え、mkfgen.myf が存在するものとします.<br>
 		</li>
 	</ul>
@@ -204,7 +222,7 @@ mkfgenが扱うプロジェクトモデル
 	<br>
 	長いですか？<br>
 	<br>
-	しかし６つのMakefileを書く手間を考えればはるかに短いともいえます.<br>
+	しかし６つのMakefileを書く手間を考えれば、これ一つで済むのですからはるかに短いともいえます.<br>
 	また、上の例ではほとんど空のセクションを列記しているだけであるため、<br>
 	見かけほど記載されている情報量は多くはありません.<br>
 	つまり実際には上記をコピペし、必要な情報だけを修正+追記するだけで大抵は事足りるでしょう.<br>
@@ -213,7 +231,7 @@ mkfgenが扱うプロジェクトモデル
 	実は mkfgenツールは、それが実行されたディレクトリ配下を再帰的にスキャンし、拡張子からC/C++ファイルを自動的に認識するため、<br>
 	mkfgen.myfにおいては基本的にCファイルの指定は不要なのです.<br>
 	<br>
-	一方、main関数を含むCファイルだけは例外的に指定する必要があります.<br>
+	一方、main関数を含むCファイルだけは明示的に指定する必要があります.<br>
 	これは product_listにexecキーワードに続けて、生成される実行バイナリ名( この例では hello )、<br>
 	ソースコード名( この例ではhello.c )の順でスペース区切りで指定する形となります.<br>
 	<br>
@@ -224,7 +242,11 @@ mkfgenが扱うプロジェクトモデル
 	( 例えばlibpngに含まれる example.c は、main関数を含むものですが、実のところこれは擬似的な Cコードであり、<br>
 	コンパイル対象に含めて欲しくないCファイルです ).<br>
 	このようなケースでも取捨選択してビルドさせるため、mkfgenツールではこの指定が必要な仕様になっています.<br>
-	( ignore_listの指定によってもこのような除外ができます ).<br>
+	<br>
+	<div class=MstyComment>
+		今思えば、ignore_listの指定によってもこのような除外ができますので、<br>
+		mkfgenの将来のバージョンではこの仕様を変更するかもしれません.<br>
+	</div>
 	<br>
 	mkfgenツールにおける Cファイルの再帰的自動認識機能はCファイルの多い大規模なプロジェクトで大きな効果を発揮します.<br>
 	下請けのCファイル群が増えた場合、mkfgenツールを実行するだけでMakefile内のCファイルの情報を自動的に更新できますし、<br>
@@ -234,6 +256,12 @@ mkfgenが扱うプロジェクトモデル
 	例えば開発しているプロジェクトが使う依存ライブラリが新しく増えたような場合です.<br>
 	この場合、include_paths_commonやdependency_libs_commonに新しいライブラリに関するパス情報などを手動で追記した上、<br>
 	mkfgenツールを実行してMakefileを更新しなければなりません.<br>
+	<br>
+	<div class=MstyComment>
+		Moai CGI上でわかりやすいUIを表示しつつ、その指定によってmkfgen.myfを自動生成し、<br>
+		それをダウンロードできるようなツールを作ると便利かもしれません.<br>
+		Moaiの将来のバージョンではそのようなツールを提供するかもしれません.<br>
+	</div>
 	<br>
 	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
 </div><br>
@@ -298,29 +326,89 @@ configセクション<span class=MstyAuthor> (Section Type : @@V 変数リスト
 		例えばlibプレフィックスを付けないようにしたい場合は、これに明示的に空値を指定します.<br>
 		</li>
 		<br>
+		<li><b>resfile_additional</b>(String型)<br>
+		resource file(拡張子res)としてこれを特別に追加します.<br>
+		</li>
+		<br>
 		<li><b>runtime_install</b>(bool型)<br>
 		これをtrueに設定すると、このproductが依存するランタイムライブラリもいっしょにインストールされます.<br>
 		falseに設定すると、このランタイムライブラリがインストールされません.<br>
 		デフォルトではtrueであり、runtime_installを特に指定しない場合もtrueとみなされます.<br>
 		</li>
 		<br>
-		<li><b>resfile_additional</b>(String型)<br>
-		resource file(拡張子res)としてこれを特別に追加します.<br>
+		<li><b>include_makefile_version</b>(bool型)<br>
+		これをtrueに設定すると、Makefile_version.makをincludeする処理が行われるようになります.<br>
+		Makefile_version.makでは DL_VER や REL_VER の値が定義されます.<br>
+		DL_VERはDLibに付加するバージョン番号であり、デフォルトではlibZnkのものが参照されます.<br>
+		REL_VERはツールに付加するバージョン番号であり、デフォルトではmoaiのものが参照されます.<br>
+		</li>
+		<br>
+		<li><b>makefile_version_landmark</b>(String型)<br>
+		ソースディレクトリ内にMakefile_version.makがまだ存在していない場合、<br>
+		その内容をどうするかに関してこの値がヒントとなります.<br>
+		mkfgenはそのソースディレクトリから親ディレクトリへと順に辿り、この値と同じ名前のディレクトリがあれば<br>
+		その中にMakefile_version.makがあるかを調べます.<br>
+		そしてもしそこにMakefile_version.makが存在するならば、<br>
+		それをincludeするような新しいMakefile_version.makをソースディレクトリ内に生成します.<br>
 		</li>
 		<br>
 		<li><b>gslconv</b>(String型)<br>
-		我々が提唱するディレクトリモデルにおいては gsl.myf というファイルが DLib(Dynamic Link Library)のプロジェクト内に存在します.<br>
-		これはそのDLibにおいてExportされるべきグローバルシンボル(要はグローバル関数)のリストを列挙したものです.<br>
+		我々が提唱するディレクトリモデルでは、Makefileの他にも gsl.myf という特別なファイルを導入しています.<br>
+		このファイルは、DLib(Windowsの場合はDLL : Dynamic Link Library)のソースディレクトリの中でのみ生成されます.<br>
+		gsl.myf はそのDLibにおいてExportされるべきグローバルシンボル(要はグローバル関数)のリストを列挙したものです.<br>
+		<br>
 		ソースコードでグローバル関数が追加/削除されると同時に、このgsl.myfも修正しなければなりませんが、<br>
 		我々プログラマがそれを毎回手動でやっていては大変ですので、通常はそれをツールによって自動更新させます.<br>
 		<br>
-		gslconv(Global Simbol List CONVerter)はそのためのツールであり、予め生成しておいたSLib(Static Library)を分析して<br>
-		それに含まれるグローバルシンボルを自動的に抽出してgsl.myfを生成/更新するツールとなります.<br>
+		gslconv(Global Simbol List CONVerter)はそのためのツールであり、mkfgenとセットで私が開発したものですが、<br>
 		mkfgenが生成するDLib用のMakefileではこのツールが必須となります<br>
 		(ちなみに gslconv 自体のソースコードはlibZnkに含まれており、libZnkとこのツールは同時にビルドされます).<br>
-		ここではgslconvの実行バイナリのパスを指定します.<br>
+		<br>
+		前置きが長くなりましたが、ここではgslconvの実行バイナリのパスを指定します.<br>
+		<br>
 		</li>
 	</ul>
+
+	<div class=MstyComment>
+		<b><u>gslconvについての補足</u></b><br>
+		<br>
+		gslconvツールは予め生成しておいたSLib(Static Library)を分析して、それに含まれるグローバルシンボルを自動的に抽出し、<br>
+		gsl.myfを生成/更新するためのものとなります.<br>
+		ただしSLibはCOFF形式である必要があります(OMF形式には対応しておりません)<br>
+		<br>
+		この gsl.myf の使い道をもう少し詳しくお話しましょう.<br>
+		例えばこの gsl.myf ファイルから各コンパイラ用の def ファイルへの変換は、<br>
+		SLibを直接分析する処理と比べればはるかに容易いのです.<br>
+		def ファイルとはDLLを作る際にコンパイラ(厳密にはリンカ)に直接指定できる形式のシンボル定義ファイルです.<br>
+		ただしコンパイラによって defファイルの記法が微妙に異なることがあるのです.<br>
+		gsl.myfとはdefファイルをコンパイラに依存しない形で抽象化したようなものです.<br>
+		<br>
+		ところで、GNU binutils に nm コマンドというものがあります.<br>
+		実のところ、このコマンドでもgslconvと同じようにSLibからグローバルシンボルを抽出できます.<br>
+		実際、mkfgenツールを開発するにあたって初期のプロトタイプでは nm を使っていました.<br>
+		しかし nm コマンドでは次の問題があるため、結局不採用としました.<br>
+		<ul>
+			<li>64bit版ライブラリのシンボルを得るためには64bit版 nm を使わなければならない.<br>
+			つまり32bit版と64bit版の両方の nm がシステムにおいて使えるようにインストールされていなければならず、<br>
+			しかもMakefile内ではどちらの版を使うかを適切に切り分けなければならない.<br>
+			</li>
+			<br>
+			<li>WindowsのVC環境では標準で用意されていない.<br>
+			(dumpbin.exeで可能では？と思われるかもしれませんが、これは静的ライブラリには使えません).<br>
+			MinGWやCygwinなどをインストールすると使うことができるが、<br>
+			VCを使っているのに nm コマンドのためだけにMinGWをインストールするという理不尽な状況が生じる.<br>
+			</li>
+			<br>
+			<li>標準で用意されていないなら開発プロジェクトに常時同梱しておけばよいと思われるかもしれないが、<br>
+			nm コマンド(binutils)のライセンスはGPLである.<br>
+			知らない方のために一言で言うと、このライセンスはとても<b>不自由</b>かつ<b>伝染</b>するので、<br>
+			このような同梱がし辛い.<br>
+			</li>
+		</ul>
+		このような要請から、上記の問題すべてを解決する代替のツールとして、今回gslconvを開発するに至ったわけです.<br>
+		gslconvであれば、32bit/64bitライブラリ双方をこれ一つで認識します.<br>
+		またライセンスは mkfgen と同じく<a class=MstyElemLink href=http://www.kmonos.net/nysl target=_blank>NYSL</a>であり、使用や同梱するにあたっての制限は何もありません.<br>
+	</div>
 	<br>
 	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
 </div><br>
@@ -334,7 +422,7 @@ include_paths_commonセクション<span class=MstyAuthor> (Section Type : @@L �
 <br>
 <div class=MstyIndent>
 	ここではヘッダをインクルードするためのパス群を一行につき一つずつ指定します.<br>
-	この指定では以下のような<b>@記法</b>を使うことができます.<br>
+	この指定では、シンタクスシュガーとして以下のような<b>@記法</b>を使うことができます.<br>
 	<br>
 	<div class=MstyComment>
 		<div class=MstyCode>
@@ -362,7 +450,7 @@ dependency_libs_commonセクション<span class=MstyAuthor> (Section Type : @@L
 <br>
 <div class=MstyIndent>
 	ここでは依存ライブラリのリストを一行につき一つずつ指定します.<br>
-	この指定では以下のような<b>@記法</b>を使うことができます.<br>
+	この指定では、シンタクスシュガーとして以下のような<b>@記法</b>を使うことができます.<br>
 	<br>
 	<div class=MstyComment>
 		rlib: @{X} Y $(DL_VER)
@@ -415,7 +503,12 @@ dependency_libs_commonセクション<span class=MstyAuthor> (Section Type : @@L
 	<div class=MstyComment>
 		$(MY_LIBS_ROOT)/$(DLIBS_DIR)/cygY.so
 	</div>
-
+	<br>
+	いかがでしょうか？<br>
+	この<b>@記法</b>１行だけでこれほどまでに多様な指定を自動生成することができます.<br>
+	(さらに必要ならば各Makefile毎に用意されたtemplateファイルを編集することにより、<br>
+	この生成のされ方を変更することもできます)<br>
+	ではさらに実際の使用例も見てみましょう.<br>
 	<br>
 	<div class=MstyComment>
 		<u><b>例</b></u><br>
@@ -425,7 +518,7 @@ dependency_libs_commonセクション<span class=MstyAuthor> (Section Type : @@L
 		<u><b>説明</b></u><br>
 		<br>
 		libRanoのmkfgen.myf より抜粋したものです.<br>
-		この例では my_libs_root/libZnk ライブラリを指定したことになります.<br>
+		この例では my_libs_root/libZnk という動的ライブラリを指定したことになります.<br>
 		(libRanoはlibZnkに依存するということです)<br>
 	</div><br>
 	<br>
@@ -438,8 +531,22 @@ dependency_libs_commonセクション<span class=MstyAuthor> (Section Type : @@L
 		<u><b>説明</b></u><br>
 		<br>
 		moaiのmkfgen.myf より抜粋したものです.<br>
-		この例では my_libs_root/libZnk および my_libs_root/libRano の二つのライブラリを指定したことになります.<br>
+		この例では my_libs_root/libZnk および my_libs_root/libRano の二つの動的ライブラリを指定したことになります.<br>
 		(moaiはlibRanoとlibZnkに依存するということです)<br>
+	</div><br>
+	<br>
+	<div class=MstyComment>
+		<u><b>例</b></u><br>
+		<br>
+		slib: @{libZnk}  Znk  $(DL_VER)<br>
+		<br>
+		<u><b>説明</b></u><br>
+		<br>
+		auto_triggerのmkfgen.myf より抜粋したものです.<br>
+		今回は最初が rlib: ではなく slib: となっています.<br>
+		rlib: は動的なランタイムライブラリであることを示すのに対し、slibは静的ライブラリであることを示します.<br>
+		この例では my_libs_root/libZnk という静的ライブラリを指定したことになります.<br>
+		(auto_triggerはlibZnkを静的にリンクするということです)<br>
 	</div><br>
 	<br>
 	<b><a class=MstyElemLink href=#Index>目次に戻る</a></b><br>
@@ -562,8 +669,8 @@ product_listセクション<span class=MstyAuthor> (Section Type : @@L ライン
 </b></u><br>
 <br>
 <div class=MstyIndent>
-	このセクションにはこのmkfgenによって生成するプロダクトとその種類を列挙する.<br>
-	複数指定可能であり、以下の記法になる.<br>
+	このセクションにはこのmkfgenによって生成するプロダクトとその種類を列挙します.<br>
+	複数指定可能であり、以下のような記法になります.<br>
 	<br>
 	<div class=MstyComment>
 		product_type product_name product_mainsrc
@@ -610,7 +717,7 @@ rc_listセクション<span class=MstyAuthor> (Section Type : @@L ラインリ�
 </b></u><br>
 <br>
 <div class=MstyIndent>
-	このセクションではこのmkfgenによって扱うrcファイルの名前を明示的に列挙できます.<br>
+	このセクションではこのmkfgenによって扱うrcファイル(Windowsのリソースファイル)の名前を明示的に列挙できます.<br>
 	しかしこれが空でもmkfgenは自動的にrcファイルを認識して、この情報を生成されるMakefileに補充します.<br>
 	万一この自動認識がうまくいかないケースが発生した場合はこのセクションで明示的に指定してください.<br>
 	<br>
@@ -717,8 +824,8 @@ src_suffix_listセクション<span class=MstyAuthor> (Section Type : @@L ライ
 <u><b>リンク</b></u>
 <ul>
 	<li><a class=MstyElemLink href="#TopBar">一番上へ</a></li>
-	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">Moai公式サイト(github)</a></li>
-	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(github)</a></li>
+	<li><a class=MstyElemLink href="https://mr-moai-2016.github.io">Moaiドキュメント(オンライン)</a></li>
+	<li><a class=MstyElemLink href="https://github.com/mr-moai-2016/znk_project">znk_project(github)</a></li>
 </ul><br>
 
 </body>

@@ -118,11 +118,13 @@ install_data:
 	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\moai1.1 @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\moai1.1 
 	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\moai2.0 @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\moai2.0 
 	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\imgs @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\imgs 
+	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\public @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\public 
 	@if exist "config.myf" @$(CP) /F "config.myf" ..\..\moai-v$(REL_VER)-$(PLATFORM)\ $(CP_END)
 	@if exist "hosts.myf" @$(CP) /F "hosts.myf" ..\..\moai-v$(REL_VER)-$(PLATFORM)\ $(CP_END)
 	@if exist "config_cgi.myf" @$(CP) /F "config_cgi.myf" ..\..\moai-v$(REL_VER)-$(PLATFORM)\ $(CP_END)
 	@if exist "target.myf" @$(CP) /F "target.myf" ..\..\moai-v$(REL_VER)-$(PLATFORM)\ $(CP_END)
 	@if exist "moai_without_proxy.bat" @$(CP) /F "moai_without_proxy.bat" ..\..\moai-v$(REL_VER)-$(PLATFORM)\ $(CP_END)
+	@if exist "moai_without_console.bat" @$(CP) /F "moai_without_console.bat" ..\..\moai-v$(REL_VER)-$(PLATFORM)\ $(CP_END)
 	@if exist "default\filters\*.myf" @$(CP) /F "default\filters\*.myf" ..\..\moai-v$(REL_VER)-$(PLATFORM)\default\filters\ $(CP_END)
 	@if exist "doc_root\*.html" @$(CP) /F "doc_root\*.html" ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\ $(CP_END)
 	@if exist "doc_root\*.css" @$(CP) /F "doc_root\*.css" ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\ $(CP_END)
@@ -136,6 +138,7 @@ install_data:
 	@if exist "doc_root\imgs\*.png" @$(CP) /F "doc_root\imgs\*.png" ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\imgs\ $(CP_END)
 	@if exist "doc_root\imgs\*.jpg" @$(CP) /F "doc_root\imgs\*.jpg" ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\imgs\ $(CP_END)
 	@if exist "doc_root\imgs\*.gif" @$(CP) /F "doc_root\imgs\*.gif" ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\imgs\ $(CP_END)
+	@if exist "doc_root\public\moai.png" @$(CP) /F "doc_root\public\moai.png" ..\..\moai-v$(REL_VER)-$(PLATFORM)\doc_root\public\ $(CP_END)
 	@if exist "moai_for_android.sh" @$(CP) /F "moai_for_android.sh" ..\..\moai-v$(REL_VER)-$(PLATFORM)\ $(CP_END)
 
 # Install exec rule.

@@ -5,5 +5,6 @@ easter
 custom_boy
 proxy_finder
 cgi_developers
+guest
 plugin_futaba
 plugin_5ch

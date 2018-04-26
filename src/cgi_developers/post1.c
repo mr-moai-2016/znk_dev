@@ -1,6 +1,21 @@
 #include "cgi_util.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+static const char*
+rejectHtmlTag( const char* cstr )
+{
+	/***
+	 * 一応最低限のXSS対策はしておく.
+	 * 本来はもっと真面目に無効化処理を行うべきですが、これは所詮サンプルなので極力簡単化するため、
+	 * HTMLタグを含む可能性がある時点でNULLを返して弾くという猛烈な制限をかけて対処しています.
+	 */
+	if( cstr && ( strchr( cstr, '<' ) || strchr( cstr, '>' ) ) ){
+		return NULL;
+	}
+	return cstr;
+}
 
 static void
 show_result( CGIEVar* evar, const char* query_string )
@@ -28,7 +43,7 @@ show_result( CGIEVar* evar, const char* query_string )
 	printf( "<body>\n" );
 
 	printf( "Moai CGI Post test.\n" );
-	printf( "<form action=\"/cgis/cgi_developers/post1.cgi\" method=\"POST\">\n" );
+	printf( "<form action=\"post1.cgi\" method=\"POST\">\n" );
 	printf( "<b>E-mail</b><input type=text name=email size=\"28\"><br>\n" );
 	printf( "<b>コメント</b><textarea name=com cols=\"48\" rows=\"4\"></textarea><br>\n" );
 	printf( "<input type=submit value=\"返信する\">\n" );
@@ -36,9 +51,13 @@ show_result( CGIEVar* evar, const char* query_string )
 
 	printf( "<pre>\n" );
 	printf( "URL Query String Tokens: \n" );
+	/***
+	 * これは所詮サンプルであるため、あまり柔軟性を考慮するとコードが煩雑になり過ぎて本質がぼやけてしまいます.
+	 * ここでは、変数の最大数、値バッファや入力バッファの最大サイズなどを固定化してあります.
+	 */
 	{
 		size_t i = 0; 
-		for( i=0; /* infinity */ ; ++i ){
+		for( i=0; i<64; ++i ){
 			char key[ 256 ] = ""; 
 			char val[ 256 ] = ""; 
 			int result = CGIUtil_getQueryStringToken( query_string, i,
@@ -47,7 +66,7 @@ show_result( CGIEVar* evar, const char* query_string )
 			if( result == 0 ){
 				break;
 			}
-			printf( "%s = [%s]\n", key, val );
+			printf( "%s = [%s]\n", rejectHtmlTag(key), rejectHtmlTag(val) );
 		}
 	}
 
@@ -62,15 +81,13 @@ show_result( CGIEVar* evar, const char* query_string )
 		char stdin_bfr[ 4096 ] = "";
 		char* end = NULL;
 		size_t content_length = strtoul( evar->content_length_, &end, 10 );
-		printf( "Content-Length = [%u]\n", content_length );
+		printf( "Content-Length = [%u]\n", (unsigned int)content_length );
 		if( evar->content_length_ != end ){
 			size_t i = 0; 
-			size_t result = CGIUtil_getStdInStr( stdin_bfr, content_length );
-			stdin_bfr[ result ] = '\0';
-			printf( "Original data = [%s]\n", stdin_bfr );
-
+			CGIUtil_getStdInStr( stdin_bfr, sizeof(stdin_bfr), content_length );
+			printf( "Original data = [%s]\n", rejectHtmlTag(stdin_bfr) );
 			printf( "Tokens: \n" );
-			for( i=0; /* infinity */ ; ++i ){
+			for( i=0; i<64; ++i ){
 				char key[ 256 ] = ""; 
 				char val[ 256 ] = ""; 
 				int result = CGIUtil_getQueryStringToken( stdin_bfr, i,
@@ -79,7 +96,7 @@ show_result( CGIEVar* evar, const char* query_string )
 				if( result == 0 ){
 					break;
 				}
-				printf( "%s = [%s]\n", key, val );
+				printf( "%s = [%s]\n", rejectHtmlTag(key), rejectHtmlTag(val) );
 			}
 		} else {
 			printf( "Error : content_length is not found.\n" );

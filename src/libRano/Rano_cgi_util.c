@@ -135,6 +135,7 @@ RanoCGIUtil_splitQueryString( ZnkVarpAry post_vars, const char* query_string, co
 	ZnkStr stmt;
 	ZnkStr key = ZnkStr_new("");
 	ZnkStr val = ZnkStr_new("");
+	ZnkStr key_unesc = ZnkStr_new("");
 	ZnkVarp varp;
 
 	/***
@@ -154,18 +155,24 @@ RanoCGIUtil_splitQueryString( ZnkVarpAry post_vars, const char* query_string, co
 		ZnkStrEx_getKeyAndVal( ZnkStr_cstr(stmt), 0, ZnkStr_leng(stmt),
 				"=", "",
 				key, val );
-		varp = ZnkVarp_create( "", "", ZnkHtpPostVar_e_None, ZnkPrim_e_Str, NULL );
-		ZnkHtpURL_unescape_toStr( varp->name_,         ZnkStr_cstr(key), ZnkStr_leng(key) );
-		if( is_unescape_val ){
-			ZnkHtpURL_unescape_toStr( varp->prim_.u_.str_, ZnkStr_cstr(val), ZnkStr_leng(val) );
-		} else {
-			ZnkStr_set( varp->prim_.u_.str_, ZnkStr_cstr(val) );
+		ZnkStr_clear( key_unesc );
+		ZnkHtpURL_unescape_toStr( key_unesc, ZnkStr_cstr(key), ZnkStr_leng(key) );
+
+		/* ‘½d“o˜^–h~ */
+		if( ZnkVarpAry_findIdx_byName( post_vars, ZnkStr_cstr(key_unesc), ZnkStr_leng(key_unesc), false ) == Znk_NPOS ){
+			varp = ZnkVarp_create( ZnkStr_cstr(key_unesc), "", ZnkHtpPostVar_e_None, ZnkPrim_e_Str, NULL );
+			if( is_unescape_val ){
+				ZnkHtpURL_unescape_toStr( ZnkVar_str(varp), ZnkStr_cstr(val), ZnkStr_leng(val) );
+			} else {
+				ZnkStr_set( ZnkVar_str(varp), ZnkStr_cstr(val) );
+			}
+			/* ‚±‚Ì varp ‚Ìõ–½‚Í post_vars‚ÌŠÇ—‰º‚É’u‚©‚ê‚é */
+			ZnkVarpAry_push_bk( post_vars, varp );
 		}
-		/* ‚±‚Ì varp ‚Ìõ–½‚Í post_vars‚ÌŠÇ—‰º‚É’u‚©‚ê‚é */
-		ZnkVarpAry_push_bk( post_vars, varp );
 	}
 	ZnkStr_delete( key );
 	ZnkStr_delete( val );
+	ZnkStr_delete( key_unesc );
 	ZnkStrAry_destroy( stmts );
 }
 

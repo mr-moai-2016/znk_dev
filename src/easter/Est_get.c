@@ -732,7 +732,7 @@ displayResult( bool is_404, bool updated, ZnkStr console_msg,
 		Znk_printf( "<link href=\"/cgis/easter/publicbox/style.css\" rel=\"stylesheet\" type=\"text/css\" />\n" );
 		Znk_printf( "</head>\n" );
 		Znk_printf( "<body bgcolor=\"#EEFFEE\" text=\"#808000\" link=\"#0000EE\" vlink=\"#0000EE\" alink=\"#FF0000\">" );
-		Znk_printf( "<span class=easter_autolink_other>" );
+		Znk_printf( "<span class=MstyAutoLinkOther>" );
 		if( is_404 ){
 			Znk_printf( "404 Not found." );
 		} else if( updated ){

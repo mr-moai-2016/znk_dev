@@ -144,9 +144,15 @@ OBJS7=\
 	$O\cgi_util.o \
 	$O\transfer_chunked.o \
 
-BASENAME8=progress
-EXE_FILE8=$O\progress.cgi
+BASENAME8=hello_template
+EXE_FILE8=$O\hello_template.cgi
 OBJS8=\
+	$O\cgi_util.o \
+	$O\hello_template.o \
+
+BASENAME9=progress
+EXE_FILE9=$O\progress.cgi
+OBJS9=\
 	$O\cgi_util.o \
 	$O\progress.o \
 
@@ -179,6 +185,9 @@ PRODUCT_EXECS= \
 PRODUCT_EXECS= \
 	__mkg_sentinel_target__ \
 	$(EXE_FILE8) \
+PRODUCT_EXECS= \
+	__mkg_sentinel_target__ \
+	$(EXE_FILE9) \
 
 RUNTIME_FILES= \
 	__mkg_sentinel_target__ \
@@ -188,7 +197,7 @@ RUNTIME_FILES= \
 
 
 # Entry rule.
-all: $O $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8) 
+all: $O $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8) $(EXE_FILE9) 
 
 # Mkdir rule.
 $O:
@@ -268,6 +277,14 @@ $(EXE_FILE8): $(OBJS8)
 	$(LINKER_OPT) \
 	-o $(EXE_FILE8)
 
+$(EXE_FILE9): $(OBJS9)
+	$(LINKER) -Wl,--gc-sections -Wl,-z,nocopyreloc $(RPATH_LINK) \
+	-lgcc \
+	$(OBJS9) $(SUB_LIBS) \
+	-Wl,-rpath,. $(MY_LIBS_ROOT)/libZnk/out_dir/$(ABINAME)/libZnk.so $(MY_LIBS_ROOT)/libRano/out_dir/$(ABINAME)/libRano.so \
+	$(LINKER_OPT) \
+	-o $(EXE_FILE9)
+
 
 ##
 # Pattern rule.
@@ -293,28 +310,25 @@ __mkg_sentinel_target__:
 
 # Install data rule.
 install_data:
-	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\bbs @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\bbs 
-	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\up @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\up 
 	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox 
-	@if exist "bbs\*" @$(CP) /F "bbs\*" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\bbs\ $(CP_END)
-	@if exist "up\*" @$(CP) /F "up\*" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\up\ $(CP_END)
 	@if exist "*.c" @$(CP) /F "*.c" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\ $(CP_END)
 	@if exist "*.cpp" @$(CP) /F "*.cpp" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\ $(CP_END)
 	@if exist "*.html" @$(CP) /F "*.html" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\ $(CP_END)
 	@if exist "*.js" @$(CP) /F "*.js" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\publicbox\ $(CP_END)
 
 # Install exec rule.
-install_exec: $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8)
-	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers 
-	@if exist "$(EXE_FILE0)" @$(CP) /F "$(EXE_FILE0)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE1)" @$(CP) /F "$(EXE_FILE1)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE2)" @$(CP) /F "$(EXE_FILE2)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE3)" @$(CP) /F "$(EXE_FILE3)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE4)" @$(CP) /F "$(EXE_FILE4)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE5)" @$(CP) /F "$(EXE_FILE5)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE6)" @$(CP) /F "$(EXE_FILE6)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE7)" @$(CP) /F "$(EXE_FILE7)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
-	@if exist "$(EXE_FILE8)" @$(CP) /F "$(EXE_FILE8)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\ $(CP_END)
+install_exec: $(EXE_FILE0) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(EXE_FILE5) $(EXE_FILE6) $(EXE_FILE7) $(EXE_FILE8) $(EXE_FILE9)
+	@if not exist ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected @mkdir ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected 
+	@if exist "$(EXE_FILE0)" @$(CP) /F "$(EXE_FILE0)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE1)" @$(CP) /F "$(EXE_FILE1)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE2)" @$(CP) /F "$(EXE_FILE2)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE3)" @$(CP) /F "$(EXE_FILE3)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE4)" @$(CP) /F "$(EXE_FILE4)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE5)" @$(CP) /F "$(EXE_FILE5)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE6)" @$(CP) /F "$(EXE_FILE6)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE7)" @$(CP) /F "$(EXE_FILE7)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE8)" @$(CP) /F "$(EXE_FILE8)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
+	@if exist "$(EXE_FILE9)" @$(CP) /F "$(EXE_FILE9)" ..\..\moai-v$(REL_VER)-$(PLATFORM)\cgis\cgi_developers\protected\ $(CP_END)
 
 # Install dlib rule.
 install_dlib:
@@ -335,6 +349,7 @@ cgi_util.o: cgi_util.h
 evar1.o: cgi_util.h
 evar2.o:
 hello.o: cgi_util.h
+hello_template.o:
 post1.o: cgi_util.h
 post2.o:
 progress.o:
