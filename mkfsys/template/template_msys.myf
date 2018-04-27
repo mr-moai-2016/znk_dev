@@ -25,7 +25,7 @@ $[obj_dir]$:
 
 @@L exefile_rule
 $[exe_file]$: $[objs]$ $[res_file]$
-	$(LINKER) -o $[exe_file]$ $[objs]$ $(SUB_LIBS) -Wl,-rpath,. $[dep_libs]$
+	$(LINKER) -o $[exe_file]$ $[res_file]$ $[objs]$ $(SUB_LIBS) -Wl,-rpath,. $[dep_libs]$
 @@.
 
 @@L dlibfile_rule
