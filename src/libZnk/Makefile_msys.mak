@@ -205,7 +205,7 @@ $O:
 
 
 # Product files rule.
-$(EXE_FILE0): $(OBJS0)
+$(EXE_FILE0): $(OBJS0) 
 	$(LINKER) -o $(EXE_FILE0) $(OBJS0) $(SUB_LIBS) -Wl,-rpath,.  -lws2_32 
 
 $(SLIB_FILE1): $(OBJS1)
