@@ -2,7 +2,7 @@ Release Note
 -----------------------------------
 
 ## 2018/08/03 Version 2.1 リリース
-  Moai Ver2.1 コードネーム「CipherAgent」がリリースされました.
+  Moai Ver2.1「CipherAgent」がリリースされました.
 
   Version 2.0.2からの修正点は以下の通り.  
 
